@@ -204,6 +204,232 @@ export async function cachePortrait(
   }
   return relative;
 }
+export function validThumbnail(value) {
+  try {
+    const u = new URL(value);
+    return (
+      u.protocol === "https:" &&
+      !u.username &&
+      !u.password &&
+      !u.port &&
+      ["upload.wikimedia.org", "thumb.wikimedia.org"].includes(u.hostname)
+    );
+  } catch {
+    return false;
+  }
+}
+export function remotePortrait(item) {
+  const meta = item?.extmetadata;
+  const license = meta?.LicenseShortName?.value || "";
+  if (
+    !/^(CC BY(?:-SA)?(?: |$)|CC0(?: |$)|Public domain(?: |$))/i.test(license) ||
+    !validThumbnail(item?.thumburl)
+  )
+    return null;
+  let licenseUrl =
+    meta.LicenseUrl?.value ||
+    (/^CC0/i.test(license)
+      ? "https://creativecommons.org/publicdomain/zero/1.0/"
+      : /^Public domain/i.test(license)
+        ? "https://creativecommons.org/publicdomain/mark/1.0/"
+        : "");
+  licenseUrl = licenseUrl.replace(
+    /^http:\/\/(www\.)?creativecommons\.org\//i,
+    "https://creativecommons.org/",
+  );
+  const plain = (s) =>
+    String(s || "")
+      .replace(/<[^>]*>/g, "")
+      .replace(/&amp;/g, "&")
+      .trim();
+  const artist = plain(meta.Artist?.value);
+  try {
+    const source = new URL(item.descriptionurl);
+    if (
+      source.protocol !== "https:" ||
+      source.hostname !== "commons.wikimedia.org" ||
+      source.username ||
+      source.password ||
+      source.port
+    )
+      return null;
+    if (
+      new URL(licenseUrl).protocol !== "https:" ||
+      (/^CC BY/i.test(license) && !artist)
+    )
+      return null;
+  } catch {
+    return null;
+  }
+  return {
+    thumbnailUrl: item.thumburl,
+    ...(item.sha1 ? { sourceHash: item.sha1 } : {}),
+    source: item.descriptionurl,
+    artist,
+    license,
+    licenseUrl,
+    credit: plain(meta.Credit?.value),
+  };
+}
+export function acceptPortraitCandidate(candidate, portrait, queue) {
+  if (portrait) {
+    candidate.person.portrait = portrait;
+    return "added";
+  }
+  if (candidate.alternatives.length) {
+    queue.push({
+      person: candidate.person,
+      id: candidate.id,
+      filename: candidate.alternatives[0],
+      alternatives: candidate.alternatives.slice(1),
+    });
+    return "retry";
+  }
+  return "skipped";
+}
+export function resetRemotePortrait(person) {
+  if (person.portrait?.path) return false;
+  delete person.portrait;
+  return true;
+}
+export function retainPortrait(person, existing) {
+  if (existing.has(person.id)) person.portrait = existing.get(person.id);
+}
+async function readSnapshot() {
+  try {
+    return JSON.parse(
+      await fs.readFile(path.join(root, "public/data/people.json"), "utf8"),
+    );
+  } catch (error) {
+    if (error.code === "ENOENT") return { people: [] };
+    throw error;
+  }
+}
+async function enrichPortraits(people, entities) {
+  const counts = {
+    people: people.length,
+    retained: people.filter((p) => p.portrait?.path).length,
+    candidates: 0,
+    added: 0,
+    noImage: 0,
+    skipped: 0,
+  };
+  const candidates = [];
+  for (const person of people) {
+    if (!resetRemotePortrait(person)) continue;
+    const id = person.id.replace(/^wd-/, "");
+    if (!entities.has(id) || !entities.get(id).claims)
+      throw Error(
+        `Missing entity claims for ${id}; preserve the prior snapshot and retry`,
+      );
+    const filenames = [
+      ...new Set(
+        values(entities.get(id), "P18").filter(
+          (v) => typeof v === "string" && v,
+        ),
+      ),
+    ];
+    if (!filenames.length) {
+      counts.noImage++;
+      continue;
+    }
+    candidates.push({
+      person,
+      id,
+      filename: filenames[0],
+      alternatives: filenames.slice(1),
+    });
+  }
+  counts.candidates = candidates.length;
+  // Twenty files per request, below the 50-thumbnail API limit; requests are paced.
+  for (let offset = 0; offset < candidates.length; ) {
+    const group = candidates.slice(offset, offset + 20);
+    const missing = [];
+    for (const c of group) {
+      const key = createHash("sha256").update(c.filename).digest("hex");
+      c.cachePath = path.join(cache, `remote-image-${key}.json`);
+      try {
+        c.page = JSON.parse(await fs.readFile(c.cachePath, "utf8"));
+      } catch (error) {
+        if (error.code !== "ENOENT") throw error;
+        missing.push(c);
+      }
+    }
+    if (missing.length) {
+      await sleep(1100);
+      const result = await api(
+        {
+          action: "query",
+          titles: missing.map((c) => `File:${c.filename}`).join("|"),
+          redirects: "1",
+          prop: "imageinfo",
+          iiprop: "url|extmetadata|sha1",
+          iiurlwidth: "240",
+          iiextmetadatafilter: "Artist|Credit|LicenseShortName|LicenseUrl",
+        },
+        "commons.wikimedia.org",
+      );
+      const renames = [
+        ...(result.query.normalized || []),
+        ...(result.query.redirects || []),
+      ];
+      for (const c of missing) {
+        let title = `File:${c.filename}`;
+        for (let pass = 0; pass < 5; pass++)
+          for (const r of renames) if (r.from === title) title = r.to;
+        c.page =
+          Object.values(result.query.pages).find(
+            (p) => p.title === title || p.title === title.replace(/_/g, " "),
+          ) || {};
+        await fs.writeFile(c.cachePath, JSON.stringify(c.page));
+      }
+    }
+    for (const c of group) {
+      const portrait = remotePortrait(c.page.imageinfo?.[0]);
+      const outcome = acceptPortraitCandidate(c, portrait, candidates);
+      if (outcome === "added") counts.added++;
+      if (outcome === "skipped") counts.skipped++;
+    }
+    if (offset % 100 === 0)
+      console.log(
+        `Portrait metadata ${offset + group.length}/${candidates.length}`,
+      );
+    offset += group.length;
+  }
+  if (counts.added + counts.skipped !== counts.candidates)
+    throw Error("Portrait candidate processing incomplete");
+  counts.filesAttempted = candidates.length;
+  console.log(JSON.stringify(counts));
+  return counts;
+}
+async function refreshPortraits() {
+  await fs.mkdir(cache, { recursive: true });
+  const snapshot = await readSnapshot();
+  const entities = new Map();
+  for (const file of await fs.readdir(cache)) {
+    if (!file.startsWith("entities-") || !file.endsWith(".json")) continue;
+    const data = JSON.parse(await fs.readFile(path.join(cache, file), "utf8"));
+    for (const e of Object.values(data.entities || {}))
+      if (e.claims) entities.set(e.id, e);
+  }
+  const missing = snapshot.people.filter(
+    (p) => !entities.has(p.id.replace(/^wd-/, "")),
+  );
+  for (let start = 0; start < missing.length; start += 40) {
+    const ids = missing
+      .slice(start, start + 40)
+      .map((p) => p.id.replace(/^wd-/, ""));
+    const result = await cached(`portrait-entities-${ids.join("-")}.json`, () =>
+      api({ action: "wbgetentities", ids: ids.join("|"), props: "claims" }),
+    );
+    for (const e of Object.values(result.entities)) entities.set(e.id, e);
+  }
+  const counts = await enrichPortraits(snapshot.people, entities);
+  snapshot.portraitRefresh = { at: new Date().toISOString(), ...counts };
+  const target = path.join(root, "public/data/people.json");
+  await fs.writeFile(target + ".tmp", JSON.stringify(snapshot));
+  await fs.rename(target + ".tmp", target);
+}
 async function main() {
   const limit = boundedInteger(
     process.env.PEOPLE_LIMIT,
@@ -211,13 +437,6 @@ async function main() {
     100,
     10000,
     "PEOPLE_LIMIT",
-  );
-  const portraitLimit = boundedInteger(
-    process.env.PORTRAIT_LIMIT,
-    250,
-    0,
-    1000,
-    "PORTRAIT_LIMIT",
   );
   await fs.mkdir(cache, { recursive: true });
   await fs.mkdir(path.join(root, "public/data"), { recursive: true });
@@ -374,141 +593,13 @@ async function main() {
         }),
     ).values(),
   ];
-  let portraits = 0;
-  // Batch Commons metadata to avoid one API request for every portrait.
-  const candidates = people
-    .map((person) => {
-      const e = entities.find((e) => `wd-${e.id}` === person.id);
-      return { id: e.id, filename: values(e, "P18")[0] };
-    })
-    .filter((p) => p.filename)
-    .slice(0, Math.ceil(portraitLimit * 1.5));
-  const missing = [];
-  for (const candidate of candidates) {
-    try {
-      const previous = JSON.parse(
-        await fs.readFile(
-          path.join(cache, `image-${candidate.id}.json`),
-          "utf8",
-        ),
-      );
-      if (!Object.values(previous.query.pages)[0]?.imageinfo?.[0]?.sha1)
-        missing.push(candidate);
-    } catch (error) {
-      if (error.code !== "ENOENT") throw error;
-      missing.push(candidate);
-    }
-  }
-  for (let offset = 0; offset < missing.length; offset += 20) {
-    const group = missing.slice(offset, offset + 20);
-    await sleep(2100);
-    const result = await api(
-      {
-        action: "query",
-        titles: group.map((p) => `File:${p.filename}`).join("|"),
-        redirects: "1",
-        prop: "imageinfo",
-        iiprop: "url|extmetadata|sha1",
-        iiurlwidth: "240",
-      },
-      "commons.wikimedia.org",
-    );
-    const pages = Object.values(result.query.pages);
-    const renames = [
-      ...(result.query.normalized || []),
-      ...(result.query.redirects || []),
-    ];
-    for (const candidate of group) {
-      let title = `File:${candidate.filename}`;
-      for (let pass = 0; pass < 3; pass++)
-        for (const rename of renames)
-          if (rename.from === title) title = rename.to;
-      const page = pages.find(
-        (p) => p.title === title || p.title === title.replace(/_/g, " "),
-      );
-      if (page)
-        await fs.writeFile(
-          path.join(cache, `image-${candidate.id}.json`),
-          JSON.stringify({ query: { pages: { [page.pageid || "-1"]: page } } }),
-        );
-    }
-    console.log(
-      `Portrait metadata ${Math.min(offset + 20, missing.length)}/${missing.length}`,
-    );
-  }
-  for (const person of people) {
-    if (portraits >= portraitLimit) break;
-    const e = entities.find((e) => `wd-${e.id}` === person.id);
-    const filename = values(e, "P18")[0];
-    if (!filename) continue;
-    try {
-      const info = await cached(`image-${e.id}.json`, async () => {
-        await sleep(2100);
-        return api(
-          {
-            action: "query",
-            titles: `File:${filename}`,
-            prop: "imageinfo",
-            iiprop: "url|extmetadata|sha1",
-            iiurlwidth: "240",
-          },
-          "commons.wikimedia.org",
-        );
-      });
-      const item = Object.values(info.query.pages)[0]?.imageinfo?.[0];
-      const meta = item?.extmetadata;
-      const license = meta?.LicenseShortName?.value || "";
-      if (!/^(CC BY|CC0|Public domain)/i.test(license) || !item.thumburl)
-        continue;
-      let licenseUrl =
-        meta.LicenseUrl?.value ||
-        (/^CC0/i.test(license)
-          ? "https://creativecommons.org/publicdomain/zero/1.0/"
-          : /^Public domain/i.test(license)
-            ? "https://creativecommons.org/publicdomain/mark/1.0/"
-            : "");
-      licenseUrl = licenseUrl.replace(
-        /^http:\/\/(www\.)?creativecommons\.org\//i,
-        "https://creativecommons.org/",
-      );
-      if (
-        !licenseUrl.startsWith("https://") ||
-        (/^CC BY/i.test(license) && !meta.Artist?.value)
-      )
-        continue;
-      const thumbnailUrl = new URL(item.thumburl);
-      if (
-        thumbnailUrl.protocol !== "https:" ||
-        ![
-          "upload.wikimedia.org",
-          "thumb.wikimedia.org",
-          "commons.wikimedia.org",
-        ].includes(thumbnailUrl.hostname)
-      )
-        continue;
-      if (!item.sha1) continue;
-      const imagePath = await cachePortrait(e.id, item.thumburl, item.sha1);
-      const plain = (s) =>
-        String(s || "")
-          .replace(/<[^>]*>/g, "")
-          .replace(/&amp;/g, "&");
-      person.portrait = {
-        path: imagePath,
-        sourceHash: item.sha1,
-        thumbnailUrl: item.thumburl,
-        source: item.descriptionurl,
-        artist: plain(meta.Artist?.value),
-        license,
-        licenseUrl,
-        credit: plain(meta.Credit?.value),
-      };
-      portraits++;
-      if (portraits % 25 === 0) console.log(`Portraits ${portraits}`);
-    } catch (error) {
-      if (error.code === "RETRY_LATER") throw error;
-      console.warn(`Portrait skipped ${person.id}: ${error.message}`);
-    }
-  }
+  const previous = await readSnapshot();
+  const existing = new Map(
+    previous.people.map((p) => [p.id, p.portrait]).filter(([, p]) => p?.path),
+  );
+  for (const person of people) retainPortrait(person, existing);
+  await enrichPortraits(people, new Map(entities.map((e) => [e.id, e])));
+  const portraits = people.filter((p) => p.portrait).length;
   let corrections = {};
   try {
     corrections = JSON.parse(
@@ -543,20 +634,6 @@ async function main() {
     path.join(root, "public/data/people.tmp"),
     path.join(root, "public/data/people.json"),
   );
-  if (portraitLimit > 0) {
-    const retained = new Set(
-      people
-        .filter((p) => p.portrait)
-        .map((p) => path.basename(p.portrait.path)),
-    );
-    for (const file of await fs.readdir(path.join(root, "public/portraits"))) {
-      if (
-        /^Q\d+-[a-f0-9]{16}\.(jpg|png|gif|webp)$/.test(file) &&
-        !retained.has(file)
-      )
-        await fs.unlink(path.join(root, "public/portraits", file));
-    }
-  }
   console.log(
     JSON.stringify({
       people: people.length,
@@ -570,4 +647,7 @@ async function main() {
     }),
   );
 }
-if (process.argv[1] === fileURLToPath(import.meta.url)) await main();
+if (process.argv[1] === fileURLToPath(import.meta.url)) {
+  if (process.argv.includes("--refresh-portraits")) await refreshPortraits();
+  else await main();
+}

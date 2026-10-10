@@ -14,6 +14,7 @@ import {
   searchPeople,
 } from "./history";
 import { parseState, encodeState, MAX_PINS } from "./state";
+import { portraitSource } from "./portraits";
 
 const $ = <T extends HTMLElement = HTMLElement>(id: string) =>
   document.getElementById(id) as T;
@@ -65,11 +66,13 @@ function safeUrl(url: string): string {
     return "#";
   }
 }
+const failedPortraits = new Set<string>();
 function portraitPath(person: Person): string | null {
-  const path = person.portrait?.path.replace(/^\//, "");
-  return path && /^portraits\/[\w.-]+$/.test(path)
-    ? `${import.meta.env.BASE_URL}${path}`
-    : null;
+  return portraitSource(
+    person.portrait,
+    import.meta.env.BASE_URL,
+    failedPortraits,
+  );
 }
 function initials(person: Person) {
   return person.name
@@ -81,16 +84,44 @@ function initials(person: Person) {
 function portrait(person: Person, small = false): string {
   const path = portraitPath(person);
   if (path)
-    return `<img class="${small ? "tiny-portrait" : "portrait"}" src="${esc(path)}" alt="Portrait of ${esc(person.name)}" loading="lazy" decoding="async" />`;
+    return `<img class="${small ? "tiny-portrait" : "portrait"}" src="${esc(path)}" data-person="${esc(person.id)}" alt="Portrait of ${esc(person.name)}" loading="lazy" decoding="async" referrerpolicy="no-referrer" />`;
   return small
     ? `<span class="tiny-portrait" aria-hidden="true"></span>`
-    : `<span class="portrait-placeholder"><span class="initials" aria-hidden="true">${esc(initials(person))}</span><small>No portrait in this collection</small></span>`;
+    : `<span class="portrait-placeholder"><span class="initials" aria-hidden="true">${esc(initials(person))}</span><small>${person.portrait ? "Portrait unavailable" : "No portrait in this collection"}</small></span>`;
 }
 function syncUrl(replace = true) {
   const url = `${location.pathname}${encodeState(year, pins)}${location.hash}`;
   if (url !== `${location.pathname}${location.search}${location.hash}`)
     history[replace ? "replaceState" : "pushState"](null, "", url);
 }
+// Image failures must never remove a person or leave repeated network retries.
+document.addEventListener(
+  "error",
+  (event) => {
+    const image = event.target;
+    if (!(image instanceof HTMLImageElement) || !image.dataset.person) return;
+    const person = byId.get(image.dataset.person);
+    if (!person) return;
+    failedPortraits.add(image.getAttribute("src") ?? image.src);
+    const fallback = portraitPath(person);
+    if (fallback) {
+      image.src = fallback;
+      return;
+    }
+    const placeholder = document.createElement("span");
+    placeholder.className = image.classList.contains("tiny-portrait")
+      ? "tiny-portrait"
+      : "portrait-placeholder";
+    placeholder.textContent = initials(person);
+    placeholder.setAttribute("role", "img");
+    placeholder.setAttribute(
+      "aria-label",
+      `Portrait unavailable for ${person.name}`,
+    );
+    image.replaceWith(placeholder);
+  },
+  true,
+);
 function recenter() {
   const span = Number($<HTMLSelectElement>("zoom").value);
   rangeStart =
@@ -307,15 +338,16 @@ function showDetails(id: string) {
       : "";
   const credit = person.portrait;
   $("details-content").innerHTML =
-    `${path ? `<img class="detail-portrait" src="${esc(path)}" alt="Portrait of ${esc(person.name)}" />` : ""}<h2>${esc(person.name)}</h2><p>${esc(person.description)}</p><p>${esc(statusAt(person, year).label)} in ${formatYear(year)}</p><table class="date-table"><tr><th>Born</th><td>${esc(dateLabel(person.birth))}</td></tr><tr><th>Died</th><td>${esc(dateLabel(person.death))}</td></tr><tr><th>Known for</th><td>${esc(person.occupations.filter((label) => !/^Q\d+$/.test(label)).join(", ") || "Not recorded")}</td></tr></table><div class="detail-actions">${jump("Birth year", yearOf(person.birth))}${jump("At age 12", birthdayYear(person, 12))}${jump("Death year", yearOf(person.death))}<button data-pin="${esc(id)}">${pins.includes(id) ? "Unpin" : "Pin to timeline"}</button></div><p class="attribution">Jumps use a representative year when dates vary. A jump to age 12 does not establish that a person lived to 12.</p><h3>Sources</h3><ul>${person.sources.map((s) => `<li><a href="${esc(safeUrl(s))}" target="_blank" rel="noopener noreferrer">${esc(s.replace(/^https?:\/\//, ""))}</a></li>`).join("")}</ul>${credit ? `<p class="attribution">Portrait: ${esc(credit.artist)}. <a href="${esc(safeUrl(credit.source))}" target="_blank" rel="noopener noreferrer">Original image</a>. <a href="${esc(safeUrl(credit.licenseUrl))}" target="_blank" rel="noopener noreferrer">${esc(credit.license)}</a>. ${esc(credit.credit || "")} Thumbnail resized; display may crop.</p>` : '<p class="attribution">No licensed portrait is cached for this person.</p>'}<details><summary>Date precision and source claims</summary><p>Dates retain their source precision, calendar, alternatives, and reference records. Approximate dates are estimates, not exact birthdays.</p><pre>${esc(JSON.stringify({ birth: person.birth, death: person.death }, null, 2))}</pre></details>`;
+    `${path ? `<img class="detail-portrait" src="${esc(path)}" data-person="${esc(person.id)}" alt="Portrait of ${esc(person.name)}" referrerpolicy="no-referrer" />` : ""}<h2>${esc(person.name)}</h2><p>${esc(person.description)}</p><p>${esc(statusAt(person, year).label)} in ${formatYear(year)}</p><table class="date-table"><tr><th>Born</th><td>${esc(dateLabel(person.birth))}</td></tr><tr><th>Died</th><td>${esc(dateLabel(person.death))}</td></tr><tr><th>Known for</th><td>${esc(person.occupations.filter((label) => !/^Q\d+$/.test(label)).join(", ") || "Not recorded")}</td></tr></table><div class="detail-actions">${jump("Birth year", yearOf(person.birth))}${jump("At age 12", birthdayYear(person, 12))}${jump("Death year", yearOf(person.death))}<button data-pin="${esc(id)}">${pins.includes(id) ? "Unpin" : "Pin to timeline"}</button></div><p class="attribution">Jumps use a representative year when dates vary. A jump to age 12 does not establish that a person lived to 12.</p><h3>Sources</h3><ul>${person.sources.map((s) => `<li><a href="${esc(safeUrl(s))}" target="_blank" rel="noopener noreferrer">${esc(s.replace(/^https?:\/\//, ""))}</a></li>`).join("")}</ul>${credit ? `<p class="attribution">Portrait: ${esc(credit.artist)}. <a href="${esc(safeUrl(credit.source))}" target="_blank" rel="noopener noreferrer">Original image</a>. <a href="${esc(safeUrl(credit.licenseUrl))}" target="_blank" rel="noopener noreferrer">${esc(credit.license)}</a>. ${esc(credit.credit || "")} Thumbnail resized; display may crop.</p>` : '<p class="attribution">No licensed portrait is available for this person.</p>'}<details><summary>Date precision and source claims</summary><p>Dates retain their source precision, calendar, alternatives, and reference records. Approximate dates are estimates, not exact birthdays.</p><pre>${esc(JSON.stringify({ birth: person.birth, death: person.death }, null, 2))}</pre></details>`;
   $<HTMLDialogElement>("details").showModal();
 }
 function showAbout() {
   const portraits = people.filter((p) => p.portrait).length;
+  const cachedPortraits = people.filter((p) => p.portrait?.path).length;
   const bce = people.filter((p) => (yearOf(p.birth) ?? 1) <= 0).length;
   const unknown = people.filter((p) => !p.death.length).length;
   $("about-content").innerHTML =
-    `<h2>History is full of connections.</h2><p>Lifetimes is a place to explore them. Pick a year, search for anyone, and pin up to eight lives to one timeline.</p><h3>What is in this collection?</h3><p>${people.length.toLocaleString()} people, ${portraits.toLocaleString()} cached portraits, and ${bce.toLocaleString()} people with a representative birth year in BCE. Snapshot: ${esc(snapshot.generatedAt?.slice(0, 10) || "not recorded")}.</p><p>This is a sample of recorded history, not everyone who lived. Coverage favors well-documented people and English-language records. Ancient history, women, and many regions remain underrepresented.</p><h3>What do the dates mean?</h3><p>CE and BCE meet without a year zero: 1 BCE is followed by 1 CE. Age is the birthday reached during the selected year. “About” uses a representative birth year when the source dates vary. It is an estimate, not an exact age.</p><p>Solid bars show definite lifetime spans supported by the imported dates. Stripes show uncertainty. A person can be definitely alive even when their age is uncertain. “Possibly alive” means the dates cannot establish life status for that year. Known birth and death years have their own labels. Calendar notes do not make an entire lifetime uncertain. Portraits may be later artistic representations.</p><p>${unknown.toLocaleString()} records have no death date. That does not prove someone is alive. These people remain searchable, with an unknown life status.</p><h3>Sources and privacy</h3><p>Biographical data comes from <a href="https://www.wikidata.org/" target="_blank" rel="noopener noreferrer">Wikidata</a>, available under CC0. Open a person for individual sources and <a href="https://commons.wikimedia.org/" target="_blank" rel="noopener noreferrer">Wikimedia Commons</a> image credits. Reviewed corrections are stored separately from imports.</p><p>Exploration uses bundled data and portraits. Favorites stay in this browser. Shared links contain the selected year and pinned IDs; they do not include favorites. No accounts or analytics.</p><p>Inspired by <a href="https://neal.fun/who-was-alive/" target="_blank" rel="noopener noreferrer">Neal Agarwal’s Who Was Alive?</a></p>`;
+    `<h2>History is full of connections.</h2><p>Lifetimes is a place to explore them. Pick a year, search for anyone, and pin up to eight lives to one timeline.</p><h3>What is in this collection?</h3><p>${people.length.toLocaleString()} people, ${portraits.toLocaleString()} portraits (${cachedPortraits.toLocaleString()} cached; the rest load from Wikimedia), and ${bce.toLocaleString()} people with a representative birth year in BCE. Snapshot: ${esc(snapshot.generatedAt?.slice(0, 10) || "not recorded")}.</p><p>This is a sample of recorded history, not everyone who lived. Coverage favors well-documented people and English-language records. Ancient history, women, and many regions remain underrepresented.</p><h3>What do the dates mean?</h3><p>CE and BCE meet without a year zero: 1 BCE is followed by 1 CE. Age is the birthday reached during the selected year. “About” uses a representative birth year when the source dates vary. It is an estimate, not an exact age.</p><p>Solid bars show definite lifetime spans supported by the imported dates. Stripes show uncertainty. A person can be definitely alive even when their age is uncertain. “Possibly alive” means the dates cannot establish life status for that year. Known birth and death years have their own labels. Calendar notes do not make an entire lifetime uncertain. Portraits may be later artistic representations.</p><p>${unknown.toLocaleString()} records have no death date. That does not prove someone is alive. These people remain searchable, with an unknown life status.</p><h3>Sources and privacy</h3><p>Biographical data comes from <a href="https://www.wikidata.org/" target="_blank" rel="noopener noreferrer">Wikidata</a>, available under CC0. Open a person for individual sources and <a href="https://commons.wikimedia.org/" target="_blank" rel="noopener noreferrer">Wikimedia Commons</a> image credits. Reviewed corrections are stored separately from imports.</p><p>Historical data stays bundled. Cached portraits load locally; other portraits load from Wikimedia as you browse. Wikimedia receives image requests, but the site sends no referring page URL. Favorites stay in this browser. Shared links contain the selected year and pinned IDs; they do not include favorites. No accounts or analytics.</p><p>Inspired by <a href="https://neal.fun/who-was-alive/" target="_blank" rel="noopener noreferrer">Neal Agarwal’s Who Was Alive?</a></p>`;
   $<HTMLDialogElement>("about").showModal();
 }
 

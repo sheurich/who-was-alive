@@ -3,7 +3,19 @@
   "unplaceableBirths": 0,
   "outsideUiRange": [],
   "people": 5255,
-  "portraits": 250,
+  "portraits": 3309,
+  "cachedPortraits": 250,
+  "remotePortraits": 3059,
+  "portraitAcquisition": {
+    "at": "2026-10-10T12:32:15.125Z",
+    "people": 5255,
+    "retained": 250,
+    "candidates": 3127,
+    "added": 3059,
+    "noImage": 1878,
+    "skipped": 68,
+    "filesAttempted": 3135
+  },
   "birthRange": [
     -3199,
     2000

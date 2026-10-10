@@ -27,6 +27,10 @@ const coverage = {
     .map((p) => ({ id: p.id, name: p.name, year: year(p) })),
   people: d.people.length,
   portraits: d.people.filter((p) => p.portrait).length,
+  cachedPortraits: d.people.filter((p) => p.portrait?.path).length,
+  remotePortraits: d.people.filter((p) => p.portrait && !p.portrait.path)
+    .length,
+  portraitAcquisition: d.portraitRefresh || null,
   birthRange: [Math.min(...finiteYears), Math.max(...finiteYears)],
   birthBands: bands.map(([label, min, max]) => ({
     label,

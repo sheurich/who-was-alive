@@ -13,7 +13,8 @@ export interface HistoricalDate {
   references?: unknown[];
 }
 export interface Portrait {
-  path: string;
+  path?: string;
+  thumbnailUrl?: string;
   source: string;
   artist: string;
   license: string;

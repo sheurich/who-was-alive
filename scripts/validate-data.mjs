@@ -11,7 +11,9 @@ import {
   boundedInteger,
   request,
   approximateQualifiers,
+  validThumbnail,
 } from "./import.mjs";
+await import("./portrait.test.mjs");
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const claim = (time, precision = 9, rank = "normal", qualifiers = {}) => ({
   id: "test",
@@ -262,19 +264,40 @@ for (const p of data.people) {
     );
   }
   if (p.portrait) {
+    if (p.portrait.thumbnailUrl)
+      assert(
+        validThumbnail(p.portrait.thumbnailUrl),
+        "Unsafe remote portrait URL",
+      );
     assert(
-      /^portraits\/Q\d+-[a-f0-9]{16}\.(jpg|png|gif|webp)$/.test(
-        p.portrait.path,
-      ),
+      p.portrait.path || p.portrait.thumbnailUrl,
+      "Portrait needs a local path or remote thumbnail",
     );
-    assert(p.portrait.source.startsWith("https://commons.wikimedia.org/"));
+    if (p.portrait.path)
+      assert(
+        /^portraits\/Q\d+-[a-f0-9]{16}\.(jpg|png|gif|webp)$/.test(
+          p.portrait.path,
+        ),
+      );
+    const portraitSource = new URL(p.portrait.source);
+    assert(
+      portraitSource.protocol === "https:" &&
+        portraitSource.hostname === "commons.wikimedia.org" &&
+        !portraitSource.username &&
+        !portraitSource.password &&
+        !portraitSource.port,
+    );
     assert(typeof p.portrait.artist === "string");
-    assert(/^[a-z0-9]{20,64}$/i.test(p.portrait.sourceHash));
+    if (p.portrait.sourceHash)
+      assert(/^[a-z0-9]{20,64}$/i.test(p.portrait.sourceHash));
     assert(typeof p.portrait.license === "string" && p.portrait.license);
     assert(
       typeof p.portrait.licenseUrl === "string" &&
         p.portrait.licenseUrl.startsWith("https://"),
     );
+    assert(/^(CC BY|CC0|Public domain)/i.test(p.portrait.license));
+    if (/^CC BY/i.test(p.portrait.license)) assert(p.portrait.artist.trim());
+    if (!p.portrait.path) continue;
     const bytes = await fs.readFile(path.join(root, "public", p.portrait.path));
     assert(bytes.length > 100);
     assert(
@@ -288,5 +311,5 @@ for (const p of data.people) {
   }
 }
 console.log(
-  `Validated ${data.people.length} people, ${portraits} cached portraits; BCE, precision, alternatives, references, and missing-death fixtures passed.`,
+  `Validated ${data.people.length} people, ${portraits} cached portraits, ${data.people.filter((p) => p.portrait && !p.portrait.path).length} remote portraits; BCE, precision, alternatives, references, and missing-death fixtures passed.`,
 );

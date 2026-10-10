@@ -1,6 +1,6 @@
 # Lifetimes
 
-A static timeline playground for exploring people, ages, and overlapping lives. Built with TypeScript and Vite. Runtime dependencies: none. The browser reads a bundled Wikidata snapshot and local portrait thumbnails.
+A static timeline playground for exploring people, ages, and overlapping lives. Built with TypeScript and Vite. Runtime dependencies: none. The browser reads a bundled Wikidata snapshot, uses cached portraits first, and loads additional thumbnails directly from Wikimedia.
 
 ## Run locally
 
@@ -24,7 +24,7 @@ npm run build
 npm run preview
 ```
 
-`dist/` is the complete static website. Serve its contents through an ordinary HTTP server; opening `index.html` as a `file:` URL does not support the data fetch. Exploration makes no requests to Wikidata, Commons, fonts, or analytics. External source links open only when clicked.
+`dist/` is the complete static website. Serve its contents through an ordinary HTTP server; opening `index.html` as a `file:` URL does not support the data fetch. Exploration makes no live data API calls. Additional portraits load from Wikimedia on demand, with no referring page URL sent. Cached portraits and historical data remain usable without Wikimedia access. Failed images show initials; no accounts, external fonts, or analytics are used. Open a person for the image artist, source, and license.
 
 ## Deploy when a target is chosen
 
