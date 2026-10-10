@@ -44,7 +44,7 @@ The app uses provider-independent person and date interfaces in `src/types.ts`. 
 
 Internal year zero means 1 BCE. It never appears as a displayed year. Original Wikidata date strings remain in `sourceValue`; normalized date strings use astronomical numbering.
 
-The app compares whole-year intervals. It does not claim an exact age on an unspecified day. Different source dates widen the interval. Coarse century and millennium dates follow historical calendar boundaries. Julian dates receive conservative margins rather than an exact day conversion.
+The app compares whole-year intervals. Displayed age is the birthday reached during the selected year, not the age on a particular day. When birth dates vary, “about” marks a single estimate from the representative birth year. Different source dates widen the interval. Coarse century and millennium dates follow historical calendar boundaries. Julian dates receive conservative margins rather than an exact day conversion.
 
 Calendar notes do not imply approximate lifetimes. Earliest and latest dates constrain the interval; all alternative dates remain represented. A person can be definitely alive while their age remains uncertain. Known birth and death years have separate labels. Unbounded approximate claims and unresolved temporal qualifiers cannot establish definite overlap. Their striped chart extents illustrate the recorded estimates, not a source-defined confidence interval. People with missing death dates have unknown life status and remain searchable. The importer does not certify living people.
 

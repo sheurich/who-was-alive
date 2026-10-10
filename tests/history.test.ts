@@ -63,9 +63,10 @@ test("date precision, approximation and alternate assertions widen intervals", (
   assert.deepEqual(lifeBounds(disputed)?.birth, { min: 1900, max: 1903 });
   assert.equal(dateBounds(d(1900, { calendar: "unknown" })), null);
 });
-test("whole-year ages remain ranges and unknown death does not imply life", () => {
+test("ages show the birthday reached that year and missing death does not imply life", () => {
   assert.equal(statusAt(p(1900, 1950), 1912).kind, "alive");
-  assert.match(statusAt(p(1900, 1950), 1912).label, /11–12/);
+  assert.equal(statusAt(p(1900, 1950), 1912).label, "Age 12");
+  assert.equal(statusAt(p(-5, 50), 7).label, "Age 12");
   assert.equal(statusAt(p(1900, 1950), 1900).kind, "possible");
   assert.equal(statusAt(p(1900, 1950), 1950).kind, "possible");
   assert.equal(statusAt(p(1900, 1950), 1899).kind, "unborn");
@@ -177,11 +178,11 @@ test("bounded broad and disputed birth dates distinguish life from age certainty
   const decade = p(1900, 1980);
   decade.birth[0].precision = 8;
   assert.equal(statusAt(decade, 1920).kind, "alive");
-  assert.match(statusAt(decade, 1920).label, /Alive.*10–20.*uncertain/);
+  assert.equal(statusAt(decade, 1920).label, "Alive · about 16");
   const disputed = p(1900, 1980);
   disputed.birth.push(d(1902));
   assert.equal(statusAt(disputed, 1920).kind, "alive");
-  assert.match(statusAt(disputed, 1920).label, /Alive.*17–20.*uncertain/);
+  assert.equal(statusAt(disputed, 1920).label, "Alive · about 19");
 });
 test("earliest and latest source qualifiers bound age without inventing precision", () => {
   const bounded = p(1900, 1980);
@@ -192,7 +193,7 @@ test("earliest and latest source qualifiers bound age without inventing precisio
   };
   assert.deepEqual(dateBounds(bounded.birth[0]), { min: 1898, max: 1903 });
   assert.equal(statusAt(bounded, 1920).kind, "alive");
-  assert.match(statusAt(bounded, 1920).label, /Alive.*17–22.*uncertain/);
+  assert.equal(statusAt(bounded, 1920).label, "Alive · about 20");
   assert.match(comparison(bounded, p(1910, 1950)), /^Definite overlap/);
 });
 test("one-sided bounds are open rather than fabricated opposite endpoints", () => {

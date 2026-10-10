@@ -269,13 +269,15 @@ export function statusAt(person: Person, year: number): LifeStatus {
   if (birth.max <= year && death.min >= year + 1) {
     if (!finite(birth))
       return { kind: "alive", label: "Alive · age uncertain" };
-    const ages = range(Math.max(0, year - birth.max), year - birth.min);
+    // The displayed age is the birthday reached in this year, not age on a day.
+    const birthYear = Math.floor((birth.min + birth.max - 1) / 2);
+    const age = Math.max(0, year - birthYear);
     return {
       kind: "alive",
       label:
         birth.max - birth.min > 1
-          ? `Alive · age ${ages} (uncertain)`
-          : `Age ${ages}`,
+          ? `Alive · about ${age}`
+          : `Age ${age}`,
     };
   }
   if (
