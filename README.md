@@ -30,7 +30,7 @@ npm run preview
 
 Publish the contents of `dist/` to any static host. No server functions, credentials, environment variables, or rewrite rules are required.
 
-GitHub Pages serves [Lifetimes](https://sheurich.github.io/who-was-alive/) from the root of the `gh-pages` branch in [sheurich/who-was-alive](https://github.com/sheurich/who-was-alive). The `main` branch holds the source. To publish an update, run the checks and build above, replace the contents of `gh-pages` with `dist/`, retain an empty `.nojekyll` file, and push a signed commit. GitHub Pages deploys the branch automatically.
+GitHub Pages serves [Lifetimes](https://sheurich.github.io/who-was-alive/) from the build of `main` in [sheurich/who-was-alive](https://github.com/sheurich/who-was-alive). Every push to `main` runs tests, validates the bundled data, builds the site, and deploys `dist/` through `.github/workflows/pages.yml`. A failed check prevents deployment. The workflow also supports manual runs from the repository's Actions tab. The old `gh-pages` branch is no longer a publishing source.
 
 The build uses Vite's relative base (`./`). Scripts, styles, data, and portraits work at both a domain root and a repository subpath such as `/lifetimes/`. Use the trailing slash for a hosted directory. Query strings preserve share state without requiring path rewrites.
 
