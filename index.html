@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#274bc0" />
+    <meta
+      name="description"
+      content="Explore years, discover people, and compare lifetimes across history."
+    />
+    <title>Lifetimes — A playground through history</title>
+    <script type="module" crossorigin src="./assets/index-ChXrP9cW.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-DAteSq4T.css">
+  </head>
+  <body>
+    <a class="skip" href="#explore">Skip to people</a>
+    <header class="masthead">
+      <a class="wordmark" href="./" aria-label="Lifetimes home"
+        ><span class="mark" aria-hidden="true">〰</span> Lifetimes</a
+      ><span class="tagline">A playground through history</span
+      ><button id="about-button" class="quiet" disabled>
+        About the collection
+      </button>
+    </header>
+    <main inert>
+      <section class="time-machine" aria-labelledby="year-heading">
+        <div class="year-intro">
+          <h1 id="year-heading">Who shared the world?</h1>
+          <p>Pick a year. Meet the people. Connect their lives.</p>
+        </div>
+        <div class="year-controls">
+          <button class="step" data-step="-10" aria-label="Go back 10 years">
+            −10</button
+          ><button class="step" data-step="-1" aria-label="Go back one year">
+            −1
+          </button>
+          <form id="year-form">
+            <label class="sr-only" for="year-input">Year</label
+            ><input
+              id="year-input"
+              inputmode="numeric"
+              type="text"
+              value="1850"
+              maxlength="8"
+              autocomplete="off"
+            /><label class="sr-only" for="era">Era</label
+            ><select id="era">
+              <option>CE</option>
+              <option>BCE</option>
+            </select>
+          </form>
+          <button class="step" data-step="1" aria-label="Go forward one year">
+            +1</button
+          ><button class="step" data-step="10" aria-label="Go forward 10 years">
+            +10
+          </button>
+        </div>
+        <p id="year-error" class="error" role="status"></p>
+        <div class="ruler">
+          <div id="ruler-ticks" aria-hidden="true"></div>
+          <label class="sr-only" for="year-slider">Explore year</label
+          ><input
+            type="range"
+            id="year-slider"
+            min="-3500"
+            max="2026"
+            value="1850"
+            step="1"
+          />
+        </div>
+        <div class="ruler-options">
+          <div class="zoom">
+            <label for="zoom">Time window</label
+            ><select id="zoom">
+              <option value="5526">All history</option>
+              <option value="1000">1,000 years</option>
+              <option value="100" selected>100 years</option>
+              <option value="20">20 years</option></select
+            ><button
+              id="recenter"
+              class="quiet"
+              title="Center the time window on the selected year"
+            >
+              Center
+            </button>
+          </div>
+          <button id="surprise" class="quiet">Take me somewhere</button>
+        </div>
+      </section>
+      <section class="comparison-panel" aria-labelledby="comparison-heading">
+        <div class="section-title">
+          <div>
+            <h2 id="comparison-heading">
+              Your shared timeline
+              <span id="pin-count" class="count">0 / 8</span>
+            </h2>
+            <p>Pin people to see how their lives connect.</p>
+          </div>
+          <div class="panel-actions">
+            <button id="share" class="outline">Copy link</button
+            ><button id="clear-pins" class="quiet">Clear</button>
+          </div>
+        </div>
+        <div id="timeline"></div>
+        <div id="comparisons"></div>
+        <p id="pin-notice" class="notice" role="status"></p>
+      </section>
+      <section id="explore" aria-labelledby="people-heading">
+        <div class="explore-heading">
+          <div>
+            <h2 id="people-heading">
+              People in <span id="current-year">1850 CE</span>
+            </h2>
+            <p id="result-count" aria-live="polite">Opening the collection…</p>
+          </div>
+          <div class="view-switch" role="group" aria-label="Collection view">
+            <button id="all-view" aria-pressed="true">Explore</button
+            ><button id="favorites-view" aria-pressed="false">
+              Favorites <span id="favorite-count">0</span>
+            </button>
+          </div>
+        </div>
+        <div class="search-row">
+          <label class="search-box" for="search"
+            ><span aria-hidden="true">⌕</span
+            ><input
+              id="search"
+              type="search"
+              placeholder="Find anyone, from any year…"
+              autocomplete="off" /></label
+          ><label class="possible-control"
+            ><input id="possible" type="checkbox" checked /> Include possible
+            matches</label
+          ><label class="sr-only" for="sort">Sort people</label
+          ><select id="sort">
+            <option value="birth">Age: oldest first</option>
+            <option value="featured">Portraits first</option>
+            <option value="name">Name A–Z</option>
+          </select>
+        </div>
+        <p id="search-note" class="search-note">
+          Age is the birthday reached that year. “About” marks an estimated age.
+        </p>
+        <div id="people-grid" class="people-grid"></div>
+        <button id="show-more" class="outline show-more" hidden>
+          Show more people
+        </button>
+      </section>
+    </main>
+    <footer>
+      <span>Lifetimes • Made for curiosity</span
+      ><span id="snapshot-info">A bundled, sourced collection</span
+      ><button id="footer-about" class="quiet" disabled>
+        Sources &amp; date notes
+      </button>
+    </footer>
+    <dialog id="details">
+      <button class="dialog-close" aria-label="Close details">×</button>
+      <div id="details-content"></div>
+    </dialog>
+    <dialog id="about">
+      <button class="dialog-close" aria-label="Close collection notes">
+        ×
+      </button>
+      <div id="about-content"></div>
+    </dialog>
+    <div id="toast" role="status" aria-live="polite"></div>
+  </body>
+</html>

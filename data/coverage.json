@@ -1,0 +1,6356 @@
+{
+  "eraBasis": "First concrete birth claim in each record; alternatives and uncertainty may span other eras.",
+  "unplaceableBirths": 0,
+  "outsideUiRange": [],
+  "people": 5255,
+  "portraits": 3309,
+  "cachedPortraits": 250,
+  "remotePortraits": 3059,
+  "portraitAcquisition": {
+    "at": "2026-10-10T12:32:15.125Z",
+    "people": 5255,
+    "retained": 250,
+    "candidates": 3127,
+    "added": 3059,
+    "noImage": 1878,
+    "skipped": 68,
+    "filesAttempted": 3135
+  },
+  "birthRange": [
+    -3199,
+    2000
+  ],
+  "birthBands": [
+    {
+      "label": "Before 1 CE",
+      "count": 232
+    },
+    {
+      "label": "1–499",
+      "count": 82
+    },
+    {
+      "label": "500–999",
+      "count": 116
+    },
+    {
+      "label": "1000–1499",
+      "count": 195
+    },
+    {
+      "label": "1500–1799",
+      "count": 692
+    },
+    {
+      "label": "1800–1899",
+      "count": 1791
+    },
+    {
+      "label": "1900 onward",
+      "count": 2147
+    }
+  ],
+  "multipleBirthClaims": 962,
+  "multipleDeathClaims": 811,
+  "approximate": 410,
+  "withoutBirthReferences": 337,
+  "withoutDeathReferences": 394,
+  "unresolvedDateClaims": 29,
+  "missingDeath": 9,
+  "missingDescription": 41,
+  "missingCitizenship": 315,
+  "genders": [
+    [
+      "male",
+      4760
+    ],
+    [
+      "female",
+      480
+    ],
+    [
+      "unspecified",
+      12
+    ],
+    [
+      "genderfluid",
+      1
+    ],
+    [
+      "non-binary, genderqueer, female",
+      1
+    ],
+    [
+      "female, male",
+      1
+    ]
+  ],
+  "citizenships": [
+    [
+      "United States",
+      700
+    ],
+    [
+      "Sweden",
+      466
+    ],
+    [
+      "France",
+      455
+    ],
+    [
+      "United Kingdom of Great Britain and Ireland",
+      315
+    ],
+    [
+      "United Kingdom",
+      268
+    ],
+    [
+      "Germany",
+      213
+    ],
+    [
+      "Russian Empire",
+      187
+    ],
+    [
+      "India",
+      121
+    ],
+    [
+      "People's Republic of China",
+      120
+    ],
+    [
+      "Japan",
+      119
+    ],
+    [
+      "Kingdom of Prussia",
+      107
+    ],
+    [
+      "Egypt",
+      102
+    ],
+    [
+      "South Africa",
+      101
+    ],
+    [
+      "Brazil",
+      100
+    ],
+    [
+      "Mexico",
+      100
+    ],
+    [
+      "Nigeria",
+      100
+    ],
+    [
+      "Iran",
+      99
+    ],
+    [
+      "Dutch Republic",
+      96
+    ],
+    [
+      "Spain",
+      95
+    ],
+    [
+      "Kingdom of the Netherlands",
+      87
+    ],
+    [
+      "British Raj",
+      85
+    ],
+    [
+      "Soviet Union",
+      82
+    ],
+    [
+      "Dominion of India",
+      79
+    ],
+    [
+      "Ancient Rome",
+      77
+    ],
+    [
+      "Kingdom of Italy",
+      71
+    ],
+    [
+      "Kingdom of Great Britain",
+      65
+    ],
+    [
+      "Switzerland",
+      62
+    ],
+    [
+      "Italy",
+      62
+    ],
+    [
+      "Empire of Japan",
+      55
+    ],
+    [
+      "Poland",
+      54
+    ],
+    [
+      "Tang dynasty",
+      52
+    ],
+    [
+      "Austrian Empire",
+      50
+    ],
+    [
+      "Belgium",
+      50
+    ],
+    [
+      "Austria",
+      48
+    ],
+    [
+      "German Reich",
+      47
+    ],
+    [
+      "Kingdom of Denmark",
+      44
+    ],
+    [
+      "Czechoslovakia",
+      42
+    ],
+    [
+      "Ancient Egypt",
+      40
+    ],
+    [
+      "Canada",
+      39
+    ],
+    [
+      "Australia",
+      39
+    ],
+    [
+      "Republic of China",
+      37
+    ],
+    [
+      "Kingdom of France",
+      35
+    ],
+    [
+      "Austria–Hungary",
+      34
+    ],
+    [
+      "Ottoman Empire",
+      34
+    ],
+    [
+      "Classical Athens",
+      32
+    ],
+    [
+      "German Empire",
+      31
+    ],
+    [
+      "Cisleithania",
+      30
+    ],
+    [
+      "Holy Roman Empire",
+      29
+    ],
+    [
+      "Habsburg Netherlands",
+      29
+    ],
+    [
+      "Weimar Republic",
+      27
+    ],
+    [
+      "Qing dynasty",
+      26
+    ],
+    [
+      "Republic of Venice",
+      24
+    ],
+    [
+      "Norway",
+      23
+    ],
+    [
+      "Ireland",
+      22
+    ],
+    [
+      "Kingdom of Bavaria",
+      19
+    ],
+    [
+      "Kingdom of Egypt",
+      19
+    ],
+    [
+      "Kingdom of Saxony",
+      18
+    ],
+    [
+      "Argentina",
+      18
+    ],
+    [
+      "Russia",
+      18
+    ],
+    [
+      "Kingdom of England",
+      17
+    ],
+    [
+      "Hungary",
+      17
+    ],
+    [
+      "Republic of Egypt",
+      17
+    ],
+    [
+      "United Arab Republic",
+      17
+    ],
+    [
+      "Finland",
+      15
+    ],
+    [
+      "Nazi Germany",
+      15
+    ],
+    [
+      "Pahlavi Iran",
+      15
+    ],
+    [
+      "Israel",
+      14
+    ],
+    [
+      "Russian Socialist Federative Soviet Republic",
+      13
+    ],
+    [
+      "Czech Republic",
+      13
+    ],
+    [
+      "Republic of Florence",
+      12
+    ],
+    [
+      "New Zealand",
+      12
+    ],
+    [
+      "Kingdom of Württemberg",
+      10
+    ],
+    [
+      "Second Polish Republic",
+      10
+    ],
+    [
+      "Abbasid Caliphate",
+      10
+    ],
+    [
+      "Papal States",
+      10
+    ],
+    [
+      "Spanish Netherlands",
+      9
+    ],
+    [
+      "Kingdom of Hanover",
+      9
+    ],
+    [
+      "Russian Soviet Federative Socialist Republic",
+      9
+    ],
+    [
+      "New Spain",
+      9
+    ],
+    [
+      "Estonia",
+      9
+    ],
+    [
+      "Irish Free State",
+      9
+    ],
+    [
+      "statelessness",
+      8
+    ],
+    [
+      "Kingdom of Bohemia",
+      8
+    ],
+    [
+      "Kingdom of Portugal",
+      8
+    ],
+    [
+      "Greece",
+      8
+    ],
+    [
+      "Southern Netherlands",
+      8
+    ],
+    [
+      "Electorate of Saxony",
+      7
+    ],
+    [
+      "Ming dynasty",
+      7
+    ],
+    [
+      "Habsburg monarchy",
+      7
+    ],
+    [
+      "Sultanate of Egypt",
+      7
+    ],
+    [
+      "Portugal",
+      6
+    ],
+    [
+      "Republic of Geneva",
+      6
+    ],
+    [
+      "Grand Duchy of Baden",
+      6
+    ],
+    [
+      "Armenia",
+      6
+    ],
+    [
+      "Hamburg",
+      6
+    ],
+    [
+      "Polish–Lithuanian Commonwealth",
+      6
+    ],
+    [
+      "Pahlavi dynasty",
+      6
+    ],
+    [
+      "Cuba",
+      5
+    ],
+    [
+      "Song dynasty",
+      5
+    ],
+    [
+      "Vatican City",
+      5
+    ],
+    [
+      "East Germany",
+      5
+    ],
+    [
+      "Crown of Castile",
+      5
+    ],
+    [
+      "Grand Duchy of Finland",
+      5
+    ],
+    [
+      "Grand Duchy of Tuscany",
+      5
+    ],
+    [
+      "Russian Republic",
+      5
+    ],
+    [
+      "British Hong Kong",
+      5
+    ],
+    [
+      "Chile",
+      4
+    ],
+    [
+      "Northern Song dynasty",
+      4
+    ],
+    [
+      "German Confederation",
+      4
+    ],
+    [
+      "Turkey",
+      4
+    ],
+    [
+      "Lebanon",
+      4
+    ],
+    [
+      "Union of South Africa",
+      4
+    ],
+    [
+      "Umayyad Caliphate",
+      4
+    ],
+    [
+      "Taiwan",
+      4
+    ],
+    [
+      "Wales",
+      4
+    ],
+    [
+      "Old Kingdom of Egypt",
+      4
+    ],
+    [
+      "Archduchy of Austria",
+      3
+    ],
+    [
+      "Grand Duchy of Hesse",
+      3
+    ],
+    [
+      "Dutch East Indies",
+      3
+    ],
+    [
+      "Kingdom of Sardinia",
+      3
+    ],
+    [
+      "Colombia",
+      3
+    ],
+    [
+      "Kingdom of Spain",
+      3
+    ],
+    [
+      "Venezuela",
+      3
+    ],
+    [
+      "Free City of Frankfurt",
+      3
+    ],
+    [
+      "Ecuador",
+      3
+    ],
+    [
+      "Duchy of Holstein",
+      3
+    ],
+    [
+      "Congress Poland",
+      3
+    ],
+    [
+      "Republic of Genoa",
+      3
+    ],
+    [
+      "Sui dynasty",
+      3
+    ],
+    [
+      "Macedonia",
+      3
+    ],
+    [
+      "South Korea",
+      3
+    ],
+    [
+      "Luxembourg",
+      3
+    ],
+    [
+      "Franciaf",
+      3
+    ],
+    [
+      "Uruguay",
+      3
+    ],
+    [
+      "Ptolemaic Kingdom",
+      3
+    ],
+    [
+      "England",
+      3
+    ],
+    [
+      "Iraq",
+      3
+    ],
+    [
+      "Bolivia",
+      3
+    ],
+    [
+      "Kingdom of Poland",
+      3
+    ],
+    [
+      "Bulgaria",
+      3
+    ],
+    [
+      "Romania",
+      3
+    ],
+    [
+      "Byzantine Empire",
+      3
+    ],
+    [
+      "Duchy of Saxe-Weimar-Eisenach",
+      2
+    ],
+    [
+      "Grand Duchy of Mecklenburg-Schwerin",
+      2
+    ],
+    [
+      "Duchy of Lorraine",
+      2
+    ],
+    [
+      "Duchy of Württemberg",
+      2
+    ],
+    [
+      "Latvia",
+      2
+    ],
+    [
+      "Southern Song dynasty",
+      2
+    ],
+    [
+      "Duchy of Saxe-Coburg and Gotha",
+      2
+    ],
+    [
+      "Seljuk Empire",
+      2
+    ],
+    [
+      "Yuan dynasty",
+      2
+    ],
+    [
+      "Kingdom of Naples",
+      2
+    ],
+    [
+      "Northern Low Countries",
+      2
+    ],
+    [
+      "Duchy of Brabant",
+      2
+    ],
+    [
+      "Crown of Aragon",
+      2
+    ],
+    [
+      "West Germany",
+      2
+    ],
+    [
+      "Slovakia",
+      2
+    ],
+    [
+      "Royal Prussia",
+      2
+    ],
+    [
+      "British Empire",
+      2
+    ],
+    [
+      "Kingdom of Lombardy–Venetia",
+      2
+    ],
+    [
+      "Burgundian Netherlands",
+      2
+    ],
+    [
+      "Mandatory Palestine",
+      2
+    ],
+    [
+      "Peru",
+      2
+    ],
+    [
+      "Ukrainian Soviet Socialist Republic",
+      2
+    ],
+    [
+      "Colony of New Zealand",
+      2
+    ],
+    [
+      "Kingdom of Ireland",
+      2
+    ],
+    [
+      "Scotland",
+      2
+    ],
+    [
+      "Kingdom of Navarre",
+      2
+    ],
+    [
+      "Yang Wu",
+      2
+    ],
+    [
+      "Serbia",
+      2
+    ],
+    [
+      "Kingdom of Wessex",
+      2
+    ],
+    [
+      "Mytilene",
+      2
+    ],
+    [
+      "Southern Tang",
+      2
+    ],
+    [
+      "Kingdom of Kush",
+      2
+    ],
+    [
+      "Rhodes",
+      2
+    ],
+    [
+      "Delian League",
+      2
+    ],
+    [
+      "Seleucid Empire",
+      2
+    ],
+    [
+      "Kingdom of Northumbria",
+      2
+    ],
+    [
+      "Carolingian Empire",
+      2
+    ],
+    [
+      "Kingdom of Jerusalem",
+      2
+    ],
+    [
+      "Colonial Nigeria",
+      2
+    ],
+    [
+      "Khedivate of Egypt",
+      2
+    ],
+    [
+      "Syria",
+      2
+    ],
+    [
+      "Qajar Iran",
+      2
+    ],
+    [
+      "Prince-Archbishopric of Salzburg",
+      1
+    ],
+    [
+      "Electorate of Cologne",
+      1
+    ],
+    [
+      "Duchy of Saxe-Eisenach",
+      1
+    ],
+    [
+      "Jamaica",
+      1
+    ],
+    [
+      "Brandenburg-Prussia",
+      1
+    ],
+    [
+      "Duchy of Bavaria",
+      1
+    ],
+    [
+      "Saudi Arabia",
+      1
+    ],
+    [
+      "Samos",
+      1
+    ],
+    [
+      "Sultanate of Zanzibar",
+      1
+    ],
+    [
+      "Herodian Kingdom of Judea",
+      1
+    ],
+    [
+      "Electoral Palatinate",
+      1
+    ],
+    [
+      "Duchy of Brunswick",
+      1
+    ],
+    [
+      "Judaea",
+      1
+    ],
+    [
+      "Indonesia",
+      1
+    ],
+    [
+      "Duchy of Saxe-Weimar",
+      1
+    ],
+    [
+      "Paraguay",
+      1
+    ],
+    [
+      "State of Greater Lebanon",
+      1
+    ],
+    [
+      "Lebanese Republic under French mandate",
+      1
+    ],
+    [
+      "Almohad Caliphate",
+      1
+    ],
+    [
+      "Duchy of Saxe-Meiningen",
+      1
+    ],
+    [
+      "Iceland",
+      1
+    ],
+    [
+      "Azerbaijan",
+      1
+    ],
+    [
+      "Duchy of Berg",
+      1
+    ],
+    [
+      "Seventeen Provinces",
+      1
+    ],
+    [
+      "Duchy of Parma and Piacenza",
+      1
+    ],
+    [
+      "Duchy of Schleswig",
+      1
+    ],
+    [
+      "Jin dynasty",
+      1
+    ],
+    [
+      "French constitutional monarchy",
+      1
+    ],
+    [
+      "Taiwan under Qing dynasty rule",
+      1
+    ],
+    [
+      "Taiwan under Japanese rule",
+      1
+    ],
+    [
+      "Joseon",
+      1
+    ],
+    [
+      "Dominican Republic",
+      1
+    ],
+    [
+      "Landgraviate of Hesse-Kassel",
+      1
+    ],
+    [
+      "Prince-Bishopric of Trent",
+      1
+    ],
+    [
+      "Belarusian People's Republic",
+      1
+    ],
+    [
+      "Byelorussian Soviet Socialist Republic",
+      1
+    ],
+    [
+      "Principality of Reuss-Gera",
+      1
+    ],
+    [
+      "Duchy of Warsaw",
+      1
+    ],
+    [
+      "Thailand",
+      1
+    ],
+    [
+      "Mali",
+      1
+    ],
+    [
+      "Duchy of Anhalt",
+      1
+    ],
+    [
+      "Costa Rica",
+      1
+    ],
+    [
+      "Kingdom of Leon",
+      1
+    ],
+    [
+      "Principality of Catalonia",
+      1
+    ],
+    [
+      "Swedish Pomerania",
+      1
+    ],
+    [
+      "Kingdom of Hungary",
+      1
+    ],
+    [
+      "Mauritius",
+      1
+    ],
+    [
+      "Republic of Mainz",
+      1
+    ],
+    [
+      "Lithuania",
+      1
+    ],
+    [
+      "Electorate of Hesse",
+      1
+    ],
+    [
+      "Taifa of Seville",
+      1
+    ],
+    [
+      "Duchy of Milan",
+      1
+    ],
+    [
+      "Yemeni Zaidi State",
+      1
+    ],
+    [
+      "Three Leagues",
+      1
+    ],
+    [
+      "First Republic of Armenia",
+      1
+    ],
+    [
+      "Kingdom of Majorca",
+      1
+    ],
+    [
+      "Grand Duchy of Oldenburg",
+      1
+    ],
+    [
+      "Duchy of Bohemia",
+      1
+    ],
+    [
+      "Ionian League",
+      1
+    ],
+    [
+      "Wuyue",
+      1
+    ],
+    [
+      "Duchy of Saxe-Altenburg",
+      1
+    ],
+    [
+      "Former Shu",
+      1
+    ],
+    [
+      "Emirate of Granada",
+      1
+    ],
+    [
+      "County of Flanders",
+      1
+    ],
+    [
+      "Riograndense Republic",
+      1
+    ],
+    [
+      "Signoria di Correggio",
+      1
+    ],
+    [
+      "Austrian Netherlands",
+      1
+    ],
+    [
+      "Oman",
+      1
+    ],
+    [
+      "al-Andalus",
+      1
+    ],
+    [
+      "Irish Republic",
+      1
+    ],
+    [
+      "Swedish Empire",
+      1
+    ],
+    [
+      "Duchy of Florence",
+      1
+    ],
+    [
+      "Pakistan",
+      1
+    ],
+    [
+      "Rashidun Caliphate",
+      1
+    ],
+    [
+      "Ukrainian People's Republic",
+      1
+    ],
+    [
+      "French mandate of Lebanon",
+      1
+    ],
+    [
+      "British America",
+      1
+    ],
+    [
+      "Free Imperial City of Nuremberg",
+      1
+    ],
+    [
+      "Netherlands",
+      1
+    ],
+    [
+      "Ukraine",
+      1
+    ],
+    [
+      "Georgia",
+      1
+    ],
+    [
+      "Tsardom of Russia",
+      1
+    ],
+    [
+      "Chinese Soviet Republic",
+      1
+    ],
+    [
+      "Later Tang",
+      1
+    ],
+    [
+      "Southern Rhodesia",
+      1
+    ],
+    [
+      "Zimbabwe",
+      1
+    ],
+    [
+      "Kingdom of Greece",
+      1
+    ],
+    [
+      "Gran Colombia",
+      1
+    ],
+    [
+      "Bohemia",
+      1
+    ],
+    [
+      "Yugoslavia",
+      1
+    ],
+    [
+      "Confederation of the Rhine",
+      1
+    ],
+    [
+      "Bremen",
+      1
+    ],
+    [
+      "Lu",
+      1
+    ],
+    [
+      "Old Swiss Confederacy",
+      1
+    ],
+    [
+      "Northern Zhou",
+      1
+    ],
+    [
+      "Italian Social Republic",
+      1
+    ],
+    [
+      "Kingdom of Dumnonia",
+      1
+    ],
+    [
+      "Principality of Wallachia",
+      1
+    ],
+    [
+      "United Principalities of Moldavia and Wallachia",
+      1
+    ],
+    [
+      "Kingdom of Romania",
+      1
+    ],
+    [
+      "Cyprus",
+      1
+    ],
+    [
+      "Duchy of Urbino",
+      1
+    ],
+    [
+      "Duchy of Burgundy",
+      1
+    ],
+    [
+      "Cyme",
+      1
+    ],
+    [
+      "Zhou dynasty",
+      1
+    ],
+    [
+      "Achaean League",
+      1
+    ],
+    [
+      "Lagash",
+      1
+    ],
+    [
+      "Gandhara",
+      1
+    ],
+    [
+      "Sudan",
+      1
+    ],
+    [
+      "Iulis",
+      1
+    ],
+    [
+      "Syracuse",
+      1
+    ],
+    [
+      "Pauravas",
+      1
+    ],
+    [
+      "Megalopolis",
+      1
+    ],
+    [
+      "Messenia",
+      1
+    ],
+    [
+      "Hasmonean dynasty",
+      1
+    ],
+    [
+      "Tanagra",
+      1
+    ],
+    [
+      "Miletus",
+      1
+    ],
+    [
+      "Kingdom of Pontus",
+      1
+    ],
+    [
+      "Kingdom of Israel",
+      1
+    ],
+    [
+      "China",
+      1
+    ],
+    [
+      "Twenty-fifth Dynasty of Egypt",
+      1
+    ],
+    [
+      "Sicyon",
+      1
+    ],
+    [
+      "Jingnan",
+      1
+    ],
+    [
+      "Achaemenid Empire",
+      1
+    ],
+    [
+      "Thebes",
+      1
+    ],
+    [
+      "Qi",
+      1
+    ],
+    [
+      "Ancient Corinth",
+      1
+    ],
+    [
+      "Epirus",
+      1
+    ],
+    [
+      "Kingdom of Armenia",
+      1
+    ],
+    [
+      "First Bulgarian Empire",
+      1
+    ],
+    [
+      "Ohrid",
+      1
+    ],
+    [
+      "Grand Duchy of Lithuania",
+      1
+    ],
+    [
+      "Grand Principality of Moscow",
+      1
+    ],
+    [
+      "Moravian Serbia",
+      1
+    ],
+    [
+      "Kingdom of Serbia",
+      1
+    ],
+    [
+      "Serbian Empire",
+      1
+    ],
+    [
+      "Crown of the Kingdom of Poland",
+      1
+    ],
+    [
+      "Serbian Despotate",
+      1
+    ],
+    [
+      "Kingdom of Castile",
+      1
+    ],
+    [
+      "Kingdom of Scotland",
+      1
+    ],
+    [
+      "Hen Ogledd",
+      1
+    ],
+    [
+      "Principality of Orange",
+      1
+    ],
+    [
+      "Kingdom of Essex",
+      1
+    ],
+    [
+      "Kingdom of Galicia",
+      1
+    ],
+    [
+      "East Francia",
+      1
+    ],
+    [
+      "Albania",
+      1
+    ],
+    [
+      "Tokugawa shogunate",
+      1
+    ],
+    [
+      "Federation of Nigeria",
+      1
+    ],
+    [
+      "French protectorate of Tunisia",
+      1
+    ],
+    [
+      "Tunisia",
+      1
+    ],
+    [
+      "Qatar",
+      1
+    ],
+    [
+      "Spanish Empire",
+      1
+    ],
+    [
+      "Second Spanish Republic",
+      1
+    ],
+    [
+      "Colonial Brazil",
+      1
+    ],
+    [
+      "Cape Colony",
+      1
+    ],
+    [
+      "Guinea",
+      1
+    ],
+    [
+      "Algeria",
+      1
+    ],
+    [
+      "Zambia",
+      1
+    ]
+  ],
+  "occupations": [
+    [
+      "botanist",
+      1044
+    ],
+    [
+      "writer",
+      937
+    ],
+    [
+      "painter",
+      830
+    ],
+    [
+      "politician",
+      828
+    ],
+    [
+      "botanical collector",
+      720
+    ],
+    [
+      "university teacher",
+      708
+    ],
+    [
+      "scientific collector",
+      610
+    ],
+    [
+      "poet",
+      542
+    ],
+    [
+      "actor",
+      369
+    ],
+    [
+      "draftsperson",
+      353
+    ],
+    [
+      "physician",
+      296
+    ],
+    [
+      "entomologist",
+      268
+    ],
+    [
+      "zoologist",
+      263
+    ],
+    [
+      "screenwriter",
+      258
+    ],
+    [
+      "composer",
+      248
+    ],
+    [
+      "printmaker",
+      243
+    ],
+    [
+      "film actor",
+      232
+    ],
+    [
+      "film director",
+      226
+    ],
+    [
+      "artist",
+      216
+    ],
+    [
+      "historian",
+      214
+    ],
+    [
+      "philosopher",
+      204
+    ],
+    [
+      "visual artist",
+      202
+    ],
+    [
+      "graphic artist",
+      196
+    ],
+    [
+      "illustrator",
+      196
+    ],
+    [
+      "naturalist",
+      188
+    ],
+    [
+      "translator",
+      179
+    ],
+    [
+      "mycologist",
+      179
+    ],
+    [
+      "journalist",
+      171
+    ],
+    [
+      "film producer",
+      167
+    ],
+    [
+      "explorer",
+      162
+    ],
+    [
+      "biologist",
+      160
+    ],
+    [
+      "sculptor",
+      157
+    ],
+    [
+      "playwright",
+      156
+    ],
+    [
+      "novelist",
+      147
+    ],
+    [
+      "teacher",
+      145
+    ],
+    [
+      "researcher",
+      143
+    ],
+    [
+      "physicist",
+      132
+    ],
+    [
+      "singer",
+      127
+    ],
+    [
+      "photographer",
+      126
+    ],
+    [
+      "musician",
+      125
+    ],
+    [
+      "director",
+      117
+    ],
+    [
+      "lithographer",
+      113
+    ],
+    [
+      "television actor",
+      113
+    ],
+    [
+      "architectural drafter",
+      108
+    ],
+    [
+      "etcher",
+      103
+    ],
+    [
+      "pteridologist",
+      100
+    ],
+    [
+      "chemist",
+      98
+    ],
+    [
+      "military personnel",
+      91
+    ],
+    [
+      "ornithologist",
+      89
+    ],
+    [
+      "curator",
+      89
+    ],
+    [
+      "designer",
+      86
+    ],
+    [
+      "literary critic",
+      86
+    ],
+    [
+      "lepidopterist",
+      84
+    ],
+    [
+      "stage actor",
+      82
+    ],
+    [
+      "librettist",
+      79
+    ],
+    [
+      "art collector",
+      78
+    ],
+    [
+      "Catholic priest",
+      77
+    ],
+    [
+      "theologian",
+      76
+    ],
+    [
+      "astronomer",
+      75
+    ],
+    [
+      "mathematician",
+      72
+    ],
+    [
+      "architect",
+      69
+    ],
+    [
+      "opinion journalist",
+      69
+    ],
+    [
+      "archaeologist",
+      69
+    ],
+    [
+      "essayist",
+      68
+    ],
+    [
+      "author",
+      68
+    ],
+    [
+      "diplomat",
+      66
+    ],
+    [
+      "autobiographer",
+      66
+    ],
+    [
+      "watercolorist",
+      65
+    ],
+    [
+      "engraver",
+      64
+    ],
+    [
+      "jurist",
+      63
+    ],
+    [
+      "conductor",
+      63
+    ],
+    [
+      "professor",
+      62
+    ],
+    [
+      "pianist",
+      62
+    ],
+    [
+      "linguist",
+      60
+    ],
+    [
+      "prose writer",
+      59
+    ],
+    [
+      "songwriter",
+      58
+    ],
+    [
+      "librarian",
+      57
+    ],
+    [
+      "pedagogue",
+      56
+    ],
+    [
+      "lawyer",
+      56
+    ],
+    [
+      "military officer",
+      54
+    ],
+    [
+      "ichthyologist",
+      54
+    ],
+    [
+      "scientist",
+      53
+    ],
+    [
+      "art historian",
+      53
+    ],
+    [
+      "children's writer",
+      51
+    ],
+    [
+      "malacologist",
+      49
+    ],
+    [
+      "short story writer",
+      47
+    ],
+    [
+      "geologist",
+      46
+    ],
+    [
+      "monarch",
+      46
+    ],
+    [
+      "bryologist",
+      46
+    ],
+    [
+      "editor",
+      45
+    ],
+    [
+      "statesperson",
+      44
+    ],
+    [
+      "anthropologist",
+      44
+    ],
+    [
+      "zoological collector",
+      44
+    ],
+    [
+      "engineer",
+      43
+    ],
+    [
+      "Catholic bishop",
+      43
+    ],
+    [
+      "pharmacist",
+      42
+    ],
+    [
+      "film score composer",
+      42
+    ],
+    [
+      "lyricist",
+      41
+    ],
+    [
+      "scientific illustrator",
+      41
+    ],
+    [
+      "recording artist",
+      41
+    ],
+    [
+      "classical philologist",
+      40
+    ],
+    [
+      "biographer",
+      39
+    ],
+    [
+      "musicologist",
+      38
+    ],
+    [
+      "copper engraver",
+      38
+    ],
+    [
+      "philologist",
+      38
+    ],
+    [
+      "publisher",
+      38
+    ],
+    [
+      "geographer",
+      37
+    ],
+    [
+      "science fiction writer",
+      36
+    ],
+    [
+      "paleontologist",
+      36
+    ],
+    [
+      "inventor",
+      35
+    ],
+    [
+      "herpetologist",
+      35
+    ],
+    [
+      "businessperson",
+      34
+    ],
+    [
+      "calligrapher",
+      34
+    ],
+    [
+      "editing staff",
+      34
+    ],
+    [
+      "biochemist",
+      34
+    ],
+    [
+      "economist",
+      33
+    ],
+    [
+      "exlibrist",
+      33
+    ],
+    [
+      "aristocrat",
+      33
+    ],
+    [
+      "film screenwriter",
+      32
+    ],
+    [
+      "lichenologist",
+      32
+    ],
+    [
+      "record producer",
+      31
+    ],
+    [
+      "producer",
+      31
+    ],
+    [
+      "scenographer",
+      29
+    ],
+    [
+      "voice actor",
+      29
+    ],
+    [
+      "non-fiction writer",
+      29
+    ],
+    [
+      "surgeon",
+      29
+    ],
+    [
+      "secondary school teacher",
+      28
+    ],
+    [
+      "muralist",
+      27
+    ],
+    [
+      "taxonomist",
+      27
+    ],
+    [
+      "singer-songwriter",
+      27
+    ],
+    [
+      "traveler",
+      27
+    ],
+    [
+      "historian of classical antiquity",
+      27
+    ],
+    [
+      "ceramicist",
+      26
+    ],
+    [
+      "diarist",
+      26
+    ],
+    [
+      "literary scholar",
+      26
+    ],
+    [
+      "film editor",
+      26
+    ],
+    [
+      "comedian",
+      25
+    ],
+    [
+      "pastellist",
+      25
+    ],
+    [
+      "psychologist",
+      25
+    ],
+    [
+      "arachnologist",
+      25
+    ],
+    [
+      "bandleader",
+      25
+    ],
+    [
+      "caricaturist",
+      24
+    ],
+    [
+      "jazz musician",
+      24
+    ],
+    [
+      "geneticist",
+      24
+    ],
+    [
+      "botanical illustrator",
+      23
+    ],
+    [
+      "revolutionary",
+      23
+    ],
+    [
+      "music educator",
+      23
+    ],
+    [
+      "guitarist",
+      23
+    ],
+    [
+      "art critic",
+      23
+    ],
+    [
+      "cinematographer",
+      23
+    ],
+    [
+      "carcinologist",
+      23
+    ],
+    [
+      "Q97940862",
+      23
+    ],
+    [
+      "ruler",
+      22
+    ],
+    [
+      "physiologist",
+      21
+    ],
+    [
+      "television producer",
+      21
+    ],
+    [
+      "civil servant",
+      21
+    ],
+    [
+      "landscape painter",
+      21
+    ],
+    [
+      "missionary",
+      21
+    ],
+    [
+      "soldier",
+      21
+    ],
+    [
+      "comics artist",
+      21
+    ],
+    [
+      "academic",
+      21
+    ],
+    [
+      "printer",
+      21
+    ],
+    [
+      "dramaturge",
+      20
+    ],
+    [
+      "bishop",
+      20
+    ],
+    [
+      "cartographer",
+      20
+    ],
+    [
+      "farmer",
+      20
+    ],
+    [
+      "collagist",
+      19
+    ],
+    [
+      "theatre designer",
+      19
+    ],
+    [
+      "organist",
+      19
+    ],
+    [
+      "military leader",
+      19
+    ],
+    [
+      "art theorist",
+      19
+    ],
+    [
+      "epidemiologist",
+      19
+    ],
+    [
+      "Attic vase-painter",
+      19
+    ],
+    [
+      "anatomist",
+      18
+    ],
+    [
+      "cleric",
+      18
+    ],
+    [
+      "collector",
+      18
+    ],
+    [
+      "neurologist",
+      18
+    ],
+    [
+      "literary historian",
+      18
+    ],
+    [
+      "critic",
+      18
+    ],
+    [
+      "animator",
+      18
+    ],
+    [
+      "judge",
+      18
+    ],
+    [
+      "music theorist",
+      17
+    ],
+    [
+      "mineralogist",
+      17
+    ],
+    [
+      "preacher",
+      17
+    ],
+    [
+      "monk",
+      17
+    ],
+    [
+      "xylographer",
+      17
+    ],
+    [
+      "music arranger",
+      17
+    ],
+    [
+      "microbiologist",
+      17
+    ],
+    [
+      "music critic",
+      16
+    ],
+    [
+      "psychiatrist",
+      16
+    ],
+    [
+      "scholar",
+      16
+    ],
+    [
+      "ethnologist",
+      16
+    ],
+    [
+      "gardener",
+      16
+    ],
+    [
+      "pharmacologist",
+      16
+    ],
+    [
+      "horticulturist",
+      16
+    ],
+    [
+      "neuroscientist",
+      16
+    ],
+    [
+      "sovereign",
+      16
+    ],
+    [
+      "molecular biologist",
+      16
+    ],
+    [
+      "immunologist",
+      16
+    ],
+    [
+      "minister",
+      15
+    ],
+    [
+      "violinist",
+      15
+    ],
+    [
+      "theatre director",
+      15
+    ],
+    [
+      "entrepreneur",
+      15
+    ],
+    [
+      "philanthropist",
+      15
+    ],
+    [
+      "Islamic jurist",
+      15
+    ],
+    [
+      "cartoonist",
+      15
+    ],
+    [
+      "miniature painter",
+      15
+    ],
+    [
+      "travel writer",
+      14
+    ],
+    [
+      "jewelry designer",
+      14
+    ],
+    [
+      "sociologist",
+      14
+    ],
+    [
+      "astrologer",
+      14
+    ],
+    [
+      "graphic designer",
+      14
+    ],
+    [
+      "ecologist",
+      14
+    ],
+    [
+      "classical scholar",
+      14
+    ],
+    [
+      "red-figure vase painter",
+      14
+    ],
+    [
+      "art dealer",
+      13
+    ],
+    [
+      "theatre critic",
+      13
+    ],
+    [
+      "wood engraver",
+      13
+    ],
+    [
+      "manufacturer",
+      13
+    ],
+    [
+      "agrostologist",
+      13
+    ],
+    [
+      "priest",
+      13
+    ],
+    [
+      "poet lawyer",
+      13
+    ],
+    [
+      "Latin Catholic priest",
+      13
+    ],
+    [
+      "archbishop",
+      13
+    ],
+    [
+      "filmmaker",
+      13
+    ],
+    [
+      "dancer",
+      13
+    ],
+    [
+      "portraitist",
+      13
+    ],
+    [
+      "virologist",
+      13
+    ],
+    [
+      "astrophysicist",
+      12
+    ],
+    [
+      "illuminator",
+      12
+    ],
+    [
+      "presbyter",
+      12
+    ],
+    [
+      "merchant",
+      12
+    ],
+    [
+      "Catholic theologian",
+      12
+    ],
+    [
+      "oncologist",
+      12
+    ],
+    [
+      "hematologist",
+      12
+    ],
+    [
+      "fresco painter",
+      12
+    ],
+    [
+      "chronicler",
+      12
+    ],
+    [
+      "polymath",
+      11
+    ],
+    [
+      "member of parliament",
+      11
+    ],
+    [
+      "association football player",
+      11
+    ],
+    [
+      "ombudsman",
+      11
+    ],
+    [
+      "activist",
+      11
+    ],
+    [
+      "endocrinologist",
+      11
+    ],
+    [
+      "internist",
+      11
+    ],
+    [
+      "orientalist",
+      11
+    ],
+    [
+      "medical researcher",
+      11
+    ],
+    [
+      "pediatrician",
+      11
+    ],
+    [
+      "science writer",
+      10
+    ],
+    [
+      "choreographer",
+      10
+    ],
+    [
+      "costume designer",
+      10
+    ],
+    [
+      "epigrammatist",
+      10
+    ],
+    [
+      "coleopterist",
+      10
+    ],
+    [
+      "mystic",
+      10
+    ],
+    [
+      "agronomist",
+      10
+    ],
+    [
+      "television presenter",
+      10
+    ],
+    [
+      "journal editor",
+      10
+    ],
+    [
+      "executive producer",
+      10
+    ],
+    [
+      "ukiyo-e artist",
+      10
+    ],
+    [
+      "music director",
+      10
+    ],
+    [
+      "bookseller",
+      10
+    ],
+    [
+      "official",
+      10
+    ],
+    [
+      "theoretical physicist",
+      9
+    ],
+    [
+      "barrister",
+      9
+    ],
+    [
+      "political activist",
+      9
+    ],
+    [
+      "archivist",
+      9
+    ],
+    [
+      "civil engineer",
+      9
+    ],
+    [
+      "orchidologist",
+      9
+    ],
+    [
+      "classical archaeologist",
+      9
+    ],
+    [
+      "mythographer",
+      9
+    ],
+    [
+      "parson",
+      9
+    ],
+    [
+      "public figure",
+      9
+    ],
+    [
+      "patron of the arts",
+      9
+    ],
+    [
+      "comics writer",
+      9
+    ],
+    [
+      "ulema",
+      9
+    ],
+    [
+      "biophysicist",
+      9
+    ],
+    [
+      "cardiologist",
+      9
+    ],
+    [
+      "pacifist",
+      8
+    ],
+    [
+      "memoirist",
+      8
+    ],
+    [
+      "computer scientist",
+      8
+    ],
+    [
+      "statistician",
+      8
+    ],
+    [
+      "carpets designer",
+      8
+    ],
+    [
+      "environmentalist",
+      8
+    ],
+    [
+      "theatre manager",
+      8
+    ],
+    [
+      "human rights defender",
+      8
+    ],
+    [
+      "educator",
+      8
+    ],
+    [
+      "political theorist",
+      8
+    ],
+    [
+      "model",
+      8
+    ],
+    [
+      "pastor",
+      8
+    ],
+    [
+      "apostle",
+      8
+    ],
+    [
+      "glass painter",
+      8
+    ],
+    [
+      "phycologist",
+      8
+    ],
+    [
+      "court painter",
+      8
+    ],
+    [
+      "mountaineer",
+      8
+    ],
+    [
+      "fabulist",
+      8
+    ],
+    [
+      "deacon",
+      8
+    ],
+    [
+      "museologist",
+      8
+    ],
+    [
+      "satirist",
+      8
+    ],
+    [
+      "trade unionist",
+      8
+    ],
+    [
+      "dipterologist",
+      8
+    ],
+    [
+      "art educator",
+      8
+    ],
+    [
+      "medievalist",
+      8
+    ],
+    [
+      "satirical novelist",
+      8
+    ],
+    [
+      "conchologist",
+      8
+    ],
+    [
+      "docent",
+      8
+    ],
+    [
+      "lexicographer",
+      8
+    ],
+    [
+      "nun",
+      8
+    ],
+    [
+      "consort",
+      8
+    ],
+    [
+      "grammarian",
+      8
+    ],
+    [
+      "master builder",
+      7
+    ],
+    [
+      "peace activist",
+      7
+    ],
+    [
+      "stage painter",
+      7
+    ],
+    [
+      "logician",
+      7
+    ],
+    [
+      "virtuoso",
+      7
+    ],
+    [
+      "textile artist",
+      7
+    ],
+    [
+      "translator of Adam Mickiewicz",
+      7
+    ],
+    [
+      "dub actor",
+      7
+    ],
+    [
+      "encyclopédistes",
+      7
+    ],
+    [
+      "world traveler",
+      7
+    ],
+    [
+      "naval officer",
+      7
+    ],
+    [
+      "canon",
+      7
+    ],
+    [
+      "physician writer",
+      7
+    ],
+    [
+      "military physician",
+      7
+    ],
+    [
+      "Esperantist",
+      7
+    ],
+    [
+      "army officer",
+      7
+    ],
+    [
+      "postage stamp designer",
+      7
+    ],
+    [
+      "medalist",
+      7
+    ],
+    [
+      "aircraft pilot",
+      7
+    ],
+    [
+      "print publisher",
+      7
+    ],
+    [
+      "correspondent",
+      7
+    ],
+    [
+      "political scientist",
+      7
+    ],
+    [
+      "church historian",
+      7
+    ],
+    [
+      "folklorist",
+      7
+    ],
+    [
+      "marine biologist",
+      7
+    ],
+    [
+      "vase painter",
+      7
+    ],
+    [
+      "poster artist",
+      6
+    ],
+    [
+      "urban planner",
+      6
+    ],
+    [
+      "furniture designer",
+      6
+    ],
+    [
+      "salonnière",
+      6
+    ],
+    [
+      "goldsmith",
+      6
+    ],
+    [
+      "genealogist",
+      6
+    ],
+    [
+      "stained-glass artist",
+      6
+    ],
+    [
+      "evolutionary biologist",
+      6
+    ],
+    [
+      "epigrapher",
+      6
+    ],
+    [
+      "scientific explorer",
+      6
+    ],
+    [
+      "philatelist",
+      6
+    ],
+    [
+      "banker",
+      6
+    ],
+    [
+      "founder of Catholic religious community",
+      6
+    ],
+    [
+      "Bible translator",
+      6
+    ],
+    [
+      "surveyor",
+      6
+    ],
+    [
+      "numismatist",
+      6
+    ],
+    [
+      "character actor",
+      6
+    ],
+    [
+      "head teacher",
+      6
+    ],
+    [
+      "crime fiction writer",
+      6
+    ],
+    [
+      "friar",
+      6
+    ],
+    [
+      "playback singer",
+      6
+    ],
+    [
+      "gastroenterologist",
+      6
+    ],
+    [
+      "Protestant theologian",
+      6
+    ],
+    [
+      "military commander",
+      6
+    ],
+    [
+      "intellectual",
+      6
+    ],
+    [
+      "governor",
+      6
+    ],
+    [
+      "parasitologist",
+      6
+    ],
+    [
+      "classical composer",
+      6
+    ],
+    [
+      "television director",
+      6
+    ],
+    [
+      "Egyptologist",
+      6
+    ],
+    [
+      "black-figure vase painter",
+      6
+    ],
+    [
+      "medieval historian",
+      6
+    ],
+    [
+      "freedom fighter",
+      5
+    ],
+    [
+      "harpsichordist",
+      5
+    ],
+    [
+      "religious leader",
+      5
+    ],
+    [
+      "nuclear physicist",
+      5
+    ],
+    [
+      "aphorist",
+      5
+    ],
+    [
+      "print collector",
+      5
+    ],
+    [
+      "Nobel Prize winner",
+      5
+    ],
+    [
+      "Doctor of the Church",
+      5
+    ],
+    [
+      "meteorologist",
+      5
+    ],
+    [
+      "decorative painter",
+      5
+    ],
+    [
+      "interior designer",
+      5
+    ],
+    [
+      "independent publisher",
+      5
+    ],
+    [
+      "aesthetician",
+      5
+    ],
+    [
+      "narrator",
+      5
+    ],
+    [
+      "ethnographer",
+      5
+    ],
+    [
+      "transitional deacon",
+      5
+    ],
+    [
+      "editor-in-chief",
+      5
+    ],
+    [
+      "bibliographer",
+      5
+    ],
+    [
+      "music executive",
+      5
+    ],
+    [
+      "beamter",
+      5
+    ],
+    [
+      "map drawer",
+      5
+    ],
+    [
+      "Anglican priest",
+      5
+    ],
+    [
+      "bioinformatician",
+      5
+    ],
+    [
+      "pathologist",
+      5
+    ],
+    [
+      "trumpeter",
+      5
+    ],
+    [
+      "chess player",
+      5
+    ],
+    [
+      "humorist",
+      5
+    ],
+    [
+      "lecturer",
+      5
+    ],
+    [
+      "music teacher",
+      5
+    ],
+    [
+      "gynecologist",
+      5
+    ],
+    [
+      "elegist",
+      5
+    ],
+    [
+      "paleobotanist",
+      5
+    ],
+    [
+      "white-groud vase-painter",
+      5
+    ],
+    [
+      "political writer",
+      4
+    ],
+    [
+      "civil rights advocate",
+      4
+    ],
+    [
+      "assemblage artist",
+      4
+    ],
+    [
+      "ethicist",
+      4
+    ],
+    [
+      "philosopher of law",
+      4
+    ],
+    [
+      "political prisoner",
+      4
+    ],
+    [
+      "bretteur",
+      4
+    ],
+    [
+      "social reformer",
+      4
+    ],
+    [
+      "orator",
+      4
+    ],
+    [
+      "socialist",
+      4
+    ],
+    [
+      "rock musician",
+      4
+    ],
+    [
+      "religious writer",
+      4
+    ],
+    [
+      "biblical scholar",
+      4
+    ],
+    [
+      "mammalogist",
+      4
+    ],
+    [
+      "meteorological observer",
+      4
+    ],
+    [
+      "Catholic deacon",
+      4
+    ],
+    [
+      "editorial cartoonist",
+      4
+    ],
+    [
+      "nurse",
+      4
+    ],
+    [
+      "production designer",
+      4
+    ],
+    [
+      "performance artist",
+      4
+    ],
+    [
+      "Qur'anic exegete",
+      4
+    ],
+    [
+      "legal scholar",
+      4
+    ],
+    [
+      "country musician",
+      4
+    ],
+    [
+      "bibliophile",
+      4
+    ],
+    [
+      "saxophonist",
+      4
+    ],
+    [
+      "vocalist",
+      4
+    ],
+    [
+      "foreign minister",
+      4
+    ],
+    [
+      "sailor",
+      4
+    ],
+    [
+      "school teacher in the Swedish school system",
+      4
+    ],
+    [
+      "veterinarian",
+      4
+    ],
+    [
+      "marji'",
+      4
+    ],
+    [
+      "forester",
+      4
+    ],
+    [
+      "printseller",
+      4
+    ],
+    [
+      "professeur des universités",
+      4
+    ],
+    [
+      "discoverer of asteroids",
+      4
+    ],
+    [
+      "orchestra leader",
+      4
+    ],
+    [
+      "dermatologist",
+      4
+    ],
+    [
+      "portrait painter",
+      4
+    ],
+    [
+      "radio personality",
+      4
+    ],
+    [
+      "anesthesiologist",
+      4
+    ],
+    [
+      "bookbinder",
+      4
+    ],
+    [
+      "prehistorian",
+      4
+    ],
+    [
+      "geophysicist",
+      4
+    ],
+    [
+      "collector of fairy tales",
+      4
+    ],
+    [
+      "pulmonologist",
+      4
+    ],
+    [
+      "medical historian",
+      4
+    ],
+    [
+      "myrmecologist",
+      4
+    ],
+    [
+      "heraldist",
+      4
+    ],
+    [
+      "photojournalist",
+      4
+    ],
+    [
+      "soul musician",
+      4
+    ],
+    [
+      "science communicator",
+      4
+    ],
+    [
+      "muhaddith",
+      4
+    ],
+    [
+      "paleoanthropologist",
+      4
+    ],
+    [
+      "jazz guitarist",
+      4
+    ],
+    [
+      "historian of mathematics",
+      4
+    ],
+    [
+      "hagiographer",
+      4
+    ],
+    [
+      "art director",
+      4
+    ],
+    [
+      "performing artist",
+      4
+    ],
+    [
+      "religious sister",
+      4
+    ],
+    [
+      "natural philosopher",
+      3
+    ],
+    [
+      "head of government",
+      3
+    ],
+    [
+      "ethologist",
+      3
+    ],
+    [
+      "humanitarian",
+      3
+    ],
+    [
+      "cosmologist",
+      3
+    ],
+    [
+      "political philosopher",
+      3
+    ],
+    [
+      "partisan",
+      3
+    ],
+    [
+      "Buddhist monk",
+      3
+    ],
+    [
+      "founder of religion",
+      3
+    ],
+    [
+      "ancient Roman priest",
+      3
+    ],
+    [
+      "Theaterintendant",
+      3
+    ],
+    [
+      "opera composer",
+      3
+    ],
+    [
+      "consul",
+      3
+    ],
+    [
+      "alchemist",
+      3
+    ],
+    [
+      "mintmaster",
+      3
+    ],
+    [
+      "communist",
+      3
+    ],
+    [
+      "athlete",
+      3
+    ],
+    [
+      "prophet",
+      3
+    ],
+    [
+      "rabbi",
+      3
+    ],
+    [
+      "thaumaturge",
+      3
+    ],
+    [
+      "fisher",
+      3
+    ],
+    [
+      "hermit",
+      3
+    ],
+    [
+      "topographer",
+      3
+    ],
+    [
+      "mosaicist",
+      3
+    ],
+    [
+      "treasurer",
+      3
+    ],
+    [
+      "resistance fighter",
+      3
+    ],
+    [
+      "latin catholic deacon",
+      3
+    ],
+    [
+      "Oberlehrer",
+      3
+    ],
+    [
+      "evangelist",
+      3
+    ],
+    [
+      "ethnobotanist",
+      3
+    ],
+    [
+      "anchorite",
+      3
+    ],
+    [
+      "dendrologist",
+      3
+    ],
+    [
+      "life scientist",
+      3
+    ],
+    [
+      "mining engineer",
+      3
+    ],
+    [
+      "president",
+      3
+    ],
+    [
+      "oceanographer",
+      3
+    ],
+    [
+      "multi-instrumentalist",
+      3
+    ],
+    [
+      "Protestant reformer",
+      3
+    ],
+    [
+      "humanist",
+      3
+    ],
+    [
+      "magistrate",
+      3
+    ],
+    [
+      "pen drawer",
+      3
+    ],
+    [
+      "religious",
+      3
+    ],
+    [
+      "literary theorist",
+      3
+    ],
+    [
+      "clerk",
+      3
+    ],
+    [
+      "hymnwriter",
+      3
+    ],
+    [
+      "Christian minister",
+      3
+    ],
+    [
+      "conservator",
+      3
+    ],
+    [
+      "drawing teacher",
+      3
+    ],
+    [
+      "chansonnier",
+      3
+    ],
+    [
+      "musicographer",
+      3
+    ],
+    [
+      "columnist",
+      3
+    ],
+    [
+      "forestry scientist",
+      3
+    ],
+    [
+      "business executive",
+      3
+    ],
+    [
+      "nephrologist",
+      3
+    ],
+    [
+      "audio engineer",
+      3
+    ],
+    [
+      "general contractor",
+      3
+    ],
+    [
+      "biostatistician",
+      3
+    ],
+    [
+      "expeditor",
+      3
+    ],
+    [
+      "book printer",
+      3
+    ],
+    [
+      "cellist",
+      3
+    ],
+    [
+      "women's rights activist",
+      3
+    ],
+    [
+      "magician",
+      3
+    ],
+    [
+      "hymenopterist",
+      3
+    ],
+    [
+      "ceramics designer",
+      3
+    ],
+    [
+      "knight",
+      3
+    ],
+    [
+      "war correspondent",
+      3
+    ],
+    [
+      "mezzotinter",
+      3
+    ],
+    [
+      "diabetologist",
+      3
+    ],
+    [
+      "radiologist",
+      3
+    ],
+    [
+      "cardiac surgeon",
+      3
+    ],
+    [
+      "conservationist",
+      3
+    ],
+    [
+      "local historian",
+      3
+    ],
+    [
+      "Latin Catholic bishop",
+      3
+    ],
+    [
+      "military theorist",
+      3
+    ],
+    [
+      "cell biologist",
+      3
+    ],
+    [
+      "decorator",
+      3
+    ],
+    [
+      "museum professional",
+      3
+    ],
+    [
+      "stunt performer",
+      3
+    ],
+    [
+      "crystallographer",
+      3
+    ],
+    [
+      "allergist",
+      3
+    ],
+    [
+      "character designer",
+      3
+    ],
+    [
+      "jazz trumpeter",
+      3
+    ],
+    [
+      "conceptual artist",
+      3
+    ],
+    [
+      "slavist",
+      3
+    ],
+    [
+      "equestrian",
+      3
+    ],
+    [
+      "qadi",
+      3
+    ],
+    [
+      "tragedy writer",
+      3
+    ],
+    [
+      "newspaper proprietor",
+      3
+    ],
+    [
+      "sexologist",
+      3
+    ],
+    [
+      "bacteriologist",
+      3
+    ],
+    [
+      "oud player",
+      3
+    ],
+    [
+      "estate owner",
+      3
+    ],
+    [
+      "classical guitarist",
+      3
+    ],
+    [
+      "rhetorician",
+      3
+    ],
+    [
+      "academic staff",
+      3
+    ],
+    [
+      "DJ producer",
+      3
+    ],
+    [
+      "camera operator",
+      3
+    ],
+    [
+      "castellologist",
+      3
+    ],
+    [
+      "queen consort",
+      3
+    ],
+    [
+      "potter",
+      3
+    ],
+    [
+      "akhoond",
+      3
+    ],
+    [
+      "philosopher of science",
+      2
+    ],
+    [
+      "mechanic",
+      2
+    ],
+    [
+      "newspaper editor",
+      2
+    ],
+    [
+      "epistemologist",
+      2
+    ],
+    [
+      "philosopher of language",
+      2
+    ],
+    [
+      "programmer",
+      2
+    ],
+    [
+      "translator of William Wordsworth",
+      2
+    ],
+    [
+      "choir director",
+      2
+    ],
+    [
+      "concertmaster",
+      2
+    ],
+    [
+      "school teacher",
+      2
+    ],
+    [
+      "financier",
+      2
+    ],
+    [
+      "Church Fathers",
+      2
+    ],
+    [
+      "executive",
+      2
+    ],
+    [
+      "women letter writer",
+      2
+    ],
+    [
+      "seamster",
+      2
+    ],
+    [
+      "carpenter",
+      2
+    ],
+    [
+      "video artist",
+      2
+    ],
+    [
+      "artisan",
+      2
+    ],
+    [
+      "plant taxonomist",
+      2
+    ],
+    [
+      "warrior",
+      2
+    ],
+    [
+      "beekeeper",
+      2
+    ],
+    [
+      "gallerist",
+      2
+    ],
+    [
+      "science journalist",
+      2
+    ],
+    [
+      "national revival activist",
+      2
+    ],
+    [
+      "reformer",
+      2
+    ],
+    [
+      "founder",
+      2
+    ],
+    [
+      "miniaturist",
+      2
+    ],
+    [
+      "porcelain painter",
+      2
+    ],
+    [
+      "Pope",
+      2
+    ],
+    [
+      "installation artist",
+      2
+    ],
+    [
+      "futurist",
+      2
+    ],
+    [
+      "Sufi",
+      2
+    ],
+    [
+      "tropical physician",
+      2
+    ],
+    [
+      "superintendent",
+      2
+    ],
+    [
+      "discoverer",
+      2
+    ],
+    [
+      "insect dealer",
+      2
+    ],
+    [
+      "communard",
+      2
+    ],
+    [
+      "geometer",
+      2
+    ],
+    [
+      "sinologist",
+      2
+    ],
+    [
+      "anti-communist",
+      2
+    ],
+    [
+      "country singer",
+      2
+    ],
+    [
+      "Zionist",
+      2
+    ],
+    [
+      "dentist",
+      2
+    ],
+    [
+      "cactus grower",
+      2
+    ],
+    [
+      "dictator",
+      2
+    ],
+    [
+      "emperor",
+      2
+    ],
+    [
+      "latinist",
+      2
+    ],
+    [
+      "scribe",
+      2
+    ],
+    [
+      "director of studies",
+      2
+    ],
+    [
+      "caliph",
+      2
+    ],
+    [
+      "baseball player",
+      2
+    ],
+    [
+      "head of state",
+      2
+    ],
+    [
+      "social critic",
+      2
+    ],
+    [
+      "construction worker",
+      2
+    ],
+    [
+      "Naqib al-ashraf",
+      2
+    ],
+    [
+      "tax collector",
+      2
+    ],
+    [
+      "pop singer",
+      2
+    ],
+    [
+      "medic",
+      2
+    ],
+    [
+      "chapelmaster",
+      2
+    ],
+    [
+      "instrument maker",
+      2
+    ],
+    [
+      "Pharmazeut",
+      2
+    ],
+    [
+      "electrician",
+      2
+    ],
+    [
+      "reproductions engraver",
+      2
+    ],
+    [
+      "postmaster",
+      2
+    ],
+    [
+      "restorer",
+      2
+    ],
+    [
+      "professeur agrégé",
+      2
+    ],
+    [
+      "piano teacher",
+      2
+    ],
+    [
+      "weapon historian",
+      2
+    ],
+    [
+      "drummer",
+      2
+    ],
+    [
+      "climatologist",
+      2
+    ],
+    [
+      "infectious disease physician",
+      2
+    ],
+    [
+      "Studienrat",
+      2
+    ],
+    [
+      "jazz singer",
+      2
+    ],
+    [
+      "orchestrator",
+      2
+    ],
+    [
+      "Africanist",
+      2
+    ],
+    [
+      "ophthalmologist",
+      2
+    ],
+    [
+      "Amir",
+      2
+    ],
+    [
+      "television personality",
+      2
+    ],
+    [
+      "turner",
+      2
+    ],
+    [
+      "seaman",
+      2
+    ],
+    [
+      "phytogeographer",
+      2
+    ],
+    [
+      "grisaillist",
+      2
+    ],
+    [
+      "Schulrat",
+      2
+    ],
+    [
+      "advokat",
+      2
+    ],
+    [
+      "landscape architect",
+      2
+    ],
+    [
+      "Orthodox theologian",
+      2
+    ],
+    [
+      "chess composer",
+      2
+    ],
+    [
+      "museum founder",
+      2
+    ],
+    [
+      "volunteer serving one year",
+      2
+    ],
+    [
+      "seafarer",
+      2
+    ],
+    [
+      "amateur photographer",
+      2
+    ],
+    [
+      "panoramist",
+      2
+    ],
+    [
+      "particle physicist",
+      2
+    ],
+    [
+      "legislator",
+      2
+    ],
+    [
+      "chemical technologist",
+      2
+    ],
+    [
+      "palaeographer",
+      2
+    ],
+    [
+      "stationer",
+      2
+    ],
+    [
+      "Germanist",
+      2
+    ],
+    [
+      "toxicologist",
+      2
+    ],
+    [
+      "rancher",
+      2
+    ],
+    [
+      "reporter",
+      2
+    ],
+    [
+      "maritime pilot",
+      2
+    ],
+    [
+      "laborer",
+      2
+    ],
+    [
+      "party leader",
+      2
+    ],
+    [
+      "painting collector",
+      2
+    ],
+    [
+      "mechanical automaton engineer",
+      2
+    ],
+    [
+      "young adult author",
+      2
+    ],
+    [
+      "hellenist",
+      2
+    ],
+    [
+      "secretary",
+      2
+    ],
+    [
+      "captain",
+      2
+    ],
+    [
+      "penciller",
+      2
+    ],
+    [
+      "storyboard artist",
+      2
+    ],
+    [
+      "princess",
+      2
+    ],
+    [
+      "transplant surgeon",
+      2
+    ],
+    [
+      "antiquarian seller",
+      2
+    ],
+    [
+      "physical chemist",
+      2
+    ],
+    [
+      "academic administrator",
+      2
+    ],
+    [
+      "materials scientist",
+      2
+    ],
+    [
+      "painter and varnisher",
+      2
+    ],
+    [
+      "obstetrician",
+      2
+    ],
+    [
+      "object artist",
+      2
+    ],
+    [
+      "music publicist",
+      2
+    ],
+    [
+      "bass guitarist",
+      2
+    ],
+    [
+      "violist",
+      2
+    ],
+    [
+      "radio drama actor",
+      2
+    ],
+    [
+      "street artist",
+      2
+    ],
+    [
+      "myriapodologist",
+      2
+    ],
+    [
+      "political economist",
+      2
+    ],
+    [
+      "serigrapher",
+      2
+    ],
+    [
+      "molecular geneticist",
+      2
+    ],
+    [
+      "biomedical engineer",
+      2
+    ],
+    [
+      "comedy writer",
+      2
+    ],
+    [
+      "historian of science",
+      2
+    ],
+    [
+      "social activist",
+      2
+    ],
+    [
+      "count",
+      2
+    ],
+    [
+      "canon law jurist",
+      2
+    ],
+    [
+      "Romanist",
+      2
+    ],
+    [
+      "local government officer",
+      2
+    ],
+    [
+      "silent film actor",
+      2
+    ],
+    [
+      "biotechnologist",
+      2
+    ],
+    [
+      "genre painter",
+      2
+    ],
+    [
+      "Western author",
+      2
+    ],
+    [
+      "Q110301835",
+      2
+    ],
+    [
+      "strategist",
+      2
+    ],
+    [
+      "rock guitarist",
+      2
+    ],
+    [
+      "keyboardist",
+      2
+    ],
+    [
+      "manager",
+      2
+    ],
+    [
+      "typographer",
+      2
+    ],
+    [
+      "patriarch",
+      2
+    ],
+    [
+      "theatrical producer",
+      2
+    ],
+    [
+      "cloistered nun",
+      2
+    ],
+    [
+      "mangaka",
+      2
+    ],
+    [
+      "American football player",
+      2
+    ],
+    [
+      "geodesist",
+      2
+    ],
+    [
+      "stem cell researcher",
+      2
+    ],
+    [
+      "legal historian",
+      2
+    ],
+    [
+      "hofmeister",
+      2
+    ],
+    [
+      "suffragist",
+      2
+    ],
+    [
+      "Christian nun",
+      2
+    ],
+    [
+      "boxer",
+      2
+    ],
+    [
+      "archaeologist of the Roman provinces",
+      2
+    ],
+    [
+      "adviser",
+      2
+    ],
+    [
+      "abbess",
+      2
+    ],
+    [
+      "bard",
+      2
+    ],
+    [
+      "feudatory",
+      2
+    ],
+    [
+      "count palatine",
+      2
+    ],
+    [
+      "troubadour",
+      2
+    ],
+    [
+      "samurai",
+      2
+    ],
+    [
+      "comics creator",
+      2
+    ],
+    [
+      "daimyo",
+      2
+    ],
+    [
+      "seiyū",
+      2
+    ],
+    [
+      "broadcaster",
+      2
+    ],
+    [
+      "police officer",
+      2
+    ],
+    [
+      "vice president",
+      2
+    ],
+    [
+      "assistant director",
+      2
+    ],
+    [
+      "Islamicist",
+      2
+    ],
+    [
+      "anti-apartheid activist",
+      2
+    ],
+    [
+      "patent examiner",
+      1
+    ],
+    [
+      "drypoint engraver",
+      1
+    ],
+    [
+      "lino cutter",
+      1
+    ],
+    [
+      "tutor",
+      1
+    ],
+    [
+      "ontologist",
+      1
+    ],
+    [
+      "diplomatician",
+      1
+    ],
+    [
+      "policy advisor",
+      1
+    ],
+    [
+      "queen",
+      1
+    ],
+    [
+      "moralist",
+      1
+    ],
+    [
+      "improviser",
+      1
+    ],
+    [
+      "book collector",
+      1
+    ],
+    [
+      "Trekkie",
+      1
+    ],
+    [
+      "podcaster",
+      1
+    ],
+    [
+      "anti-transgender activist",
+      1
+    ],
+    [
+      "spiritual teacher",
+      1
+    ],
+    [
+      "pop musician",
+      1
+    ],
+    [
+      "investor",
+      1
+    ],
+    [
+      "technology entrepreneur",
+      1
+    ],
+    [
+      "impresario",
+      1
+    ],
+    [
+      "titular bishop",
+      1
+    ],
+    [
+      "media critic",
+      1
+    ],
+    [
+      "jihadist",
+      1
+    ],
+    [
+      "terrorist",
+      1
+    ],
+    [
+      "building contractor",
+      1
+    ],
+    [
+      "fashion entrepreneur",
+      1
+    ],
+    [
+      "feminist",
+      1
+    ],
+    [
+      "philosophy teacher",
+      1
+    ],
+    [
+      "healer",
+      1
+    ],
+    [
+      "messiah",
+      1
+    ],
+    [
+      "tektōn",
+      1
+    ],
+    [
+      "archimandrite",
+      1
+    ],
+    [
+      "Eastern Orthodox priest",
+      1
+    ],
+    [
+      "Eastern Orthodox monk",
+      1
+    ],
+    [
+      "old master",
+      1
+    ],
+    [
+      "oboist",
+      1
+    ],
+    [
+      "vicar general",
+      1
+    ],
+    [
+      "musical instrument maker",
+      1
+    ],
+    [
+      "violin maker",
+      1
+    ],
+    [
+      "dragonslayer",
+      1
+    ],
+    [
+      "plant physiologist",
+      1
+    ],
+    [
+      "Engelandvaarder",
+      1
+    ],
+    [
+      "fossil collector",
+      1
+    ],
+    [
+      "exhibition curator",
+      1
+    ],
+    [
+      "photography critic",
+      1
+    ],
+    [
+      "cricketer",
+      1
+    ],
+    [
+      "regular cleric",
+      1
+    ],
+    [
+      "Roman Catholic cleric",
+      1
+    ],
+    [
+      "pilgrim",
+      1
+    ],
+    [
+      "holographer",
+      1
+    ],
+    [
+      "biomedical scientist",
+      1
+    ],
+    [
+      "teacher at a Gymnasium",
+      1
+    ],
+    [
+      "children's rights activist",
+      1
+    ],
+    [
+      "apologist",
+      1
+    ],
+    [
+      "monastic",
+      1
+    ],
+    [
+      "court clerk",
+      1
+    ],
+    [
+      "notary",
+      1
+    ],
+    [
+      "Christian monk",
+      1
+    ],
+    [
+      "fruit grower",
+      1
+    ],
+    [
+      "metallurgist",
+      1
+    ],
+    [
+      "preschool teacher",
+      1
+    ],
+    [
+      "military historian",
+      1
+    ],
+    [
+      "naval historian",
+      1
+    ],
+    [
+      "trader of naturalia",
+      1
+    ],
+    [
+      "commander-in-chief",
+      1
+    ],
+    [
+      "announcer",
+      1
+    ],
+    [
+      "lifeguard",
+      1
+    ],
+    [
+      "game show host",
+      1
+    ],
+    [
+      "marine painter",
+      1
+    ],
+    [
+      "hydrologist",
+      1
+    ],
+    [
+      "hydrobiologist",
+      1
+    ],
+    [
+      "banjoist",
+      1
+    ],
+    [
+      "instrumentalist",
+      1
+    ],
+    [
+      "bohemicist",
+      1
+    ],
+    [
+      "Christian reformer",
+      1
+    ],
+    [
+      "eugenicist",
+      1
+    ],
+    [
+      "mime artist",
+      1
+    ],
+    [
+      "occultist",
+      1
+    ],
+    [
+      "music video director",
+      1
+    ],
+    [
+      "Catholic clergyman",
+      1
+    ],
+    [
+      "military officer of healthcare",
+      1
+    ],
+    [
+      "independent scholar",
+      1
+    ],
+    [
+      "militant",
+      1
+    ],
+    [
+      "cabaret performer",
+      1
+    ],
+    [
+      "Lady Margaret's Professor of Divinity",
+      1
+    ],
+    [
+      "discoverer of minor planets",
+      1
+    ],
+    [
+      "bandmaster",
+      1
+    ],
+    [
+      "radio playwright",
+      1
+    ],
+    [
+      "Q131623563",
+      1
+    ],
+    [
+      "information manager",
+      1
+    ],
+    [
+      "prisoner",
+      1
+    ],
+    [
+      "ballet dancer",
+      1
+    ],
+    [
+      "papercut artist",
+      1
+    ],
+    [
+      "fairy tale teller",
+      1
+    ],
+    [
+      "hepatologist",
+      1
+    ],
+    [
+      "polo player",
+      1
+    ],
+    [
+      "comics editor",
+      1
+    ],
+    [
+      "pathophysiologist",
+      1
+    ],
+    [
+      "parliamentary stenographer",
+      1
+    ],
+    [
+      "court reporter",
+      1
+    ],
+    [
+      "speculative fiction writer",
+      1
+    ],
+    [
+      "proofreader",
+      1
+    ],
+    [
+      "heraldic artist",
+      1
+    ],
+    [
+      "publican",
+      1
+    ],
+    [
+      "encyclopedist",
+      1
+    ],
+    [
+      "bird illustrator",
+      1
+    ],
+    [
+      "Q78562887",
+      1
+    ],
+    [
+      "teacher at family school",
+      1
+    ],
+    [
+      "winegrower",
+      1
+    ],
+    [
+      "Holocaust perpetrator",
+      1
+    ],
+    [
+      "ornamental sculptor",
+      1
+    ],
+    [
+      "interior architect",
+      1
+    ],
+    [
+      "ornament designer",
+      1
+    ],
+    [
+      "social worker",
+      1
+    ],
+    [
+      "school counselor",
+      1
+    ],
+    [
+      "feuilletonist",
+      1
+    ],
+    [
+      "preservationist",
+      1
+    ],
+    [
+      "golfer",
+      1
+    ],
+    [
+      "secretary of state",
+      1
+    ],
+    [
+      "glass artist",
+      1
+    ],
+    [
+      "volcanologist",
+      1
+    ],
+    [
+      "mutakallim",
+      1
+    ],
+    [
+      "bioinorganic chemist",
+      1
+    ],
+    [
+      "Bachelor of Social Work",
+      1
+    ],
+    [
+      "bureaucrat",
+      1
+    ],
+    [
+      "paper artist",
+      1
+    ],
+    [
+      "theatrologist",
+      1
+    ],
+    [
+      "mayor",
+      1
+    ],
+    [
+      "Q117288112",
+      1
+    ],
+    [
+      "slave driver",
+      1
+    ],
+    [
+      "plower",
+      1
+    ],
+    [
+      "primator",
+      1
+    ],
+    [
+      "physical education teacher",
+      1
+    ],
+    [
+      "yodeler",
+      1
+    ],
+    [
+      "phytopathologist",
+      1
+    ],
+    [
+      "philosopher of medicine",
+      1
+    ],
+    [
+      "lord of the manor",
+      1
+    ],
+    [
+      "chancellor",
+      1
+    ],
+    [
+      "assessor",
+      1
+    ],
+    [
+      "lobbyist",
+      1
+    ],
+    [
+      "prince consort",
+      1
+    ],
+    [
+      "redactor",
+      1
+    ],
+    [
+      "copyist",
+      1
+    ],
+    [
+      "miner",
+      1
+    ],
+    [
+      "subject teacher",
+      1
+    ],
+    [
+      "plastic artist",
+      1
+    ],
+    [
+      "industrialist",
+      1
+    ],
+    [
+      "homeopath",
+      1
+    ],
+    [
+      "firefighter",
+      1
+    ],
+    [
+      "regular priest",
+      1
+    ],
+    [
+      "forestry worker",
+      1
+    ],
+    [
+      "theoretical chemist",
+      1
+    ],
+    [
+      "biogeochemist",
+      1
+    ],
+    [
+      "racial theorist",
+      1
+    ],
+    [
+      "glaciologist",
+      1
+    ],
+    [
+      "physical geographer",
+      1
+    ],
+    [
+      "Polonophile",
+      1
+    ],
+    [
+      "chief physician",
+      1
+    ],
+    [
+      "pomologist",
+      1
+    ],
+    [
+      "human geneticist",
+      1
+    ],
+    [
+      "railway engineer",
+      1
+    ],
+    [
+      "political reporter",
+      1
+    ],
+    [
+      "music promoter",
+      1
+    ],
+    [
+      "translator-interpreter",
+      1
+    ],
+    [
+      "gymnast",
+      1
+    ],
+    [
+      "Q110268470",
+      1
+    ],
+    [
+      "research fellow",
+      1
+    ],
+    [
+      "Q111518167",
+      1
+    ],
+    [
+      "activist shareholder",
+      1
+    ],
+    [
+      "factory owner",
+      1
+    ],
+    [
+      "japanologist",
+      1
+    ],
+    [
+      "gastronomist",
+      1
+    ],
+    [
+      "cryptographer",
+      1
+    ],
+    [
+      "planter class",
+      1
+    ],
+    [
+      "general manager",
+      1
+    ],
+    [
+      "business undergraduate",
+      1
+    ],
+    [
+      "statutory auditor",
+      1
+    ],
+    [
+      "temperance worker",
+      1
+    ],
+    [
+      "Q112275859",
+      1
+    ],
+    [
+      "professor of medicine",
+      1
+    ],
+    [
+      "Q111533220",
+      1
+    ],
+    [
+      "stockbroker",
+      1
+    ],
+    [
+      "cultural worker",
+      1
+    ],
+    [
+      "Idist",
+      1
+    ],
+    [
+      "inquisitor",
+      1
+    ],
+    [
+      "accountant",
+      1
+    ],
+    [
+      "Kammerdiener",
+      1
+    ],
+    [
+      "protistologist",
+      1
+    ],
+    [
+      "häradsskrivare",
+      1
+    ],
+    [
+      "Q122864064",
+      1
+    ],
+    [
+      "Q117290135",
+      1
+    ],
+    [
+      "religious studies scholar",
+      1
+    ],
+    [
+      "violin teacher",
+      1
+    ],
+    [
+      "genomicist",
+      1
+    ],
+    [
+      "animalier",
+      1
+    ],
+    [
+      "English teacher",
+      1
+    ],
+    [
+      "psychoanalyst",
+      1
+    ],
+    [
+      "inker",
+      1
+    ],
+    [
+      "cultural policymaker",
+      1
+    ],
+    [
+      "Virgin",
+      1
+    ],
+    [
+      "slave trader",
+      1
+    ],
+    [
+      "social democrat",
+      1
+    ],
+    [
+      "tinsmith",
+      1
+    ],
+    [
+      "stevedore",
+      1
+    ],
+    [
+      "fashion photographer",
+      1
+    ],
+    [
+      "chamberlain",
+      1
+    ],
+    [
+      "senior accountant",
+      1
+    ],
+    [
+      "sound designer",
+      1
+    ],
+    [
+      "school inspector",
+      1
+    ],
+    [
+      "mercenary",
+      1
+    ],
+    [
+      "fairy tale scholar",
+      1
+    ],
+    [
+      "jazz bassist",
+      1
+    ],
+    [
+      "Monsignor",
+      1
+    ],
+    [
+      "nuncio",
+      1
+    ],
+    [
+      "shopkeeper",
+      1
+    ],
+    [
+      "philhellene",
+      1
+    ],
+    [
+      "submariner",
+      1
+    ],
+    [
+      "cookbook writer",
+      1
+    ],
+    [
+      "claims adjuster",
+      1
+    ],
+    [
+      "spokesperson",
+      1
+    ],
+    [
+      "agricultural engineer",
+      1
+    ],
+    [
+      "phytosociologist",
+      1
+    ],
+    [
+      "theology teacher",
+      1
+    ],
+    [
+      "professor of philosophy",
+      1
+    ],
+    [
+      "music journalist",
+      1
+    ],
+    [
+      "copywriter",
+      1
+    ],
+    [
+      "bibliologist",
+      1
+    ],
+    [
+      "industrial designer",
+      1
+    ],
+    [
+      "sport cyclist",
+      1
+    ],
+    [
+      "animation director",
+      1
+    ],
+    [
+      "stage manager",
+      1
+    ],
+    [
+      "art advisor",
+      1
+    ],
+    [
+      "americanist",
+      1
+    ],
+    [
+      "structural engineer",
+      1
+    ],
+    [
+      "holder of the procuration",
+      1
+    ],
+    [
+      "book artist",
+      1
+    ],
+    [
+      "molding worker",
+      1
+    ],
+    [
+      "in-home tutor",
+      1
+    ],
+    [
+      "wali",
+      1
+    ],
+    [
+      "Q122818899",
+      1
+    ],
+    [
+      "man of letters",
+      1
+    ],
+    [
+      "dilettante",
+      1
+    ],
+    [
+      "arms trader",
+      1
+    ],
+    [
+      "YouTuber",
+      1
+    ],
+    [
+      "Miles Christianus",
+      1
+    ],
+    [
+      "king",
+      1
+    ],
+    [
+      "woman conductor",
+      1
+    ],
+    [
+      "acarologist",
+      1
+    ],
+    [
+      "exegete",
+      1
+    ],
+    [
+      "behavior geneticist",
+      1
+    ],
+    [
+      "stampcutter",
+      1
+    ],
+    [
+      "drafter",
+      1
+    ],
+    [
+      "dissident",
+      1
+    ],
+    [
+      "jazz arranger",
+      1
+    ],
+    [
+      "church musician",
+      1
+    ],
+    [
+      "philosopher of culture",
+      1
+    ],
+    [
+      "master hairdressers",
+      1
+    ],
+    [
+      "story artist",
+      1
+    ],
+    [
+      "philosophy historian",
+      1
+    ],
+    [
+      "Q117748106",
+      1
+    ],
+    [
+      "co-minister",
+      1
+    ],
+    [
+      "sports scientist",
+      1
+    ],
+    [
+      "Q110436265",
+      1
+    ],
+    [
+      "school nurse",
+      1
+    ],
+    [
+      "occupational physician",
+      1
+    ],
+    [
+      "pamphleteer",
+      1
+    ],
+    [
+      "video game actor",
+      1
+    ],
+    [
+      "history painter",
+      1
+    ],
+    [
+      "decorative artist",
+      1
+    ],
+    [
+      "enameler",
+      1
+    ],
+    [
+      "bank teller",
+      1
+    ],
+    [
+      "Q105552841",
+      1
+    ],
+    [
+      "storyteller",
+      1
+    ],
+    [
+      "dean",
+      1
+    ],
+    [
+      "Pre-Raphaelite Brotherhood",
+      1
+    ],
+    [
+      "administrator",
+      1
+    ],
+    [
+      "interpreter",
+      1
+    ],
+    [
+      "astronaut",
+      1
+    ],
+    [
+      "philosopher of mathematics",
+      1
+    ],
+    [
+      "architectural photographer",
+      1
+    ],
+    [
+      "Generalfeldmarschall",
+      1
+    ],
+    [
+      "SOE agent",
+      1
+    ],
+    [
+      "Volksschule teacher",
+      1
+    ],
+    [
+      "business theorist",
+      1
+    ],
+    [
+      "republican militiaman  (Spanish Civil War)",
+      1
+    ],
+    [
+      "office worker",
+      1
+    ],
+    [
+      "Q116865529",
+      1
+    ],
+    [
+      "papyrologist",
+      1
+    ],
+    [
+      "cabinetmaker",
+      1
+    ],
+    [
+      "French resistance fighter",
+      1
+    ],
+    [
+      "readymade artist",
+      1
+    ],
+    [
+      "blacksmith",
+      1
+    ],
+    [
+      "technician",
+      1
+    ],
+    [
+      "science administrator",
+      1
+    ],
+    [
+      "senior lecturer",
+      1
+    ],
+    [
+      "herder",
+      1
+    ],
+    [
+      "consignor",
+      1
+    ],
+    [
+      "Q105085644",
+      1
+    ],
+    [
+      "cantor",
+      1
+    ],
+    [
+      "historian of Modern Age",
+      1
+    ],
+    [
+      "retail worker",
+      1
+    ],
+    [
+      "double-bassist",
+      1
+    ],
+    [
+      "necropolis scholar",
+      1
+    ],
+    [
+      "Q111651527",
+      1
+    ],
+    [
+      "Q112240550",
+      1
+    ],
+    [
+      "ci lyric writer",
+      1
+    ],
+    [
+      "Gaelic football player",
+      1
+    ],
+    [
+      "hurler",
+      1
+    ],
+    [
+      "Christian religious",
+      1
+    ],
+    [
+      "prosecutor",
+      1
+    ],
+    [
+      "marine architect",
+      1
+    ],
+    [
+      "sociobiologist",
+      1
+    ],
+    [
+      "animal painter",
+      1
+    ],
+    [
+      "neurobiologist",
+      1
+    ],
+    [
+      "environmental health scientist",
+      1
+    ],
+    [
+      "intelligence officer",
+      1
+    ],
+    [
+      "Q110440774",
+      1
+    ],
+    [
+      "master of novices",
+      1
+    ],
+    [
+      "upholsterer",
+      1
+    ],
+    [
+      "Q111702060",
+      1
+    ],
+    [
+      "planetary scientist",
+      1
+    ],
+    [
+      "space scientist",
+      1
+    ],
+    [
+      "general music director",
+      1
+    ],
+    [
+      "companions of the Prophet",
+      1
+    ],
+    [
+      "social pedagogue",
+      1
+    ],
+    [
+      "military chaplain",
+      1
+    ],
+    [
+      "organic chemist",
+      1
+    ],
+    [
+      "silviculturist",
+      1
+    ],
+    [
+      "theatre entrepreneur",
+      1
+    ],
+    [
+      "English–German translator",
+      1
+    ],
+    [
+      "book designer",
+      1
+    ],
+    [
+      "music historian",
+      1
+    ],
+    [
+      "district student leader",
+      1
+    ],
+    [
+      "rock singer",
+      1
+    ],
+    [
+      "prelate",
+      1
+    ],
+    [
+      "fighter pilot",
+      1
+    ],
+    [
+      "glass engraver",
+      1
+    ],
+    [
+      "estrada artist",
+      1
+    ],
+    [
+      "vaudeville performer",
+      1
+    ],
+    [
+      "fashion designer",
+      1
+    ],
+    [
+      "train driver",
+      1
+    ],
+    [
+      "steel engraver",
+      1
+    ],
+    [
+      "Q125380827",
+      1
+    ],
+    [
+      "academic painter",
+      1
+    ],
+    [
+      "esperantologist",
+      1
+    ],
+    [
+      "retirement",
+      1
+    ],
+    [
+      "Poor Clare nun",
+      1
+    ],
+    [
+      "milk deliverer",
+      1
+    ],
+    [
+      "mint lord",
+      1
+    ],
+    [
+      "electronic musician",
+      1
+    ],
+    [
+      "jazz pianist",
+      1
+    ],
+    [
+      "fiscorn player",
+      1
+    ],
+    [
+      "local politician",
+      1
+    ],
+    [
+      "documentarian",
+      1
+    ],
+    [
+      "jazz saxophonist",
+      1
+    ],
+    [
+      "jazz composer",
+      1
+    ],
+    [
+      "stamp dealer",
+      1
+    ],
+    [
+      "flautist",
+      1
+    ],
+    [
+      "biocurator",
+      1
+    ],
+    [
+      "patent inventor",
+      1
+    ],
+    [
+      "athletics competitor",
+      1
+    ],
+    [
+      "reproductive printmaker",
+      1
+    ],
+    [
+      "microscopist",
+      1
+    ],
+    [
+      "film critic",
+      1
+    ],
+    [
+      "naval surgeon",
+      1
+    ],
+    [
+      "Q131673259",
+      1
+    ],
+    [
+      "rapper",
+      1
+    ],
+    [
+      "Q111133929",
+      1
+    ],
+    [
+      "aide-de-camp",
+      1
+    ],
+    [
+      "Liedermacher",
+      1
+    ],
+    [
+      "Q686932",
+      1
+    ],
+    [
+      "art model",
+      1
+    ],
+    [
+      "venereologist",
+      1
+    ],
+    [
+      "histologist",
+      1
+    ],
+    [
+      "framer",
+      1
+    ],
+    [
+      "Jewish communities scholar",
+      1
+    ],
+    [
+      "apiologist",
+      1
+    ],
+    [
+      "Q41689136",
+      1
+    ],
+    [
+      "Q10453613",
+      1
+    ],
+    [
+      "map maker",
+      1
+    ],
+    [
+      "musical theatre composer",
+      1
+    ],
+    [
+      "histopathologist",
+      1
+    ],
+    [
+      "spongiologist",
+      1
+    ],
+    [
+      "rhapsode",
+      1
+    ],
+    [
+      "Taoist",
+      1
+    ],
+    [
+      "economic historian",
+      1
+    ],
+    [
+      "social historian",
+      1
+    ],
+    [
+      "assyriologist",
+      1
+    ],
+    [
+      "ancient Near Eastern scholar",
+      1
+    ],
+    [
+      "pharaoh",
+      1
+    ],
+    [
+      "Greek vase-painter",
+      1
+    ],
+    [
+      "dithyrambic poet",
+      1
+    ],
+    [
+      "citharode",
+      1
+    ],
+    [
+      "Oberstudienrat",
+      1
+    ],
+    [
+      "antiquarian",
+      1
+    ],
+    [
+      "antiquarian bookseller",
+      1
+    ],
+    [
+      "ancient Greek potter",
+      1
+    ],
+    [
+      "vizier",
+      1
+    ],
+    [
+      "Vizier",
+      1
+    ],
+    [
+      "homemaker",
+      1
+    ],
+    [
+      "cattle rancher",
+      1
+    ],
+    [
+      "sophist",
+      1
+    ],
+    [
+      "coroplast",
+      1
+    ],
+    [
+      "sport historian",
+      1
+    ],
+    [
+      "Indologist",
+      1
+    ],
+    [
+      "Attic potter",
+      1
+    ],
+    [
+      "tennis player",
+      1
+    ],
+    [
+      "Ayurveda practitioner",
+      1
+    ],
+    [
+      "hetaera",
+      1
+    ],
+    [
+      "mimographer",
+      1
+    ],
+    [
+      "iatrosophist",
+      1
+    ],
+    [
+      "Pharaoh Queen",
+      1
+    ],
+    [
+      "political adviser",
+      1
+    ],
+    [
+      "Min",
+      1
+    ],
+    [
+      "nomarch",
+      1
+    ],
+    [
+      "Dayan",
+      1
+    ],
+    [
+      "architectural historian",
+      1
+    ],
+    [
+      "preface author",
+      1
+    ],
+    [
+      "historic preservationist",
+      1
+    ],
+    [
+      "herbalist",
+      1
+    ],
+    [
+      "social scientist",
+      1
+    ],
+    [
+      "iconographer",
+      1
+    ],
+    [
+      "law professor",
+      1
+    ],
+    [
+      "archdeacon",
+      1
+    ],
+    [
+      "Latin Catholic monk",
+      1
+    ],
+    [
+      "envoy extraordinary and minister plenipotentiary",
+      1
+    ],
+    [
+      "medieval archaeologist",
+      1
+    ],
+    [
+      "sheriff",
+      1
+    ],
+    [
+      "chronograph",
+      1
+    ],
+    [
+      "Minnesänger",
+      1
+    ],
+    [
+      "gerontologist",
+      1
+    ],
+    [
+      "sitarist",
+      1
+    ],
+    [
+      "seal cutter",
+      1
+    ],
+    [
+      "electrical engineer",
+      1
+    ],
+    [
+      "contemporary artist",
+      1
+    ],
+    [
+      "kugyō",
+      1
+    ],
+    [
+      "video game artist",
+      1
+    ],
+    [
+      "ashigaru",
+      1
+    ],
+    [
+      "developmental biologist",
+      1
+    ],
+    [
+      "managing director",
+      1
+    ],
+    [
+      "plasma physicist",
+      1
+    ],
+    [
+      "ice dancer",
+      1
+    ],
+    [
+      "child actor",
+      1
+    ],
+    [
+      "pharmacy historian",
+      1
+    ],
+    [
+      "karateka",
+      1
+    ],
+    [
+      "martial artist",
+      1
+    ],
+    [
+      "autodidact",
+      1
+    ],
+    [
+      "greengrocer",
+      1
+    ],
+    [
+      "wholesaler",
+      1
+    ],
+    [
+      "director of audiography",
+      1
+    ],
+    [
+      "gospel musician",
+      1
+    ],
+    [
+      "physiotherapist",
+      1
+    ],
+    [
+      "professional",
+      1
+    ],
+    [
+      "veteran",
+      1
+    ],
+    [
+      "union member",
+      1
+    ],
+    [
+      "academic musician",
+      1
+    ],
+    [
+      "suffragette",
+      1
+    ],
+    [
+      "chemical engineer",
+      1
+    ],
+    [
+      "basketball player",
+      1
+    ],
+    [
+      "association football coach",
+      1
+    ],
+    [
+      "business magnate",
+      1
+    ],
+    [
+      "percussionist",
+      1
+    ],
+    [
+      "musical theatre actor",
+      1
+    ],
+    [
+      "monologist",
+      1
+    ],
+    [
+      "bridge player",
+      1
+    ],
+    [
+      "metaphysician",
+      1
+    ],
+    [
+      "presenter",
+      1
+    ],
+    [
+      "Islamic theologian",
+      1
+    ],
+    [
+      "ambassador",
+      1
+    ],
+    [
+      "conquistador",
+      1
+    ],
+    [
+      "Conqueror",
+      1
+    ],
+    [
+      "herbarium curator",
+      1
+    ],
+    [
+      "joiner",
+      1
+    ],
+    [
+      "astrobiologist",
+      1
+    ],
+    [
+      "balloonist",
+      1
+    ],
+    [
+      "Formula One driver",
+      1
+    ],
+    [
+      "racing automobile driver",
+      1
+    ],
+    [
+      "primatologist",
+      1
+    ],
+    [
+      "qāriʾ",
+      1
+    ],
+    [
+      "topologist",
+      1
+    ],
+    [
+      "dub director",
+      1
+    ],
+    [
+      "ayatollah",
+      1
+    ],
+    [
+      "artificial intelligence researcher",
+      1
+    ],
+    [
+      "photogrammetrist",
+      1
+    ],
+    [
+      "scientific editor",
+      1
+    ],
+    [
+      "protestant clergyman",
+      1
+    ],
+    [
+      "paymaster",
+      1
+    ],
+    [
+      "functionary",
+      1
+    ],
+    [
+      "military civil servant",
+      1
+    ]
+  ]
+}
