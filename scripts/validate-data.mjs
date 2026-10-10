@@ -10,6 +10,7 @@ import {
   retryDelay,
   boundedInteger,
   request,
+  approximateQualifiers,
 } from "./import.mjs";
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const claim = (time, precision = 9, rank = "normal", qualifiers = {}) => ({
@@ -72,7 +73,31 @@ assert.equal(person.birth[0].references.length, 1);
 assert.equal(
   date(claim("+1500-00-00T00:00:00Z", 9, "normal", { P1480: [{}] }))
     .approximate,
+  false,
+);
+const circumstance = (id) => ({
+  P1480: [{ snaktype: "value", datavalue: { value: { id } } }],
+});
+for (const id of ["Q26877139", "Q26877143", "Q27055388"]) {
+  const input = claim("+1852-11-27T00:00:00Z", 11, "normal", circumstance(id));
+  assert.equal(date(input).approximate, false, `${id} is calendar metadata`);
+  assert.deepEqual(date(input).qualifiers, input.qualifiers);
+}
+for (const id of ["Q5727902", "Q60070514", "Q37113960"]) {
+  assert.equal(
+    date(claim("+1775-04-23T00:00:00Z", 11, "normal", circumstance(id)))
+      .approximate,
+    true,
+  );
+}
+assert.equal(
+  date(
+    claim("+1395-00-00T00:00:00Z", 9, "normal", {
+      P5102: circumstance("Q5727902").P1480,
+    }),
+  ).approximate,
   true,
+  "Nature-of-statement circa is also an approximation",
 );
 const unresolved = {
   id: "unknown",
@@ -230,6 +255,11 @@ for (const p of data.people) {
     for (const field of ["before", "after"])
       assert(Number.isFinite(d[field]) && d[field] >= 0);
     assert(d.rank !== "deprecated");
+    assert.equal(
+      d.approximate,
+      approximateQualifiers(d.qualifiers),
+      `${p.id}: approximation flag must match the sourcing qualifier value`,
+    );
   }
   if (p.portrait) {
     assert(

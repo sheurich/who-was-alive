@@ -100,6 +100,15 @@ export async function cached(name, fn) {
   await fs.writeFile(p, JSON.stringify(value));
   return value;
 }
+export function approximateQualifiers(qualifiers = {}) {
+  // P1480 describes sourcing circumstances, including calendars, not just circa.
+  return [...(qualifiers.P1480 || []), ...(qualifiers.P5102 || [])].some(
+    (snak) =>
+      ["Q5727902", "Q60070514", "Q37113960"].includes(
+        snak.datavalue?.value?.id,
+      ),
+  );
+}
 export function date(claim) {
   const v = claim.mainsnak?.datavalue?.value;
   if (!v?.time) {
@@ -127,7 +136,7 @@ export function date(claim) {
     calendar: v.calendarmodel,
     before: v.before,
     after: v.after,
-    approximate: !!claim.qualifiers?.P1480,
+    approximate: approximateQualifiers(claim.qualifiers),
     qualifiers: claim.qualifiers || {},
     references: claim.references || [],
     rank: claim.rank,

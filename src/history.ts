@@ -11,21 +11,72 @@ export type LifeStatus = {
 const GREGORIAN = "Q1985727";
 const JULIAN = "Q1985786";
 
-function uncertainDate(date: HistoricalDate): boolean {
-  return (
-    !!date.approximate ||
-    ["P1319", "P1326", "P1480", "P4241"].some(
-      (key) => key in (date.qualifiers ?? {}),
-    )
-  );
+// These sourcing circumstances describe calendar treatment, not uncertain dates.
+const SOURCING_METADATA = new Set([
+  "Q106419137",
+  "Q26877139",
+  "Q26877143",
+  "Q27055388",
+  "Q18195782",
+  "Q26961029",
+  "Q71536040",
+  "Q712144",
+  "Q132555",
+]);
+const STATEMENT_METADATA = new Set(["Q29509043", "Q29509080"]);
+
+const APPROXIMATION = new Set(["Q5727902", "Q60070514", "Q37113960"]);
+
+interface DateEvidence {
+  interval: Bounds | null;
+  display: Bounds | null;
 }
 
-/** Approximation has no source-defined tolerance; its chart extent cannot prove life or overlap. */
+type QualifierSnak = { datavalue?: { value?: unknown } };
+function qualifierValues(
+  date: HistoricalDate,
+  property: string,
+): unknown[] | null {
+  const value = date.qualifiers?.[property];
+  if (value === undefined) return [];
+  if (!Array.isArray(value) || !value.length) return null;
+  const result = value.map((snak: QualifierSnak) => snak?.datavalue?.value);
+  return result.some((value) => value === undefined) ? null : result;
+}
+function qualifierIds(date: HistoricalDate, property: string): string[] | null {
+  const values = qualifierValues(date, property);
+  if (!values) return null;
+  const ids = values.map((value) => (value as { id?: unknown })?.id);
+  return ids.every((id) => typeof id === "string") ? (ids as string[]) : null;
+}
+function sourcing(
+  date: HistoricalDate,
+): { approximate: boolean; unsupported: boolean } | null {
+  const circumstances = qualifierIds(date, "P1480");
+  const nature = qualifierIds(date, "P5102");
+  if (!circumstances || !nature) return null;
+  return {
+    approximate:
+      !!date.approximate ||
+      [...circumstances, ...nature].some((id) => APPROXIMATION.has(id)),
+    unsupported:
+      circumstances.some(
+        (id) => !SOURCING_METADATA.has(id) && !APPROXIMATION.has(id),
+      ) ||
+      nature.some(
+        (id) => !STATEMENT_METADATA.has(id) && !APPROXIMATION.has(id),
+      ),
+  };
+}
+function finite(bounds: Bounds | null): bounds is Bounds {
+  return !!bounds && Number.isFinite(bounds.min) && Number.isFinite(bounds.max);
+}
+
+/** True when the complete lifetime cannot be bounded by source assertions. */
 export function isUncertain(person: Person): boolean {
-  return (
-    [...person.birth, ...person.death].some(uncertainDate) ||
-    !lifeBounds(person)?.death
-  );
+  const birth = evidenceBounds(person.birth);
+  const death = evidenceBounds(person.death);
+  return !finite(birth) || !finite(death);
 }
 
 /** All numbers are astronomical years: 0 is 1 BCE. Bounds use an exclusive upper endpoint. */
@@ -62,7 +113,8 @@ function rawYear(date: HistoricalDate): number | null {
 }
 
 /** Intentionally calculate in whole years even for day precision. No birthday is inferred. */
-export function dateBounds(date: HistoricalDate): Bounds | null {
+function sourceBounds(date: HistoricalDate): Bounds | null {
+  if (date.snaktype) return null;
   const year = rawYear(date);
   if (
     year === null ||
@@ -95,16 +147,83 @@ export function dateBounds(date: HistoricalDate): Bounds | null {
   const after = Number.isFinite(date.after) ? Math.max(0, date.after!) : 0;
   // Wikidata before/after units follow precision; sub-year values are rounded outwards.
   const qualifierUnit = date.precision > 9 ? 1 : unit;
-  // This padding is a visual extent only. uncertainDate excludes it from definite conclusions.
-  const approximation = date.approximate ? unit : 0;
   // Julian conversion can cross a year boundary. Conservative bounds avoid false precision.
   const calendarMargin =
     calendar === JULIAN || calendar === "julian"
       ? Math.ceil(Math.abs(year) / 36500) + 1
       : 0;
   return {
-    min: start - before * qualifierUnit - approximation - calendarMargin,
-    max: start + unit + after * qualifierUnit + approximation + calendarMargin,
+    min: start - before * qualifierUnit - calendarMargin,
+    max: start + unit + after * qualifierUnit + calendarMargin,
+  };
+}
+
+/** Qualifier time values retain Wikidata JSON's historical BCE numbering. */
+function qualifierTime(value: unknown): Bounds | null {
+  if (!value || typeof value !== "object") return null;
+  const raw = value as {
+    time?: string;
+    precision?: number;
+    calendarmodel?: string;
+    before?: number;
+    after?: number;
+  };
+  const match =
+    typeof raw.time === "string" &&
+    raw.time.match(/^([+-]?\d+)(-\d{2}-\d{2}.*)$/);
+  if (!match || typeof raw.precision !== "number") return null;
+  const sourceYear = Number(match[1]);
+  const year = sourceYear < 0 ? sourceYear + 1 : sourceYear;
+  return sourceBounds({
+    value: `${year < 0 ? "-" : "+"}${String(Math.abs(year)).padStart(4, "0")}${match[2]}`,
+    precision: raw.precision,
+    calendar: raw.calendarmodel,
+    before: raw.before,
+    after: raw.after,
+  });
+}
+
+function dateEvidence(date: HistoricalDate): DateEvidence {
+  const display = sourceBounds(date);
+  if (!display) return { interval: null, display: null };
+  const earliest = qualifierValues(date, "P1319");
+  const latest = qualifierValues(date, "P1326");
+  const context = sourcing(date);
+  if (!earliest || !latest || !context) return { interval: null, display };
+  const lower = earliest.map(qualifierTime);
+  const upper = latest.map(qualifierTime);
+  if ([...lower, ...upper].some((bound) => !bound))
+    return { interval: null, display };
+  const hasEndpoints = lower.length > 0 || upper.length > 0;
+  const unsupported = context.unsupported;
+  const unbounded = context.approximate || unsupported;
+  if (!hasEndpoints && !unbounded) return { interval: display, display };
+  const min = lower.length
+    ? Math.min(...lower.map((bound) => bound!.min))
+    : -Infinity;
+  const max = upper.length
+    ? Math.max(...upper.map((bound) => bound!.max))
+    : Infinity;
+  if (min >= max) return { interval: null, display };
+  const interval = { min, max };
+  return {
+    interval: unsupported ? { min: -Infinity, max: Infinity } : interval,
+    display: finite(interval) ? interval : display,
+  };
+}
+
+/** Finite chart extent only; source evidence governs life and overlap conclusions. */
+export function dateBounds(date: HistoricalDate): Bounds | null {
+  return dateEvidence(date).display;
+}
+
+function evidenceBounds(dates: HistoricalDate[]): Bounds | null {
+  if (!dates.length) return null;
+  const bounds = dates.map((date) => dateEvidence(date).interval);
+  if (bounds.some((bound) => !bound)) return null;
+  return {
+    min: Math.min(...bounds.map((bound) => bound!.min)),
+    max: Math.max(...bounds.map((bound) => bound!.max)),
   };
 }
 
@@ -136,26 +255,54 @@ function range(min: number, max: number): string {
 }
 
 export function statusAt(person: Person, year: number): LifeStatus {
-  const life = lifeBounds(person);
-  if (!life || !Number.isFinite(year))
+  if (!Number.isFinite(year))
     return { kind: "unknown", label: "Dates uncertain" };
-  if (!person.birth.some(uncertainDate) && life.birth.min >= year + 1)
+  const birth = evidenceBounds(person.birth);
+  const death = evidenceBounds(person.death);
+  if (birth && death && death.max <= birth.min)
+    return { kind: "unknown", label: "Conflicting life dates" };
+  if (birth && birth.min >= year + 1)
     return { kind: "unborn", label: "Not born yet" };
-  if (!person.death.some(uncertainDate) && life.death && life.death.max <= year)
-    return { kind: "died", label: "Died" };
-  if ([...person.birth, ...person.death].some(uncertainDate)) {
-    return life.death && year + 1 > life.birth.min && year < life.death.max
-      ? { kind: "possible", label: "Possibly alive · approximate dates" }
-      : { kind: "unknown", label: "Life status uncertain · approximate dates" };
-  }
-  if (!life.death) return { kind: "unknown", label: "Life status unknown" };
-  if (life.birth.max <= year && life.death.min >= year + 1) {
+  if (death && death.max <= year) return { kind: "died", label: "Died" };
+  if (!birth || !death || death.max <= birth.min)
+    return { kind: "unknown", label: "Life status unknown" };
+  if (birth.max <= year && death.min >= year + 1) {
+    if (!finite(birth))
+      return { kind: "alive", label: "Alive · age uncertain" };
+    const ages = range(Math.max(0, year - birth.max), year - birth.min);
     return {
       kind: "alive",
-      label: `Age ${range(Math.max(0, year - life.birth.max), year - life.birth.min)}`,
+      label:
+        birth.max - birth.min > 1
+          ? `Alive · age ${ages} (uncertain)`
+          : `Age ${ages}`,
     };
   }
-  return { kind: "possible", label: "Possibly alive · dates uncertain" };
+  if (
+    birth.min === year &&
+    birth.max === year + 1 &&
+    death.min === year &&
+    death.max === year + 1
+  )
+    return { kind: "possible", label: "Born and died this year" };
+  if (birth.min === year && birth.max === year + 1)
+    return { kind: "possible", label: "Born this year" };
+  if (death.min === year && death.max === year + 1)
+    return { kind: "possible", label: "Died this year" };
+  if (!finite(birth) || !finite(death)) {
+    const display = lifeBounds(person);
+    return display?.death &&
+      year + 1 > display.birth.min &&
+      year < display.death.max
+      ? { kind: "possible", label: "Possibly alive · dates uncertain" }
+      : { kind: "unknown", label: "Life status uncertain · dates uncertain" };
+  }
+  const birthBoundary = year + 1 > birth.min && year < birth.max;
+  const deathBoundary = year + 1 > death.min && year < death.max;
+  return {
+    kind: "possible",
+    label: `Possibly alive · ${birthBoundary && deathBoundary ? "birth/death" : birthBoundary ? "birth" : "death"} year uncertain`,
+  };
 }
 
 export function yearOf(dates: HistoricalDate[]): number | null {
@@ -169,6 +316,13 @@ export function birthdayYear(person: Person, age: number): number | null {
   return year === null ? null : year + age;
 }
 
+function yearsLabel(min: number, max: number): string {
+  if (min === max) return formatYear(min);
+  if (min > 0) return `${min}–${max} CE`;
+  if (max <= 0) return `${1 - min}–${1 - max} BCE`;
+  return `${formatYear(min)}–${formatYear(max)}`;
+}
+
 export function dateLabel(dates: HistoricalDate[]): string {
   if (!dates.length) return "Unknown";
   return [
@@ -176,11 +330,38 @@ export function dateLabel(dates: HistoricalDate[]): string {
       dates.map((date) => {
         const year = rawYear(date);
         if (year === null) return "Unknown";
+        const earliest = qualifierValues(date, "P1319");
+        const latest = qualifierValues(date, "P1326");
+        const lower = earliest?.map(qualifierTime);
+        const upper = latest?.map(qualifierTime);
+        const context = sourcing(date);
+        if (
+          !lower ||
+          !upper ||
+          !context ||
+          [...lower, ...upper].some((bound) => !bound)
+        )
+          return "Uncertain date";
+        const unsupported = context.unsupported;
         let label = formatYear(year);
-        if (date.precision < 9)
-          label += date.precision === 8 ? " (decade)" : " (broad estimate)";
-        if (uncertainDate(date) || date.before || date.after)
-          label = `c. ${label}`;
+        if (lower.length && upper.length) {
+          const min = Math.min(...lower.map((bound) => bound!.min));
+          const max = Math.max(...upper.map((bound) => bound!.max)) - 1;
+          label = min <= max ? yearsLabel(min, max) : "Conflicting date bounds";
+        } else if (lower.length) {
+          label = `No earlier than ${formatYear(Math.min(...lower.map((bound) => bound!.min)))}`;
+        } else if (upper.length) {
+          label = `No later than ${formatYear(Math.max(...upper.map((bound) => bound!.max)) - 1)}`;
+        } else {
+          if (date.precision < 9)
+            label += date.precision === 8 ? " (decade)" : " (broad estimate)";
+          if (context.approximate) label = `c. ${label}`;
+          else if (date.before || date.after) {
+            const bounds = sourceBounds(date);
+            if (bounds) label = yearsLabel(bounds.min, bounds.max - 1);
+          }
+        }
+        if (unsupported) label += " (uncertain)";
         if (date.calendar?.endsWith(JULIAN) || date.calendar === "julian")
           label += " (Julian)";
         return label;
@@ -190,11 +371,9 @@ export function dateLabel(dates: HistoricalDate[]): string {
 }
 
 export function ageDifference(a: Person, b: Person): string {
-  if ([...a.birth, ...b.birth].some(uncertainDate))
-    return "Age difference uncertain";
-  const aa = combined(a.birth);
-  const bb = combined(b.birth);
-  if (!aa || !bb) return "Age difference unknown";
+  const aa = evidenceBounds(a.birth);
+  const bb = evidenceBounds(b.birth);
+  if (!finite(aa) || !finite(bb)) return "Age difference uncertain";
   const deltaMin = aa.min - bb.max;
   const deltaMax = aa.max - bb.min;
   const min =
@@ -206,24 +385,34 @@ export function ageDifference(a: Person, b: Person): string {
 }
 
 export function comparison(a: Person, b: Person): string {
-  const aa = lifeBounds(a);
-  const bb = lifeBounds(b);
-  if (!aa?.death || !bb?.death) return "Unknown overlap · incomplete dates";
+  const aa = { birth: evidenceBounds(a.birth), death: evidenceBounds(a.death) };
+  const bb = { birth: evidenceBounds(b.birth), death: evidenceBounds(b.death) };
+  if (
+    !aa.birth ||
+    !aa.death ||
+    !bb.birth ||
+    !bb.death ||
+    aa.death.max <= aa.birth.min ||
+    bb.death.max <= bb.birth.min
+  )
+    return "Unknown overlap · incomplete dates";
   const earliestStart = Math.max(aa.birth.min, bb.birth.min);
   const latestStart = Math.max(aa.birth.max, bb.birth.max);
   const earliestEnd = Math.min(aa.death.min, bb.death.min);
   const latestEnd = Math.min(aa.death.max, bb.death.max);
-  if ([...a.birth, ...a.death, ...b.birth, ...b.death].some(uncertainDate)) {
-    return latestEnd > earliestStart
-      ? "Possible overlap · approximate dates"
-      : "Unknown overlap · approximate dates";
+  if (earliestEnd > latestStart) {
+    return Number.isFinite(latestEnd - earliestStart)
+      ? `Definite overlap · ${range(earliestEnd - latestStart, latestEnd - earliestStart)} years`
+      : "Definite overlap · duration uncertain";
   }
-  if (earliestEnd > latestStart)
-    return `Definite overlap · ${range(earliestEnd - latestStart, latestEnd - earliestStart)} years`;
   if (latestEnd > earliestStart) return "Possible overlap · dates uncertain";
   const early = aa.death.max <= bb.birth.min ? aa : bb;
   const late = early === aa ? bb : aa;
-  return `Gap · ${range(Math.max(0, late.birth.min - early.death!.max), late.birth.max - early.death!.min)} years`;
+  const min = Math.max(0, late.birth!.min - early.death!.max);
+  const max = late.birth!.max - early.death!.min;
+  return Number.isFinite(max)
+    ? `Gap · ${range(min, max)} years`
+    : "Gap · duration uncertain";
 }
 
 const normalize = (text: string) =>

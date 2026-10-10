@@ -46,7 +46,7 @@ Internal year zero means 1 BCE. It never appears as a displayed year. Original W
 
 The app compares whole-year intervals. It does not claim an exact age on an unspecified day. Different source dates widen the interval. Coarse century and millennium dates follow historical calendar boundaries. Julian dates receive conservative margins rather than an exact day conversion.
 
-Approximate claims and unresolved temporal qualifiers cannot establish definite overlap. Their striped chart extents illustrate the recorded estimates, not a source-defined confidence interval. People with missing death dates have unknown life status and remain searchable. The importer does not certify living people.
+Calendar notes do not imply approximate lifetimes. Earliest and latest dates constrain the interval; all alternative dates remain represented. A person can be definitely alive while their age remains uncertain. Known birth and death years have separate labels. Unbounded approximate claims and unresolved temporal qualifiers cannot establish definite overlap. Their striped chart extents illustrate the recorded estimates, not a source-defined confidence interval. People with missing death dates have unknown life status and remain searchable. The importer does not certify living people.
 
 A birthday jump uses a representative birth year plus twelve. It does not establish that the person survived to that age. “Definite” means supported by all imported date bounds, not independently verified historical truth.
 
