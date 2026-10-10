@@ -26,11 +26,11 @@ npm run preview
 
 `dist/` is the complete static website. Serve its contents through an ordinary HTTP server; opening `index.html` as a `file:` URL does not support the data fetch. Exploration makes no live data API calls. Additional portraits load from Wikimedia on demand, with no referring page URL sent. Cached portraits and historical data remain usable without Wikimedia access. Failed images show initials; no accounts, external fonts, or analytics are used. Open a person for the image artist, source, and license.
 
-## Deploy when a target is chosen
+## Deployment
 
 Publish the contents of `dist/` to any static host. No server functions, credentials, environment variables, or rewrite rules are required.
 
-For GitHub Pages, use `npm ci` and `npm run build`, then upload `dist/` with the host's Pages artifact workflow. Alternatively, copy `dist/` into the publishing branch or folder configured in Pages. This repository includes no deployment workflow and has no remote target configured.
+GitHub Pages serves [Lifetimes](https://sheurich.github.io/who-was-alive/) from the root of the `gh-pages` branch in [sheurich/who-was-alive](https://github.com/sheurich/who-was-alive). The `main` branch holds the source. To publish an update, run the checks and build above, replace the contents of `gh-pages` with `dist/`, retain an empty `.nojekyll` file, and push a signed commit. GitHub Pages deploys the branch automatically.
 
 The build uses Vite's relative base (`./`). Scripts, styles, data, and portraits work at both a domain root and a repository subpath such as `/lifetimes/`. Use the trailing slash for a hosted directory. Query strings preserve share state without requiring path rewrites.
 
