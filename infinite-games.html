@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#efe9ff" />
+    <meta
+      name="description"
+      content="An endless arcade. The deeper you scroll, the stranger the games become. Every cover is playable."
+    />
+    <title>Infinite Games — Keep going. It gets weird.</title>
+  </head>
+  <body>
+    <a class="ig-skip" href="#shelf">Skip to games</a>
+    <header class="ig-nav">
+      <a href="./" class="ig-back">← Lifetimes</a>
+      <a href="#top" class="ig-brand">∞ Infinite Games</a>
+      <a id="new-universe" href="./infinite-games.html">New universe ↻</a>
+    </header>
+    <main id="top">
+      <section class="ig-intro" aria-labelledby="ig-title">
+        <div class="ig-heading">
+          <h1 id="ig-title">
+            Infinite<br /><span
+              >Games<span class="ig-spark" aria-hidden="true">✳</span></span
+            >
+          </h1>
+          <div class="ig-invitation">
+            <p>A perfectly normal arcade.<br />Until you keep scrolling.</p>
+            <p class="ig-small">
+              Every cover opens a game. The deeper you go, the less sense it
+              makes.
+            </p>
+            <a href="#shelf" class="ig-explore">Find a game ↓</a>
+          </div>
+        </div>
+        <div class="ig-ticket">
+          <span aria-hidden="true">✦</span> Endless strange games. Zero coins
+          needed. <span aria-hidden="true">✦</span>
+        </div>
+      </section>
+      <section id="shelf" aria-label="Endless game shelf">
+        <div class="ig-shelf-heading">
+          <h2>Your next rabbit hole</h2>
+          <div class="ig-depth">
+            <span id="depth-label">Normal-ish</span
+            ><meter
+              id="weird-meter"
+              min="0"
+              max="100"
+              value="0"
+              aria-label="Weirdness"
+            ></meter>
+          </div>
+        </div>
+        <div id="game-grid" class="ig-grid"></div>
+        <div id="more-marker" class="ig-more">
+          <p id="shelf-note">There is always another game.</p>
+          <button id="more-games" type="button">Keep going ↓</button>
+          <p id="load-status" role="status" class="ig-small"></p>
+        </div>
+      </section>
+    </main>
+    <dialog id="game-dialog" aria-labelledby="game-title">
+      <div class="ig-dialog-head">
+        <span id="game-number"></span
+        ><button id="close-game" aria-label="Close game">✕</button>
+      </div>
+      <h2 id="game-title"></h2>
+      <p id="game-kind"></p>
+      <div id="game-host"></div>
+      <div class="ig-dialog-foot">
+        <button id="replay-game">Play again ↻</button
+        ><button id="back-shelf">Back to the shelf</button>
+      </div>
+    </dialog>
+    <noscript
+      ><p>Enable JavaScript to explore and play Infinite Games.</p></noscript
+    >
+    <script type="module" src="/src/infinite-games.ts"></script>
+  </body>
+</html>

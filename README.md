@@ -34,6 +34,10 @@ GitHub Pages serves [Lifetimes](https://sheurich.github.io/who-was-alive/) from 
 
 The build uses Vite's relative base (`./`). Scripts, styles, data, and portraits work at both a domain root and a repository subpath such as `/lifetimes/`. Use the trailing slash for a hosted directory. Query strings preserve share state without requiring path rewrites.
 
+## Infinite Games
+
+Open `infinite-games.html`, or use the Infinite Games link in Lifetimes. This endless gallery creates original game covers locally. Scrolling progressively distorts the pictures and titles. Every cover opens a seeded variant of a space dodger, treasure hunt, or matching game. These are three game types with changing challenges, not independently generated game engines. Controls remain readable, with keyboard and touch support and no timers, flashing, sound, or runtime API calls. The URL preserves the universe seed and open game. Close a game with Escape and use Play again to replay its challenge.
+
 ## Data and corrections
 
 See [DATA.md](DATA.md) for acquisition, refresh commands, attribution, and coverage. The snapshot records source links, date precision, calendars, qualifiers, alternate claims, and references. Revision links appear only when the same entity response supplied a revision ID. `data/corrections.json` stores reviewed overrides separately from imported records.

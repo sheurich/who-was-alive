@@ -1,0 +1,209 @@
+.mini-game {
+  --mini-hue: 230;
+  --mini-tilt: 0deg;
+  color: #18213b;
+  background: #f5f8ff;
+  border: 2px solid #c5d0e5;
+  border-radius: 20px;
+  padding: clamp(12px, 3vw, 24px);
+  font:
+    500 15px/1.5 system-ui,
+    sans-serif;
+  width: 100%;
+  box-sizing: border-box;
+}
+.mini-game * {
+  box-sizing: border-box;
+}
+.mini-instructions {
+  margin: 0 0 14px;
+  max-width: 60ch;
+}
+.mini-progress {
+  font-weight: 750;
+  margin: 0 0 16px;
+  font-variant-numeric: tabular-nums;
+}
+.mini-message {
+  min-height: 3em;
+  margin: 16px 0 0;
+  color: #243962;
+}
+.mini-finished .mini-message {
+  color: #12523b;
+  font-weight: 750;
+}
+.mini-board {
+  max-width: 520px;
+  margin-inline: auto;
+}
+.mini-button {
+  appearance: none;
+  font: inherit;
+  color: #18213b;
+  background: #fff;
+  border: 2px solid #8a9bba;
+  border-radius: 10px;
+  padding: 10px 8px;
+  min-height: 46px;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+.mini-button:hover:not([aria-disabled="true"]) {
+  background: #e7edff;
+  border-color: #344e91;
+}
+.mini-button:focus-visible,
+.mini-flight-deck:focus-visible {
+  outline: 3px solid #164ebc;
+  outline-offset: 3px;
+}
+.mini-button[aria-disabled="true"] {
+  cursor: default;
+}
+.mini-button[hidden] {
+  display: none;
+}
+.mini-incoming {
+  text-align: center;
+  margin: 0 0 10px;
+  font-weight: 750;
+}
+.mini-flight-deck {
+  border-radius: 12px;
+}
+.mini-lanes,
+.mini-lane-controls {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+.mini-lane {
+  position: relative;
+  min-height: 190px;
+  display: grid;
+  grid-template-rows: 1fr 1fr auto;
+  place-items: center;
+  background: hsl(var(--mini-hue) 55% 94%);
+  border: 2px dashed #8d9dbc;
+  border-radius: 45% 45% 10px 10px / 15% 15% 10px 10px;
+}
+.mini-lane.mini-selected {
+  border: 3px solid #324f8a;
+  background: hsl(var(--mini-hue) 60% 88%);
+}
+.mini-asteroid {
+  font-size: 42px;
+  line-height: 1;
+  color: #80421b;
+  transform: rotate(var(--mini-tilt));
+}
+.mini-ship {
+  font-size: 44px;
+  color: #243d79;
+  line-height: 1;
+}
+.mini-lane-name {
+  text-transform: capitalize;
+  font-size: 13px;
+  margin-bottom: 8px;
+}
+.mini-selection {
+  text-align: center;
+  font-size: 14px;
+  margin: 8px 0 12px;
+}
+.mini-lane-controls .mini-button {
+  font-size: 14px;
+  padding-inline: 3px;
+}
+.mini-hint {
+  font-size: 13px;
+  color: #445571;
+  margin: 14px 0 0;
+}
+.mini-target {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  font-weight: 750;
+  margin: 0 0 16px;
+}
+.mini-target .mini-glyph {
+  font-size: 28px;
+}
+.mini-hunt-grid,
+.mini-memory-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+}
+.mini-tile,
+.mini-card {
+  aspect-ratio: 1;
+  padding: 4px;
+  display: grid;
+  place-items: center;
+  min-width: 0;
+}
+.mini-glyph {
+  font:
+    36px/1.2 "Arial Unicode MS",
+    "Segoe UI Symbol",
+    sans-serif;
+}
+.mini-tile .mini-glyph {
+  transform: rotate(var(--mini-tilt));
+}
+.mini-game[data-weird="true"] .mini-tile:nth-child(3n) {
+  border-radius: 45% 10% 40% 20%;
+  background: #ece7ff;
+}
+.mini-tile.mini-miss {
+  opacity: 0.5;
+  border-style: dashed;
+}
+.mini-card {
+  background: hsl(var(--mini-hue) 65% 88%);
+  border-color: #586f9d;
+}
+.mini-card.mini-revealed {
+  background: #fff;
+}
+.mini-card.mini-matched {
+  border: 3px solid #267357;
+  background: #e4f5eb;
+}
+.mini-card.mini-matched::after {
+  content: "✓";
+  font-size: 12px;
+  line-height: 1;
+  color: #13533c;
+}
+.mini-hide {
+  display: block;
+  width: 100%;
+  margin-top: 12px;
+}
+@media (max-width: 380px) {
+  .mini-hunt-grid,
+  .mini-memory-grid {
+    gap: 6px;
+  }
+  .mini-glyph {
+    font-size: 29px;
+  }
+  .mini-lane {
+    min-height: 150px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .mini-game *,
+  .mini-game *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
