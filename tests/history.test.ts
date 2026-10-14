@@ -223,7 +223,10 @@ test("unknown sourcing circumstances remain conservative", () => {
 });
 test("boundary labels identify known birth and death years", () => {
   assert.equal(statusAt(p(1900, 1980), 1900).label, "Born this year");
-  assert.equal(statusAt(p(1900, 1980), 1980).label, "Died this year");
+  assert.equal(
+    statusAt(p(1900, 1980), 1980).label,
+    "Died at about age 80 this year",
+  );
   const decade = p(1900, 1980);
   decade.birth[0].precision = 8;
   assert.match(statusAt(decade, 1905).label, /birth year uncertain/);
@@ -310,4 +313,39 @@ test("statement-nature qualifiers distinguish uncertainty from official status",
     person.birth[0].qualifiers = { P5102: itemQualifier(id) };
     assert.equal(statusAt(person, 1950).kind, "alive");
   }
+});
+
+const datedPerson = (birth: string, death: string): Person => ({
+  ...p(1900, 1980),
+  birth: [{ value: birth, precision: 11, calendar: "gregorian" }],
+  death: [{ value: death, precision: 11, calendar: "gregorian" }],
+});
+test("death ages use completed birthdays and remain fixed after death", () => {
+  const person = datedPerson("+1900-12-10T00:00:00Z", "+1980-02-01T00:00:00Z");
+  assert.equal(statusAt(person, 1980).label, "Died at age 79 this year");
+  assert.equal(statusAt(person, 2000).label, "Died at age 79");
+  person.death[0].value = "+1980-12-10T00:00:00Z";
+  assert.equal(statusAt(person, 2000).label, "Died at age 80");
+  assert.equal(
+    statusAt(datedPerson("+0000-12-10T00:00:00Z", "+0001-02-01T00:00:00Z"), 2)
+      .label,
+    "Died before age 1",
+  );
+});
+test("death ages do not claim precision absent from the source", () => {
+  assert.equal(statusAt(p(1900, 1980), 2000).label, "Died at about age 80");
+  const disputed = p(1900, 1980);
+  disputed.birth.push(d(1902));
+  assert.equal(statusAt(disputed, 2000).label, "Died at about age 79");
+  disputed.birth = [];
+  assert.equal(statusAt(disputed, 2000).label, "Died · age unknown");
+  const partial = datedPerson("+1900-00-00T00:00:00Z", "+1980-02-01T00:00:00Z");
+  partial.birth[0].precision = 9;
+  assert.equal(statusAt(partial, 2000).label, "Died at about age 80");
+});
+
+test("an unspecified calendar cannot establish an exact age at death", () => {
+  const person = datedPerson("+1900-12-10T00:00:00Z", "+1980-12-10T00:00:00Z");
+  delete person.birth[0].calendar;
+  assert.equal(statusAt(person, 2000).label, "Died at about age 80");
 });

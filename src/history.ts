@@ -254,6 +254,61 @@ function range(min: number, max: number): string {
   return lo === hi ? String(lo) : `${lo}–${hi}`;
 }
 
+// Exact death ages require complete, consistent Gregorian dates.
+function exactDate(dates: HistoricalDate[]): number[] | null {
+  const values = dates.map((date) => {
+    const context = sourcing(date);
+    const calendar = date.calendar?.split("/").pop();
+    if (
+      date.snaktype ||
+      date.precision < 11 ||
+      date.before ||
+      date.after ||
+      !context ||
+      context.approximate ||
+      context.unsupported ||
+      date.qualifiers?.P1319 ||
+      date.qualifiers?.P1326 ||
+      (calendar !== GREGORIAN && calendar !== "gregorian")
+    )
+      return null;
+    const match = date.value.match(/^([+-]?\d+)-(\d{2})-(\d{2})T/);
+    if (!match) return null;
+    const [year, month, day] = match.slice(1).map(Number);
+    const leap = year % 4 === 0 && (year % 100 !== 0 || year % 400 === 0);
+    const days = [31, leap ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+    if (month < 1 || month > 12 || day < 1 || day > days[month - 1])
+      return null;
+    return [year, month, day];
+  });
+  const first = values[0];
+  return first && values.every((value) => value?.join() === first.join())
+    ? first
+    : null;
+}
+
+function deathLabel(person: Person): string {
+  const birth = exactDate(person.birth);
+  const death = exactDate(person.death);
+  if (birth && death) {
+    const beforeBirthday =
+      death[1] < birth[1] || (death[1] === birth[1] && death[2] < birth[2]);
+    const age = death[0] - birth[0] - Number(beforeBirthday);
+    if (age < 0) return "Died · age unknown";
+    return age === 0 ? "Died before age 1" : `Died at age ${age}`;
+  }
+  const b = evidenceBounds(person.birth);
+  const d = evidenceBounds(person.death);
+  if (!finite(b) || !finite(d)) return "Died · age unknown";
+  const birthYear = Math.floor((b.min + b.max - 1) / 2);
+  const deathYear = Math.floor((d.min + d.max - 1) / 2);
+  const age = deathYear - birthYear;
+  if (age < 0) return "Died · age unknown";
+  if (age === 0 && b.max - b.min === 1 && d.max - d.min === 1)
+    return "Died before age 1";
+  return `Died at about age ${age}`;
+}
+
 export function statusAt(person: Person, year: number): LifeStatus {
   if (!Number.isFinite(year))
     return { kind: "unknown", label: "Dates uncertain" };
@@ -263,7 +318,8 @@ export function statusAt(person: Person, year: number): LifeStatus {
     return { kind: "unknown", label: "Conflicting life dates" };
   if (birth && birth.min >= year + 1)
     return { kind: "unborn", label: "Not born yet" };
-  if (death && death.max <= year) return { kind: "died", label: "Died" };
+  if (death && death.max <= year)
+    return { kind: "died", label: deathLabel(person) };
   if (!birth || !death || death.max <= birth.min)
     return { kind: "unknown", label: "Life status unknown" };
   if (birth.max <= year && death.min >= year + 1) {
@@ -274,10 +330,7 @@ export function statusAt(person: Person, year: number): LifeStatus {
     const age = Math.max(0, year - birthYear);
     return {
       kind: "alive",
-      label:
-        birth.max - birth.min > 1
-          ? `Alive · about ${age}`
-          : `Age ${age}`,
+      label: birth.max - birth.min > 1 ? `Alive · about ${age}` : `Age ${age}`,
     };
   }
   if (
@@ -286,11 +339,11 @@ export function statusAt(person: Person, year: number): LifeStatus {
     death.min === year &&
     death.max === year + 1
   )
-    return { kind: "possible", label: "Born and died this year" };
+    return { kind: "possible", label: `${deathLabel(person)} this year` };
   if (birth.min === year && birth.max === year + 1)
     return { kind: "possible", label: "Born this year" };
   if (death.min === year && death.max === year + 1)
-    return { kind: "possible", label: "Died this year" };
+    return { kind: "possible", label: `${deathLabel(person)} this year` };
   if (!finite(birth) || !finite(death)) {
     const display = lifeBounds(person);
     return display?.death &&
