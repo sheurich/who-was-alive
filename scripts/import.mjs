@@ -4,6 +4,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const cache = path.join(root, "work/cache");
+export const requiredPeople = ["Q1080305"];
 const ua =
   "Lifetimes educational static snapshot/1.0 (bounded research import; Wikimedia data reuse)";
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
@@ -445,7 +446,7 @@ async function main() {
     "Q42 Q937 Q5582 Q762 Q7186 Q8016 Q1035 Q1001 Q5593 Q868 Q859 Q8686 Q873 Q8023 Q9047 Q9682 Q254 Q7259 Q7207 Q1290 Q255 Q4724 Q7200 Q535 Q692 Q7620 Q17714 Q1339 Q906 Q7312 Q1511 Q13133 Q1305 Q5809 Q5705 Q567 Q991 Q1043 Q10225 Q34660 Q409 Q9441 Q7286 Q116 Q30487 Q7085 Q1048 Q8684 Q4235 Q317521 Q8011 Q571 Q159 Q3831 Q5879 Q8682 Q7302 Q1342 Q100 Q958 Q1339 Q1041 Q7728 Q7622 Q1201 Q19185 Q4431 Q1344 Q5580 Q1235 Q12191 Q2559 Q7315 Q8018 Q2054 Q1337 Q8017 Q9049 Q8743 Q935 Q903 Q1309 Q936 Q1317 Q1394 Q1046 Q6389 Q8723 Q11571 Q395 Q7742 Q1335 Q845 Q10261 Q7197 Q6921 Q15869 Q2736 Q402 Q7310 Q1899".split(
       " ",
     );
-  const ids = new Set(seeds);
+  const ids = new Set([...seeds, ...requiredPeople]);
   for (let offset = 0; offset < limit; offset += 500) {
     const data = await cached(
       limit === 4000

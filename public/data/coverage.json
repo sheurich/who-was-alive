@@ -2,10 +2,10 @@
   "eraBasis": "First concrete birth claim in each record; alternatives and uncertainty may span other eras.",
   "unplaceableBirths": 0,
   "outsideUiRange": [],
-  "people": 5255,
-  "portraits": 3309,
+  "people": 5256,
+  "portraits": 3310,
   "cachedPortraits": 250,
-  "remotePortraits": 3059,
+  "remotePortraits": 3060,
   "portraitAcquisition": {
     "at": "2026-10-10T12:32:15.125Z",
     "people": 5255,
@@ -43,7 +43,7 @@
     },
     {
       "label": "1800–1899",
-      "count": 1791
+      "count": 1792
     },
     {
       "label": "1900 onward",
@@ -51,7 +51,7 @@
     }
   ],
   "multipleBirthClaims": 962,
-  "multipleDeathClaims": 811,
+  "multipleDeathClaims": 812,
   "approximate": 410,
   "withoutBirthReferences": 337,
   "withoutDeathReferences": 394,
@@ -62,7 +62,7 @@
   "genders": [
     [
       "male",
-      4760
+      4761
     ],
     [
       "female",
@@ -88,7 +88,7 @@
   "citizenships": [
     [
       "United States",
-      700
+      701
     ],
     [
       "Sweden",
@@ -1897,12 +1897,12 @@
       35
     ],
     [
-      "herpetologist",
+      "businessperson",
       35
     ],
     [
-      "businessperson",
-      34
+      "herpetologist",
+      35
     ],
     [
       "calligrapher",

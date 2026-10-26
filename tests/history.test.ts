@@ -349,3 +349,11 @@ test("an unspecified calendar cannot establish an exact age at death", () => {
   delete person.birth[0].calendar;
   assert.equal(statusAt(person, 2000).label, "Died at about age 80");
 });
+
+test("alternative full dates establish exact death age only when every age agrees", () => {
+  const person = datedPerson("+1900-03-05T00:00:00Z", "+1980-03-04T00:00:00Z");
+  person.death.push({ ...person.death[0], value: "+1980-03-07T00:00:00Z" });
+  assert.match(statusAt(person, 2000).label, /^Died at about age/);
+  person.birth[0].value = "+1900-09-12T00:00:00Z";
+  assert.equal(statusAt(person, 2000).label, "Died at age 79");
+});

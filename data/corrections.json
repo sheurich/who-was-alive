@@ -1,1 +1,98 @@
-{}
+{
+  "wd-Q1080305": {
+    "reason": "Wikidata records 4 March 1945; English Wikipedia records 7 March 1945. Retain both sourced death dates without choosing between them.",
+    "sources": [
+      "https://www.wikidata.org/wiki/Q1080305",
+      "https://www.wikidata.org/w/index.php?title=Q1080305&oldid=2558857230",
+      "https://en.wikipedia.org/w/index.php?title=Christian_Heurich&oldid=1361594613"
+    ],
+    "death": [
+      {
+        "value": "+1945-03-04T00:00:00Z",
+        "sourceValue": "+1945-03-04T00:00:00Z",
+        "precision": 11,
+        "calendar": "http://www.wikidata.org/entity/Q1985727",
+        "before": 0,
+        "after": 0,
+        "approximate": false,
+        "qualifiers": {},
+        "references": [
+          {
+            "hash": "ffa6d327419643c0191d8cd12cdfb51bd6b3d3b4",
+            "snaks": {
+              "P248": [
+                {
+                  "snaktype": "value",
+                  "property": "P248",
+                  "hash": "019a50b7de741e0068bde41c9d9955b22a5de47b",
+                  "datavalue": {
+                    "value": {
+                      "entity-type": "item",
+                      "numeric-id": 36578,
+                      "id": "Q36578"
+                    },
+                    "type": "wikibase-entityid"
+                  },
+                  "datatype": "wikibase-item"
+                }
+              ],
+              "P813": [
+                {
+                  "snaktype": "value",
+                  "property": "P813",
+                  "hash": "39372fcfc87c4e7d3306f51a554a7178e7057147",
+                  "datavalue": {
+                    "value": {
+                      "time": "+2014-05-05T00:00:00Z",
+                      "timezone": 0,
+                      "before": 0,
+                      "after": 0,
+                      "precision": 11,
+                      "calendarmodel": "http://www.wikidata.org/entity/Q1985727"
+                    },
+                    "type": "time"
+                  },
+                  "datatype": "time"
+                }
+              ]
+            },
+            "snaks-order": [
+              "P248",
+              "P813"
+            ]
+          }
+        ],
+        "rank": "normal",
+        "statementId": "Q1080305$52E1D4F4-7512-40D8-8DF2-C09BF73D8C89"
+      },
+      {
+        "value": "+1945-03-07T00:00:00Z",
+        "precision": 11,
+        "calendar": "http://www.wikidata.org/entity/Q1985727",
+        "references": [
+          {
+            "snaks": {
+              "P854": [
+                {
+                  "snaktype": "value",
+                  "property": "P854",
+                  "datatype": "url",
+                  "datavalue": {
+                    "type": "string",
+                    "value": "https://en.wikipedia.org/w/index.php?title=Christian_Heurich&oldid=1361594613"
+                  }
+                }
+              ]
+            }
+          }
+        ],
+        "sourceValue": "+1945-03-07T00:00:00Z",
+        "before": 0,
+        "after": 0,
+        "approximate": false,
+        "qualifiers": {},
+        "rank": "normal"
+      }
+    ]
+  }
+}

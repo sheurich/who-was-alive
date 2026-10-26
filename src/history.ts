@@ -254,8 +254,8 @@ function range(min: number, max: number): string {
   return lo === hi ? String(lo) : `${lo}–${hi}`;
 }
 
-// Exact death ages require complete, consistent Gregorian dates.
-function exactDate(dates: HistoricalDate[]): number[] | null {
+// An exact age requires complete Gregorian dates and agreement across every claim.
+function exactDates(dates: HistoricalDate[]): number[][] | null {
   const values = dates.map((date) => {
     const context = sourcing(date);
     const calendar = date.calendar?.split("/").pop();
@@ -281,21 +281,30 @@ function exactDate(dates: HistoricalDate[]): number[] | null {
       return null;
     return [year, month, day];
   });
-  const first = values[0];
-  return first && values.every((value) => value?.join() === first.join())
-    ? first
+  return values.length && values.every((value) => value !== null)
+    ? (values as number[][])
     : null;
 }
 
 function deathLabel(person: Person): string {
-  const birth = exactDate(person.birth);
-  const death = exactDate(person.death);
-  if (birth && death) {
-    const beforeBirthday =
-      death[1] < birth[1] || (death[1] === birth[1] && death[2] < birth[2]);
-    const age = death[0] - birth[0] - Number(beforeBirthday);
-    if (age < 0) return "Died · age unknown";
-    return age === 0 ? "Died before age 1" : `Died at age ${age}`;
+  const births = exactDates(person.birth);
+  const deaths = exactDates(person.death);
+  if (births && deaths) {
+    const ages = new Set(
+      births.flatMap((birth) =>
+        deaths.map((death) => {
+          const beforeBirthday =
+            death[1] < birth[1] ||
+            (death[1] === birth[1] && death[2] < birth[2]);
+          return death[0] - birth[0] - Number(beforeBirthday);
+        }),
+      ),
+    );
+    if ([...ages].some((age) => age < 0)) return "Died · age unknown";
+    if (ages.size === 1) {
+      const age = [...ages][0];
+      return age === 0 ? "Died before age 1" : `Died at age ${age}`;
+    }
   }
   const b = evidenceBounds(person.birth);
   const d = evidenceBounds(person.death);
