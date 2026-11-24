@@ -53,9 +53,9 @@ For a portrait-only update from English Wikipedia, run `node scripts/import.mjs 
 
 Commons `imageinfo` supplies thumbnail URLs and `extmetadata` license details. The importer requests twenty file titles per metadata query; thumbnails are 240–250 pixels wide. It retains existing cached portraits, tries alternative recorded images when the first fails validation, and links additional images identified as CC BY, CC BY-SA, CC0, or public domain. It stores plain-text attribution, a Commons file page, and the license URL. Portrait filenames include a hash of the thumbnail URL and Commons source-file SHA1. Cached portrait bytes and their attribution stay together. Linked images can change or become unavailable on Wikimedia. Thumbnails are resized representations; historical portraits may be later depictions. Missing, rejected, or failed images leave the person available with a placeholder. The browser prefers local files, permits remote thumbnails only from HTTPS upload.wikimedia.org or thumb.wikimedia.org, loads card portraits lazily, and sends no referrer. Artist, source, and license links appear in the person details. Filenames preserve supported raster extensions from the thumbnail URL, and validation checks file signatures.
 
-## Snapshot coverage: 26 October 2026
+## Snapshot coverage: 24 November 2026
 
-The bundled snapshot contains 5,258 records and 3,311 licensed portraits: 250 cached files and 3,061 Wikimedia thumbnail links. Of the remaining people, 1,878 have no recorded image and 68 have no image accepted under the supported license and attribution checks. The import checked 3,135 file candidates for 3,127 people; alternate images recovered seven portraits. Births range from 3200 BCE to 2000 CE, using each record's first concrete birth claim for these counts. Alternatives and uncertainty may span other eras. All concrete representative births fit the interface range.
+The bundled snapshot contains 5,258 records and 3,462 licensed portraits: 250 cached files and 3,212 Wikimedia thumbnail links. The November Wikipedia refresh checked 5,007 eligible records. It added 151 portraits and replaced 2,731. The other 1,796 records have no usable portrait in the snapshot. Births range from 3200 BCE to 2000 CE, using each record's first concrete birth claim for these counts. Alternatives and uncertainty may span other eras. All concrete representative births fit the interface range.
 
 | Birth era | People |
 | --- | ---: |
@@ -71,7 +71,7 @@ The sample remains uneven: 4,762 records have a male-only gender label, and 480 
 
 Birth dates have multiple claims for 963 people; death dates have multiple claims for 813. For 338 records, no birth claim has a statement reference; for 394, no death claim has one. Their Wikidata entity links remain available, but these gaps do not count as independent historical verification. Exactly 809 records include a revision captured with their claims; the other 4,448 have an entity link without a revision pin.
 
-The original snapshot was imported on 10 October 2026; Christian Heurich was added on 26 October 2026. Portrait acquisition counts above describe the original full import; his additional portrait uses the same license and attribution checks.
+The original snapshot was imported on 10 October 2026; Christian Heurich was added on 26 October 2026.
 
 The snapshot is about 39 MB before compression because it retains raw date qualifiers and references. `public/data/coverage.json` contains the measured counts. Regenerate it with `node scripts/coverage.mjs` after an import. No contemporary living roster or balanced regional census is claimed.
 
