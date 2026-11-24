@@ -39,6 +39,15 @@
     "sources": [
       "https://phys.org/news/2016-11-jeremy-lefty-snail.html",
       "https://phys.org/news/2017-10-rip-jeremy-lefty-garden-snail.html"
-    ]
+    ],
+    "portrait": {
+      "thumbnailUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/99/Jeremy_the_left-coiling_snail_on_top_of_a_right-coiling_snail%2C_Theresa.jpg/330px-Jeremy_the_left-coiling_snail_on_top_of_a_right-coiling_snail%2C_Theresa.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "sourceHash": "46f1892d4afed7996511a5c4bbddf2c96b6c0da4",
+      "source": "https://commons.wikimedia.org/wiki/File:Jeremy_the_left-coiling_snail_on_top_of_a_right-coiling_snail,_Theresa.jpg",
+      "artist": "Angus Davison",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "credit": "Own work"
+    }
   }
 ]

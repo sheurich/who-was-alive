@@ -53,7 +53,7 @@ Commons `imageinfo` supplies thumbnail URLs and `extmetadata` license details. T
 
 ## Snapshot coverage: 26 October 2026
 
-The bundled snapshot contains 5,258 records and 3,310 licensed portraits: 250 cached files and 3,060 Wikimedia thumbnail links. Of the remaining people, 1,878 have no recorded image and 68 have no image accepted under the supported license and attribution checks. The import checked 3,135 file candidates for 3,127 people; alternate images recovered seven portraits. Births range from 3200 BCE to 2000 CE, using each record's first concrete birth claim for these counts. Alternatives and uncertainty may span other eras. All concrete representative births fit the interface range.
+The bundled snapshot contains 5,258 records and 3,311 licensed portraits: 250 cached files and 3,061 Wikimedia thumbnail links. Of the remaining people, 1,878 have no recorded image and 68 have no image accepted under the supported license and attribution checks. The import checked 3,135 file candidates for 3,127 people; alternate images recovered seven portraits. Births range from 3200 BCE to 2000 CE, using each record's first concrete birth claim for these counts. Alternatives and uncertainty may span other eras. All concrete representative births fit the interface range.
 
 | Birth era | People |
 | --- | ---: |
