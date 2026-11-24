@@ -991,3 +991,10 @@ details pre {
     height: 155px;
   }
 }
+
+.wikipedia-link {
+  display: inline-block;
+  padding-block: 0.35rem;
+  font-weight: 650;
+  text-underline-offset: 0.15em;
+}
