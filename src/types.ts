@@ -34,6 +34,7 @@ export interface Person {
   regions?: string[];
   gender?: string;
   livingAsOf?: string;
+  observedYear?: number;
 }
 export interface Snapshot {
   generatedAt: string;

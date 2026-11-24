@@ -225,7 +225,7 @@ for (const p of data.people) {
     Array.isArray(p.sources) &&
       p.sources.length &&
       Array.isArray(p.birth) &&
-      p.birth.length &&
+      (p.birth.length || Number.isInteger(p.observedYear)) &&
       Array.isArray(p.death),
   );
   assert(

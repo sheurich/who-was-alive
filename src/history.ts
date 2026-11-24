@@ -329,6 +329,10 @@ export function statusAt(person: Person, year: number): LifeStatus {
     return { kind: "unborn", label: "Not born yet" };
   if (death && death.max <= year)
     return { kind: "died", label: deathLabel(person) };
+  if (year === person.observedYear)
+    return { kind: "alive", label: "Observed alive · age unknown" };
+  if (!birth && death?.min === year && death.max === year + 1)
+    return { kind: "possible", label: "Died this year · age unknown" };
   if (!birth || !death || death.max <= birth.min)
     return { kind: "unknown", label: "Life status unknown" };
   if (birth.max <= year && death.min >= year + 1) {

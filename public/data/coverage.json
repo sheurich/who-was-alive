@@ -1,8 +1,8 @@
 {
   "eraBasis": "First concrete birth claim in each record; alternatives and uncertainty may span other eras.",
-  "unplaceableBirths": 0,
+  "unplaceableBirths": 1,
   "outsideUiRange": [],
-  "people": 5256,
+  "people": 5258,
   "portraits": 3310,
   "cachedPortraits": 250,
   "remotePortraits": 3060,
@@ -39,7 +39,7 @@
     },
     {
       "label": "1500–1799",
-      "count": 692
+      "count": 693
     },
     {
       "label": "1800–1899",
@@ -50,19 +50,19 @@
       "count": 2147
     }
   ],
-  "multipleBirthClaims": 962,
-  "multipleDeathClaims": 812,
+  "multipleBirthClaims": 963,
+  "multipleDeathClaims": 813,
   "approximate": 410,
-  "withoutBirthReferences": 337,
+  "withoutBirthReferences": 338,
   "withoutDeathReferences": 394,
   "unresolvedDateClaims": 29,
   "missingDeath": 9,
   "missingDescription": 41,
-  "missingCitizenship": 315,
+  "missingCitizenship": 316,
   "genders": [
     [
       "male",
-      4761
+      4762
     ],
     [
       "female",
@@ -70,7 +70,7 @@
     ],
     [
       "unspecified",
-      12
+      13
     ],
     [
       "genderfluid",
@@ -311,6 +311,10 @@
       19
     ],
     [
+      "Kingdom of England",
+      18
+    ],
+    [
       "Kingdom of Saxony",
       18
     ],
@@ -321,10 +325,6 @@
     [
       "Russia",
       18
-    ],
-    [
-      "Kingdom of England",
-      17
     ],
     [
       "Hungary",
@@ -1478,7 +1478,7 @@
     ],
     [
       "university teacher",
-      708
+      709
     ],
     [
       "scientific collector",
@@ -1538,7 +1538,7 @@
     ],
     [
       "philosopher",
-      204
+      205
     ],
     [
       "visual artist",
@@ -1554,7 +1554,7 @@
     ],
     [
       "naturalist",
-      188
+      189
     ],
     [
       "translator",
@@ -1578,7 +1578,7 @@
     ],
     [
       "biologist",
-      160
+      161
     ],
     [
       "sculptor",
@@ -1602,7 +1602,7 @@
     ],
     [
       "physicist",
-      132
+      133
     ],
     [
       "singer",
@@ -1685,12 +1685,12 @@
       77
     ],
     [
-      "theologian",
+      "astronomer",
       76
     ],
     [
-      "astronomer",
-      75
+      "theologian",
+      76
     ],
     [
       "mathematician",
@@ -1698,7 +1698,7 @@
     ],
     [
       "architect",
-      69
+      70
     ],
     [
       "opinion journalist",
@@ -1889,12 +1889,12 @@
       36
     ],
     [
-      "paleontologist",
+      "inventor",
       36
     ],
     [
-      "inventor",
-      35
+      "paleontologist",
+      36
     ],
     [
       "businessperson",
@@ -1969,6 +1969,10 @@
       27
     ],
     [
+      "diarist",
+      27
+    ],
+    [
       "taxonomist",
       27
     ],
@@ -1986,10 +1990,6 @@
     ],
     [
       "ceramicist",
-      26
-    ],
-    [
-      "diarist",
       26
     ],
     [

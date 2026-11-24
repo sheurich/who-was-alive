@@ -4,7 +4,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const cache = path.join(root, "work/cache");
-export const requiredPeople = ["Q1080305"];
+export const requiredPeople = ["Q1080305", "Q46830"];
 const ua =
   "Lifetimes educational static snapshot/1.0 (bounded research import; Wikimedia data reuse)";
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
@@ -413,7 +413,8 @@ async function refreshPortraits() {
     for (const e of Object.values(data.entities || {}))
       if (e.claims) entities.set(e.id, e);
   }
-  const missing = snapshot.people.filter(
+  const wikidataPeople = snapshot.people.filter((p) => /^wd-Q\d+$/.test(p.id));
+  const missing = wikidataPeople.filter(
     (p) => !entities.has(p.id.replace(/^wd-/, "")),
   );
   for (let start = 0; start < missing.length; start += 40) {
@@ -425,7 +426,7 @@ async function refreshPortraits() {
     );
     for (const e of Object.values(result.entities)) entities.set(e.id, e);
   }
-  const counts = await enrichPortraits(snapshot.people, entities);
+  const counts = await enrichPortraits(wikidataPeople, entities);
   snapshot.portraitRefresh = { at: new Date().toISOString(), ...counts };
   const target = path.join(root, "public/data/people.json");
   await fs.writeFile(target + ".tmp", JSON.stringify(snapshot));
@@ -617,6 +618,9 @@ async function main() {
     throw Error("Corrections must be an object keyed by person ID");
   for (const person of people)
     if (corrections[person.id]) Object.assign(person, corrections[person.id]);
+  const guests = JSON.parse(
+    await fs.readFile(path.join(root, "data/guest-lives.json"), "utf8"),
+  );
   const snapshot = {
     generatedAt: new Date().toISOString(),
     provider: "Wikidata",
@@ -625,7 +629,7 @@ async function main() {
       "Incoming-link-ranked humans with birth and death claims, plus ancient/medieval text, women, nine country strata, and introductory seeds; English or multilingual names required.",
     yearConvention:
       "Astronomical numbering; raw Wikidata JSON preserved in sourceValue. Calendar retained, not converted.",
-    people,
+    people: [...people, ...guests],
   };
   await fs.writeFile(
     path.join(root, "public/data/people.tmp"),

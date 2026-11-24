@@ -1,0 +1,44 @@
+[
+  {
+    "id": "jeremy-snail",
+    "name": "Jeremy the “lefty” snail",
+    "aliases": [
+      "Jeremy",
+      "Jeremy the snail",
+      "Jeremy the lefty snail"
+    ],
+    "description": "A brown garden snail with a rare left-coiling shell, studied at the University of Nottingham.",
+    "occupations": [],
+    "regions": [],
+    "observedYear": 2016,
+    "birth": [],
+    "death": [
+      {
+        "value": "+2017-00-00T00:00:00Z",
+        "sourceValue": "+2017-00-00T00:00:00Z",
+        "precision": 9,
+        "calendar": "gregorian",
+        "before": 0,
+        "after": 0,
+        "approximate": false,
+        "references": [
+          {
+            "snaks": {
+              "P854": [
+                {
+                  "datavalue": {
+                    "value": "https://phys.org/news/2017-10-rip-jeremy-lefty-garden-snail.html"
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "sources": [
+      "https://phys.org/news/2016-11-jeremy-lefty-snail.html",
+      "https://phys.org/news/2017-10-rip-jeremy-lefty-garden-snail.html"
+    ]
+  }
+]
