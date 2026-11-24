@@ -2,6 +2,8 @@
 
 A static timeline playground for exploring people, ages, and overlapping lives. Built with TypeScript and Vite. Runtime dependencies: none. The browser reads a bundled Wikidata snapshot, uses cached portraits first, and loads additional thumbnails directly from Wikimedia.
 
+Lifetimes was inspired by Neal Agarwal’s [*Who Was Alive?*](https://neal.fun/who-was-alive/).
+
 ## Run locally
 
 Use Node.js 22.12 or newer and npm.
