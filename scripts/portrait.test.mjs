@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import {
   remotePortrait,
+  wikipediaPortrait,
   validThumbnail,
   retainPortrait,
   resetRemotePortrait,
@@ -17,6 +18,15 @@ const item = {
     Artist: { value: "<a>Artist</a>" },
   },
 };
+assert.equal(
+  wikipediaPortrait({ imagerepository: "local", imageinfo: [item] }),
+  null,
+  "A local Wikipedia upload can shadow a Commons filename",
+);
+assert.deepEqual(
+  wikipediaPortrait({ imagerepository: "shared", imageinfo: [item] }),
+  remotePortrait(item),
+);
 assert.equal(remotePortrait(item).artist, "Artist");
 assert.equal(remotePortrait(item).path, undefined);
 for (const url of [

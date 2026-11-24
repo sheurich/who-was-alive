@@ -403,6 +403,118 @@ async function enrichPortraits(people, entities) {
   console.log(JSON.stringify(counts));
   return counts;
 }
+export function wikipediaPortrait(file) {
+  return file?.imagerepository === "shared"
+    ? remotePortrait(file.imageinfo?.[0])
+    : null;
+}
+
+async function applyWikipediaPortraits(people) {
+  await fs.mkdir(cache, { recursive: true });
+  const byId = new Map(
+    people
+      .filter((p) => /^wd-Q\d+$/.test(p.id) && !p.portrait?.path)
+      .map((p) => [p.id.slice(3), p]),
+  );
+  const ids = [...byId.keys()];
+  let updated = 0;
+  const lookup = (kind, keys, params, host) => {
+    const hash = createHash("sha256")
+      .update(JSON.stringify(keys))
+      .digest("hex");
+    return cached(`wiki-portrait-${kind}-${hash}.json`, async () => {
+      await sleep(1100);
+      return api(params, host);
+    });
+  };
+  for (let offset = 0; offset < ids.length; offset += 40) {
+    const group = ids.slice(offset, offset + 40);
+    const { entities } = await lookup("links", group, {
+      action: "wbgetentities",
+      ids: group.join("|"),
+      props: "sitelinks",
+      sitefilter: "enwiki",
+    });
+    const titles = [
+      ...new Set(
+        Object.values(entities)
+          .map((entity) => entity.sitelinks?.enwiki?.title)
+          .filter(Boolean),
+      ),
+    ];
+    if (!titles.length) continue;
+    const articles = await lookup(
+      "articles",
+      titles,
+      {
+        action: "query",
+        titles: titles.join("|"),
+        prop: "pageimages|pageprops",
+        piprop: "name",
+        pilicense: "free",
+        ppprop: "wikibase_item",
+      },
+      "en.wikipedia.org",
+    );
+    const images = Object.values(articles.query.pages).filter(
+      (page) =>
+        page.ns === 0 &&
+        page.pageimage &&
+        byId.has(page.pageprops?.wikibase_item) &&
+        group.includes(page.pageprops.wikibase_item),
+    );
+    for (let start = 0; start < images.length; start += 20) {
+      const batch = images.slice(start, start + 20);
+      const filenames = [
+        ...new Set(
+          batch.map((page) => `File:${page.pageimage.replace(/_/g, " ")}`),
+        ),
+      ];
+      const shared = await lookup(
+        "shared",
+        filenames,
+        {
+          action: "query",
+          titles: filenames.join("|"),
+          prop: "imageinfo",
+          iiprop: "url|extmetadata|sha1",
+          iiurlwidth: "240",
+          iiextmetadatafilter: "Artist|Credit|LicenseShortName|LicenseUrl",
+        },
+        "en.wikipedia.org",
+      );
+      const files = new Map(
+        Object.values(shared.query.pages).map((page) => [page.title, page]),
+      );
+      for (const page of batch) {
+        const file = files.get(`File:${page.pageimage.replace(/_/g, " ")}`);
+        const portrait = wikipediaPortrait(file);
+        if (!portrait) continue;
+        byId.get(page.pageprops.wikibase_item).portrait = portrait;
+        updated++;
+      }
+    }
+    if (offset % 400 === 0)
+      console.log(
+        `Wikipedia portraits checked: ${offset + group.length}/${ids.length}`,
+      );
+  }
+  return { checked: ids.length, updated };
+}
+
+async function refreshWikipediaPortraits() {
+  const snapshot = await readSnapshot();
+  const counts = await applyWikipediaPortraits(snapshot.people);
+  snapshot.wikipediaPortraitRefresh = {
+    at: new Date().toISOString(),
+    ...counts,
+  };
+  const target = path.join(root, "public/data/people.json");
+  await fs.writeFile(target + ".tmp", JSON.stringify(snapshot));
+  await fs.rename(target + ".tmp", target);
+  console.log(JSON.stringify(counts));
+}
+
 async function refreshPortraits() {
   await fs.mkdir(cache, { recursive: true });
   const snapshot = await readSnapshot();
@@ -427,6 +539,10 @@ async function refreshPortraits() {
     for (const e of Object.values(result.entities)) entities.set(e.id, e);
   }
   const counts = await enrichPortraits(wikidataPeople, entities);
+  snapshot.wikipediaPortraitRefresh = {
+    at: new Date().toISOString(),
+    ...(await applyWikipediaPortraits(wikidataPeople)),
+  };
   snapshot.portraitRefresh = { at: new Date().toISOString(), ...counts };
   const target = path.join(root, "public/data/people.json");
   await fs.writeFile(target + ".tmp", JSON.stringify(snapshot));
@@ -601,6 +717,10 @@ async function main() {
   );
   for (const person of people) retainPortrait(person, existing);
   await enrichPortraits(people, new Map(entities.map((e) => [e.id, e])));
+  const wikipediaPortraitRefresh = {
+    at: new Date().toISOString(),
+    ...(await applyWikipediaPortraits(people)),
+  };
   const portraits = people.filter((p) => p.portrait).length;
   let corrections = {};
   try {
@@ -623,6 +743,7 @@ async function main() {
   );
   const snapshot = {
     generatedAt: new Date().toISOString(),
+    wikipediaPortraitRefresh,
     provider: "Wikidata",
     license: "CC0-1.0",
     selection:
@@ -654,5 +775,7 @@ async function main() {
 }
 if (process.argv[1] === fileURLToPath(import.meta.url)) {
   if (process.argv.includes("--refresh-portraits")) await refreshPortraits();
+  else if (process.argv.includes("--refresh-wikipedia-portraits"))
+    await refreshWikipediaPortraits();
   else await main();
 }
