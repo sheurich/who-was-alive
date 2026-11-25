@@ -94,5 +94,14 @@
         "rank": "normal"
       }
     ]
+  },
+  "wd-Q34660": {
+    "reason": "Record living status for the 2026 edition rather than interpreting a missing death date as a death.",
+    "livingAsOf": "2026",
+    "death": [],
+    "sources": [
+      "https://www.wikidata.org/wiki/Q34660",
+      "https://www.jkrowling.com/about/"
+    ]
   }
 }

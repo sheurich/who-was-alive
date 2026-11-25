@@ -318,6 +318,12 @@ function deathLabel(person: Person): string {
   return `Died at about age ${age}`;
 }
 
+export function deathDateLabel(person: Person): string {
+  if (person.livingAsOf && !person.death.length)
+    return `Alive as of ${person.livingAsOf}`;
+  return person.death.length ? dateLabel(person.death) : "Not recorded";
+}
+
 export function statusAt(person: Person, year: number): LifeStatus {
   if (!Number.isFinite(year))
     return { kind: "unknown", label: "Dates uncertain" };
@@ -327,14 +333,27 @@ export function statusAt(person: Person, year: number): LifeStatus {
     return { kind: "unknown", label: "Conflicting life dates" };
   if (birth && birth.min >= year + 1)
     return { kind: "unborn", label: "Not born yet" };
+  const lifespan = person.estimatedLifespanYears;
+  const estimate = lifespan !== undefined ? `Estimated lifespan: about ${lifespan} years` : null;
   if (death && death.max <= year)
-    return { kind: "died", label: deathLabel(person) };
+    return { kind: "died", label: estimate ? `Died · ${estimate}` : deathLabel(person) };
   if (year === person.observedYear)
-    return { kind: "alive", label: "Observed alive · age unknown" };
+    return { kind: "alive", label: `Observed alive · ${estimate ?? "age unknown"}` };
   if (!birth && death?.min === year && death.max === year + 1)
-    return { kind: "possible", label: "Died this year · age unknown" };
+    return { kind: "possible", label: `Died this year · ${estimate ?? "age unknown"}` };
+  if (lifespan !== undefined && !birth && finite(death) && year < death.min && year >= death.min - lifespan)
+    return { kind: "possible", label: `Possibly alive · ${estimate}` };
+  const livingYear = person.livingAsOf ? Number(person.livingAsOf) : null;
+  if (livingYear !== null && !person.death.length && year <= livingYear && birth) {
+    if (birth.max <= year || year === livingYear) {
+      const age = finite(birth) && birth.max - birth.min === 1 ? ` · age ${year - birth.min}` : "";
+      return { kind: "alive", label: `Alive${age}` };
+    }
+    if (birth.min === year && birth.max === year + 1)
+      return { kind: "possible", label: "Born this year" };
+  }
   if (!birth || !death || death.max <= birth.min)
-    return { kind: "unknown", label: "Life status unknown" };
+    return { kind: "unknown", label: estimate ? `Life status unknown · ${estimate}` : "Life status unknown" };
   if (birth.max <= year && death.min >= year + 1) {
     if (!finite(birth))
       return { kind: "alive", label: "Alive · age uncertain" };

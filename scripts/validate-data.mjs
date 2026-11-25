@@ -237,7 +237,12 @@ for (const p of data.people) {
     assert(!source.includes("undefined"));
     if (source.includes("oldid=")) assert(/oldid=\d+$/.test(source));
   }
-  assert(!p.livingAsOf, "Import must not infer living status");
+  if (p.livingAsOf !== undefined) {
+    assert.match(p.livingAsOf, /^\d{4}$/);
+    assert.equal(p.death.length, 0);
+  }
+  if (p.estimatedLifespanYears !== undefined)
+    assert(Number.isFinite(p.estimatedLifespanYears) && p.estimatedLifespanYears > 0);
   for (const d of [...p.birth, ...p.death]) {
     if (d.value === "") {
       assert(["somevalue", "novalue"].includes(d.snaktype));

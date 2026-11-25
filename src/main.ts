@@ -7,6 +7,7 @@ import {
   isUncertain,
   statusAt,
   dateLabel,
+  deathDateLabel,
   ageDifference,
   comparison,
   birthdayYear,
@@ -15,6 +16,7 @@ import {
 } from "./history";
 import { parseState, encodeState, MAX_PINS } from "./state";
 import { portraitSource } from "./portraits";
+import { applyCuratedRecords } from "./collection";
 
 const $ = <T extends HTMLElement = HTMLElement>(id: string) =>
   document.getElementById(id) as T;
@@ -240,7 +242,7 @@ function renderTimeline() {
       if (b.death && b.death.min > b.birth.max && !approximate)
         bars += `<span class="life-bar definite" style="left:${pos(b.birth.max)}%;width:${pos(b.death.min) - pos(b.birth.max)}%;background-color:${color}"></span>`;
     }
-    html += `<div class="timeline-row"><div class="timeline-person">${portrait(person, true)}<button class="person-label-button" data-details="${esc(person.id)}"><div class="timeline-person-name">${esc(person.name)}</div><div class="timeline-person-label">${esc(status.label)}</div></button><button class="remove-pin" data-pin="${esc(person.id)}" aria-label="Unpin ${esc(person.name)}">×</button></div><div class="bar-track" role="img" aria-label="${esc(person.name)}: ${esc(dateLabel(person.birth))} to ${esc(dateLabel(person.death))}; ${esc(status.label)}">${bars}<span class="year-line" style="left:${pos(year)}%"></span></div></div>`;
+    html += `<div class="timeline-row"><div class="timeline-person">${portrait(person, true)}<button class="person-label-button" data-details="${esc(person.id)}"><div class="timeline-person-name">${esc(person.name)}</div><div class="timeline-person-label">${esc(status.label)}</div></button><button class="remove-pin" data-pin="${esc(person.id)}" aria-label="Unpin ${esc(person.name)}">×</button></div><div class="bar-track" role="img" aria-label="${esc(person.name)}: born ${esc(dateLabel(person.birth))}; ${esc(deathDateLabel(person))}; ${esc(status.label)}">${bars}<span class="year-line" style="left:${pos(year)}%"></span></div></div>`;
   });
   $("timeline").innerHTML =
     html +
@@ -324,7 +326,7 @@ function renderPeople() {
         const status = statusAt(person, year),
           isPinned = pins.includes(person.id),
           favorite = favorites.has(person.id);
-        return `<article class="person-card"><button class="portrait-button" data-details="${esc(person.id)}" aria-label="Explore ${esc(person.name)}">${portrait(person)}<span class="status-badge ${status.kind}">${esc(status.label)}</span></button><div class="card-body"><button class="person-name" data-details="${esc(person.id)}">${esc(person.name)}</button><p class="person-dates">${esc(dateLabel(person.birth))} – ${esc(dateLabel(person.death))}</p><p class="description">${esc(person.description || person.occupations.filter((label) => !/^Q\d+$/.test(label)).join(", ") || "Explore this life and its source records.")}</p>${wikipediaLink(person)}<div class="card-actions"><button class="pin-button" data-pin="${esc(person.id)}" aria-pressed="${isPinned}">${isPinned ? "Pinned ✓" : "+ Pin to timeline"}</button><button class="favorite-button" data-favorite="${esc(person.id)}" aria-pressed="${favorite}" aria-label="${favorite ? "Remove" : "Save"} ${esc(person.name)} ${favorite ? "from" : "to"} favorites">${favorite ? "★" : "☆"}</button></div></div></article>`;
+        return `<article class="person-card"><button class="portrait-button" data-details="${esc(person.id)}" aria-label="Explore ${esc(person.name)}">${portrait(person)}<span class="status-badge ${status.kind}">${esc(status.label)}</span></button><div class="card-body"><button class="person-name" data-details="${esc(person.id)}">${esc(person.name)}</button><p class="person-dates">${esc(dateLabel(person.birth))} – ${esc(deathDateLabel(person))}</p><p class="description">${esc(person.description || person.occupations.filter((label) => !/^Q\d+$/.test(label)).join(", ") || "Explore this life and its source records.")}</p>${wikipediaLink(person)}<div class="card-actions"><button class="pin-button" data-pin="${esc(person.id)}" aria-pressed="${isPinned}">${isPinned ? "Pinned ✓" : "+ Pin to timeline"}</button><button class="favorite-button" data-favorite="${esc(person.id)}" aria-pressed="${favorite}" aria-label="${favorite ? "Remove" : "Save"} ${esc(person.name)} ${favorite ? "from" : "to"} favorites">${favorite ? "★" : "☆"}</button></div></div></article>`;
       })
       .join("") ||
     `<div class="empty-results"><h3>${favoritesOnly ? "Keep a few lives close." : "A little further into the unknown."}</h3>${favoritesOnly ? "Use the star on a person to save a favorite." : query ? "No matches. Try a name, occupation, or another spelling." : "This collection has no matches for that year. Try another year, include possible matches, or search for someone."}</div>`;
@@ -348,8 +350,9 @@ function showDetails(id: string) {
       ? `<button data-jump="${value}">${label}</button>`
       : "";
   const credit = person.portrait;
+  const endHeading = person.livingAsOf && !person.death.length ? "Life status" : "Death date";
   $("details-content").innerHTML =
-    `${path ? `<img class="detail-portrait" src="${esc(path)}" data-person="${esc(person.id)}" alt="Portrait of ${esc(person.name)}" referrerpolicy="no-referrer" />` : ""}<h2>${esc(person.name)}</h2>${wikipediaLink(person)}<p>${esc(person.description)}</p><p>In ${formatYear(year)}: ${esc(statusAt(person, year).label)}</p><table class="date-table"><tr><th>Born</th><td>${esc(dateLabel(person.birth))}</td></tr><tr><th>Died</th><td>${esc(dateLabel(person.death))}</td></tr><tr><th>Known for</th><td>${esc(person.occupations.filter((label) => !/^Q\d+$/.test(label)).join(", ") || "Not recorded")}</td></tr></table><div class="detail-actions">${jump("Birth year", yearOf(person.birth))}${jump("At age 12", birthdayYear(person, 12))}${jump("Death year", yearOf(person.death))}<button data-pin="${esc(id)}">${pins.includes(id) ? "Unpin" : "Pin to timeline"}</button></div><p class="attribution">Jumps use a representative year when dates vary. A jump to age 12 does not establish that a person lived to 12.</p><h3>Sources</h3><ul>${person.sources.map((s) => `<li><a href="${esc(safeUrl(s))}" target="_blank" rel="noopener noreferrer">${esc(s.replace(/^https?:\/\//, ""))}</a></li>`).join("")}</ul>${credit ? `<p class="attribution">Portrait: ${esc(credit.artist)}. <a href="${esc(safeUrl(credit.source))}" target="_blank" rel="noopener noreferrer">Original image</a>. <a href="${esc(safeUrl(credit.licenseUrl))}" target="_blank" rel="noopener noreferrer">${esc(credit.license)}</a>. ${esc(credit.credit || "")} Thumbnail resized; display may crop.</p>` : '<p class="attribution">No licensed portrait is available for this person.</p>'}<details><summary>Date precision and source claims</summary><p>Dates retain their source precision, calendar, alternatives, and reference records. Approximate dates are estimates, not exact birthdays.</p><pre>${esc(JSON.stringify({ birth: person.birth, death: person.death }, null, 2))}</pre></details>`;
+    `${path ? `<img class="detail-portrait" src="${esc(path)}" data-person="${esc(person.id)}" alt="Portrait of ${esc(person.name)}" referrerpolicy="no-referrer" />` : ""}<h2>${esc(person.name)}</h2>${wikipediaLink(person)}<p>${esc(person.description)}</p><p>In ${formatYear(year)}: ${esc(statusAt(person, year).label)}</p><table class="date-table"><tr><th>Born</th><td>${esc(dateLabel(person.birth))}</td></tr><tr><th>${endHeading}</th><td>${esc(deathDateLabel(person))}</td></tr><tr><th>Known for</th><td>${esc(person.occupations.filter((label) => !/^Q\d+$/.test(label)).join(", ") || "Not recorded")}</td></tr></table><div class="detail-actions">${jump("Birth year", yearOf(person.birth))}${jump("At age 12", birthdayYear(person, 12))}${jump("Death year", yearOf(person.death))}<button data-pin="${esc(id)}">${pins.includes(id) ? "Unpin" : "Pin to timeline"}</button></div><p class="attribution">Jumps use a representative year when dates vary. A jump to age 12 does not establish that a person lived to 12.</p><h3>Sources</h3><ul>${person.sources.map((s) => `<li><a href="${esc(safeUrl(s))}" target="_blank" rel="noopener noreferrer">${esc(s.replace(/^https?:\/\//, ""))}</a></li>`).join("")}</ul>${credit ? `<p class="attribution">Portrait: ${esc(credit.artist)}. <a href="${esc(safeUrl(credit.source))}" target="_blank" rel="noopener noreferrer">Original image</a>. <a href="${esc(safeUrl(credit.licenseUrl))}" target="_blank" rel="noopener noreferrer">${esc(credit.license)}</a>. ${esc(credit.credit || "")} Thumbnail resized; display may crop.</p>` : '<p class="attribution">No licensed portrait is available for this person.</p>'}<details><summary>Date precision and source claims</summary><p>Dates retain their source precision, calendar, alternatives, and reference records. Approximate dates are estimates, not exact birthdays.</p><pre>${esc(JSON.stringify({ birth: person.birth, death: person.death }, null, 2))}</pre></details>`;
   $<HTMLDialogElement>("details").showModal();
 }
 function showAbout() {
@@ -464,7 +467,7 @@ async function start() {
     snapshot = (await response.json()) as Snapshot;
     if (!Array.isArray(snapshot.people) || !snapshot.people.length)
       throw new Error("Empty snapshot");
-    people = snapshot.people;
+    people = applyCuratedRecords(snapshot.people);
     byId = new Map(people.map((p) => [p.id, p]));
     try {
       const saved: unknown = JSON.parse(

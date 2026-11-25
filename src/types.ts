@@ -35,6 +35,7 @@ export interface Person {
   gender?: string;
   livingAsOf?: string;
   observedYear?: number;
+  estimatedLifespanYears?: number;
 }
 export interface Snapshot {
   generatedAt: string;
