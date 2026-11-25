@@ -301,21 +301,30 @@ function deathLabel(person: Person): string {
       ),
     );
     if ([...ages].some((age) => age < 0)) return "Died · age unknown";
-    if (ages.size === 1) {
-      const age = [...ages][0];
-      return age === 0 ? "Died before age 1" : `Died at age ${age}`;
+    if (ages.size === 1 && ages.has(0)) return "Died before age 1";
+    return `Died at age ${[...ages].sort((a, b) => a - b).join(" or ")}`;
+  }
+  const birthBounds = person.birth.map((date) => dateEvidence(date).interval);
+  const deathBounds = person.death.map((date) => dateEvidence(date).interval);
+  if (!birthBounds.length || !deathBounds.length) return "Died · age unknown";
+
+  // Compare each date alternative separately, rather than averaging incompatible years.
+  const estimates: Bounds[] = [];
+  for (const birth of birthBounds) {
+    if (!finite(birth)) return "Died · age unknown";
+    for (const death of deathBounds) {
+      if (!finite(death)) return "Died · age unknown";
+      const max = death.max - 1 - birth.min;
+      if (max < 0) return "Died · age unknown";
+      estimates.push({ min: Math.max(0, death.min - (birth.max - 1)), max });
     }
   }
-  const b = evidenceBounds(person.birth);
-  const d = evidenceBounds(person.death);
-  if (!finite(b) || !finite(d)) return "Died · age unknown";
-  const birthYear = Math.floor((b.min + b.max - 1) / 2);
-  const deathYear = Math.floor((d.min + d.max - 1) / 2);
-  const age = deathYear - birthYear;
-  if (age < 0) return "Died · age unknown";
-  if (age === 0 && b.max - b.min === 1 && d.max - d.min === 1)
-    return "Died before age 1";
-  return `Died at about age ${age}`;
+  if (estimates.every(({ max }) => max === 0)) return "Died before age 1";
+  const labels = new Set(
+    estimates.sort((a, b) => a.min - b.min || a.max - b.max)
+      .map(({ min, max }) => range(min, max)),
+  );
+  return `Died at about age ${[...labels].join(" or ")}`;
 }
 
 export function deathDateLabel(person: Person): string {
