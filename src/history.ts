@@ -288,8 +288,13 @@ function exactDates(dates: HistoricalDate[]): number[][] | null {
 }
 
 function deathLabel(person: Person): string {
-  const births = exactDates(person.birth);
-  const deaths = exactDates(person.death);
+  // Use the preferred source claim, then snapshot order, without averaging rival dates.
+  const preferredFirst = (a: HistoricalDate, b: HistoricalDate) =>
+    Number(b.rank === "preferred") - Number(a.rank === "preferred");
+  const birthClaims = [...person.birth].sort(preferredFirst);
+  const deathClaims = [...person.death].sort(preferredFirst);
+  const births = exactDates(birthClaims);
+  const deaths = exactDates(deathClaims);
   if (births && deaths) {
     const ages = new Set(
       births.flatMap((birth) =>
@@ -302,14 +307,14 @@ function deathLabel(person: Person): string {
       ),
     );
     if ([...ages].some((age) => age < 0)) return "Died · age unknown";
-    if (ages.size === 1 && ages.has(0)) return "Died before age 1";
-    return `Died at age ${[...ages].sort((a, b) => a - b).join(" or ")}`;
+    const [age] = ages;
+    if (ages.size === 1) return age === 0 ? "Died before age 1" : `Died at age ${age}`;
+    return `Died at about age ${age}`;
   }
-  const birthBounds = person.birth.map((date) => dateEvidence(date).interval);
-  const deathBounds = person.death.map((date) => dateEvidence(date).interval);
+  const birthBounds = birthClaims.map((date) => dateEvidence(date).interval);
+  const deathBounds = deathClaims.map((date) => dateEvidence(date).interval);
   if (!birthBounds.length || !deathBounds.length) return "Died · age unknown";
 
-  // Compare each date alternative separately, rather than averaging incompatible years.
   const estimates: Bounds[] = [];
   for (const birth of birthBounds) {
     if (!finite(birth)) return "Died · age unknown";
@@ -321,11 +326,8 @@ function deathLabel(person: Person): string {
     }
   }
   if (estimates.every(({ max }) => max === 0)) return "Died before age 1";
-  const labels = new Set(
-    estimates.sort((a, b) => a.min - b.min || a.max - b.max)
-      .map(({ min, max }) => range(min, max)),
-  );
-  return `Died at about age ${[...labels].join(" or ")}`;
+  const [{ min, max }] = estimates;
+  return `Died at about age ${Math.round((min + max) / 2)}`;
 }
 
 export function deathDateLabel(person: Person): string {

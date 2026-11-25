@@ -351,7 +351,7 @@ test("death ages do not claim precision absent from the source", () => {
   assert.equal(statusAt(p(1900, 1980), 2000).label, "Died at about age 80");
   const disputed = p(1900, 1980);
   disputed.birth.push(d(1902));
-  assert.equal(statusAt(disputed, 2000).label, "Died at about age 78 or 80");
+  assert.equal(statusAt(disputed, 2000).label, "Died at about age 80");
   disputed.birth = [];
   assert.equal(statusAt(disputed, 2000).label, "Died · age unknown");
   const partial = datedPerson("+1900-00-00T00:00:00Z", "+1980-02-01T00:00:00Z");
@@ -363,14 +363,16 @@ test("alternative BCE death dates do not produce an unsupported midpoint age", (
   const person = p(-2590, -2490);
   person.death.push(d(-2432));
   assert.equal(dateLabel(person.death), "2491 BCE or 2433 BCE");
-  assert.equal(statusAt(person, -2400).label, "Died at about age 100 or 158");
+  assert.equal(statusAt(person, -2400).label, "Died at about age 100");
+  person.death[1].rank = "preferred";
+  assert.equal(statusAt(person, -2400).label, "Died at about age 158");
 });
 
-test("a bounded date range produces an age range, including in the death year", () => {
+test("a bounded date range produces one estimate, including in the death year", () => {
   const person = p(1900, 1980);
   person.birth = [d(1900, { before: 2, after: 3 })];
-  assert.equal(statusAt(person, 1980).label, "Died at about age 77–82 this year");
-  assert.equal(statusAt(person, 2000).label, "Died at about age 77–82");
+  assert.equal(statusAt(person, 1980).label, "Died at about age 80 this year");
+  assert.equal(statusAt(person, 2000).label, "Died at about age 80");
 });
 
 test("an unspecified calendar cannot establish an exact age at death", () => {
@@ -379,10 +381,10 @@ test("an unspecified calendar cannot establish an exact age at death", () => {
   assert.equal(statusAt(person, 2000).label, "Died at about age 80");
 });
 
-test("alternative full dates show distinct completed ages unless every age agrees", () => {
+test("alternative full dates use an approximate age unless every age agrees", () => {
   const person = datedPerson("+1900-03-05T00:00:00Z", "+1980-03-04T00:00:00Z");
   person.death.push({ ...person.death[0], value: "+1980-03-07T00:00:00Z" });
-  assert.equal(statusAt(person, 2000).label, "Died at age 79 or 80");
+  assert.equal(statusAt(person, 2000).label, "Died at about age 79");
   person.birth[0].value = "+1900-09-12T00:00:00Z";
   assert.equal(statusAt(person, 2000).label, "Died at age 79");
 });
