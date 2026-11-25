@@ -28,10 +28,10 @@ test("Jeremy's lifespan estimate does not invent a birth date", () => {
   assert(person);
   assert.equal(yearOf(person.birth), null);
   assert.equal(deathDateLabel(person), "2017 CE");
-  assert.equal(statusAt(person, 2014).kind, "unknown");
+  assert.deepEqual(statusAt(person, 2014), { kind: "unknown", label: "Life status unknown" });
   assert.equal(statusAt(person, 2015).kind, "possible");
-  assert.equal(statusAt(person, 2016).kind, "alive");
-  assert.equal(statusAt(person, 2017).kind, "possible");
-  assert.equal(statusAt(person, 2018).kind, "died");
-  assert.match(statusAt(person, 2018).label, /Estimated lifespan: about 2 years/);
+  assert.deepEqual(statusAt(person, 2016), { kind: "alive", label: "Alive · about 1" });
+  assert.equal(statusAt(person, 2017).label, "Died at about age 2 this year");
+  assert.equal(statusAt(person, 2017).diedThisYear, true);
+  assert.deepEqual(statusAt(person, 2018), { kind: "died", label: "Died at about age 2" });
 });

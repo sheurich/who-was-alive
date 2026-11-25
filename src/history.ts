@@ -344,19 +344,32 @@ export function statusAt(person: Person, year: number): LifeStatus {
   if (birth && birth.min >= year + 1)
     return { kind: "unborn", label: "Not born yet" };
   const lifespan = person.estimatedLifespanYears;
-  const estimate = lifespan !== undefined ? `Estimated lifespan: about ${lifespan} years` : null;
-  if (death && death.max <= year)
-    return { kind: "died", label: estimate ? `Died · ${estimate}` : deathLabel(person) };
-  if (death?.min === year && death.max === year + 1)
+  const diedThisYear = death?.min === year && death.max === year + 1;
+  if (death && (death.max <= year || diedThisYear)) {
+    const label = lifespan !== undefined ? `Died at about age ${lifespan}` : deathLabel(person);
+    return diedThisYear
+      ? {
+          kind: "possible",
+          diedThisYear: true,
+          label: birth || lifespan !== undefined ? `${label} this year` : "Died this year · age unknown",
+        }
+      : { kind: "died", label };
+  }
+  const estimatedAge = !birth && lifespan !== undefined && finite(death) && death.max === death.min + 1
+    ? lifespan - (death.min - year)
+    : null;
+  if (year === person.observedYear)
+    return {
+      kind: "alive",
+      label: estimatedAge !== null && estimatedAge >= 0
+        ? `Alive · about ${estimatedAge}`
+        : "Observed alive · age unknown",
+    };
+  if (estimatedAge !== null && estimatedAge >= 0)
     return {
       kind: "possible",
-      diedThisYear: true,
-      label: birth ? `${deathLabel(person)} this year` : `Died this year · ${estimate ?? "age unknown"}`,
+      label: estimatedAge === 0 ? "Possibly alive · estimated birth year" : `Possibly alive · about ${estimatedAge}`,
     };
-  if (year === person.observedYear)
-    return { kind: "alive", label: `Observed alive · ${estimate ?? "age unknown"}` };
-  if (lifespan !== undefined && !birth && finite(death) && year < death.min && year >= death.min - lifespan)
-    return { kind: "possible", label: `Possibly alive · ${estimate}` };
   const livingYear = person.livingAsOf ? Number(person.livingAsOf) : null;
   if (livingYear !== null && !person.death.length && year <= livingYear && birth) {
     if (birth.max <= year || year === livingYear) {
@@ -367,7 +380,7 @@ export function statusAt(person: Person, year: number): LifeStatus {
       return { kind: "possible", label: "Born this year" };
   }
   if (!birth || !death || death.max <= birth.min)
-    return { kind: "unknown", label: estimate ? `Life status unknown · ${estimate}` : "Life status unknown" };
+    return { kind: "unknown", label: "Life status unknown" };
   if (birth.max <= year && death.min >= year + 1) {
     if (!finite(birth))
       return { kind: "alive", label: "Alive · age uncertain" };
