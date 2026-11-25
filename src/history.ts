@@ -7,6 +7,7 @@ export interface Bounds {
 export type LifeStatus = {
   kind: "alive" | "possible" | "unborn" | "died" | "unknown";
   label: string;
+  diedThisYear?: true;
 };
 const GREGORIAN = "Q1985727";
 const JULIAN = "Q1985786";
@@ -346,10 +347,14 @@ export function statusAt(person: Person, year: number): LifeStatus {
   const estimate = lifespan !== undefined ? `Estimated lifespan: about ${lifespan} years` : null;
   if (death && death.max <= year)
     return { kind: "died", label: estimate ? `Died · ${estimate}` : deathLabel(person) };
+  if (death?.min === year && death.max === year + 1)
+    return {
+      kind: "possible",
+      diedThisYear: true,
+      label: birth ? `${deathLabel(person)} this year` : `Died this year · ${estimate ?? "age unknown"}`,
+    };
   if (year === person.observedYear)
     return { kind: "alive", label: `Observed alive · ${estimate ?? "age unknown"}` };
-  if (!birth && death?.min === year && death.max === year + 1)
-    return { kind: "possible", label: `Died this year · ${estimate ?? "age unknown"}` };
   if (lifespan !== undefined && !birth && finite(death) && year < death.min && year >= death.min - lifespan)
     return { kind: "possible", label: `Possibly alive · ${estimate}` };
   const livingYear = person.livingAsOf ? Number(person.livingAsOf) : null;
@@ -374,17 +379,8 @@ export function statusAt(person: Person, year: number): LifeStatus {
       label: birth.max - birth.min > 1 ? `Alive · about ${age}` : `Age ${age}`,
     };
   }
-  if (
-    birth.min === year &&
-    birth.max === year + 1 &&
-    death.min === year &&
-    death.max === year + 1
-  )
-    return { kind: "possible", label: `${deathLabel(person)} this year` };
   if (birth.min === year && birth.max === year + 1)
     return { kind: "possible", label: "Born this year" };
-  if (death.min === year && death.max === year + 1)
-    return { kind: "possible", label: `${deathLabel(person)} this year` };
   if (!finite(birth) || !finite(death)) {
     const display = lifeBounds(person);
     return display?.death &&

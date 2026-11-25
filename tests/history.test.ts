@@ -232,6 +232,21 @@ test("boundary labels identify known birth and death years", () => {
   assert.match(statusAt(decade, 1905).label, /birth year uncertain/);
 });
 
+test("a death in the selected year is distinguished from uncertain matches", () => {
+  const person = p(1900, 1980);
+  assert.equal(statusAt(person, 1980).diedThisYear, true);
+  assert.equal(statusAt(person, 1981).diedThisYear, undefined);
+  assert.equal(statusAt(person, 1900).diedThisYear, undefined);
+  person.death.push(d(1981));
+  assert.equal(statusAt(person, 1980).kind, "possible");
+  assert.equal(statusAt(person, 1980).diedThisYear, undefined);
+  person.birth = [];
+  person.death = [d(1980)];
+  assert.equal(statusAt(person, 1980).diedThisYear, true);
+  person.death = [];
+  assert.equal(statusAt(person, 1980).diedThisYear, undefined);
+});
+
 test("unknown or disputed sourcing cannot gain certainty from temporal bounds", () => {
   for (const id of ["Q999999999", "Q18912752", "Q30230067"]) {
     const person = p(1900, 1980);

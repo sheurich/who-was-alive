@@ -286,13 +286,12 @@ function rememberFocus(): () => void {
 function renderPeople() {
   const restoreFocus = rememberFocus();
   const query = $<HTMLInputElement>("search").value.trim();
-  const includePossible = $<HTMLInputElement>("possible").checked;
   let matches = query ? searchPeople(people, query) : people;
   if (favoritesOnly) matches = matches.filter((p) => favorites.has(p.id));
   if (!query && !favoritesOnly)
     matches = matches.filter((p) => {
-      const status = statusAt(p, year).kind;
-      return status === "alive" || (includePossible && status === "possible");
+      const status = statusAt(p, year);
+      return status.kind === "alive" || status.diedThisYear === true;
     });
   matches = [...matches].sort(
     $<HTMLSelectElement>("sort").value === "birth"
@@ -315,10 +314,9 @@ function renderPeople() {
   $("search-note").textContent =
     query || favoritesOnly
       ? "Search and favorites stay visible across years. Open a person to jump to their lifetime."
-      : "Age is the birthday reached that year. “About” marks an estimated age.";
+      : "Includes people known to be alive or to have died that year. “About” marks an estimated age.";
   $("all-view").setAttribute("aria-pressed", String(!favoritesOnly));
   $("favorites-view").setAttribute("aria-pressed", String(favoritesOnly));
-  $<HTMLInputElement>("possible").disabled = !!query || favoritesOnly;
   $("people-grid").innerHTML =
     matches
       .slice(0, limit)
@@ -329,7 +327,7 @@ function renderPeople() {
         return `<article class="person-card"><button class="portrait-button" data-details="${esc(person.id)}" aria-label="Explore ${esc(person.name)}">${portrait(person)}<span class="status-badge ${status.kind}">${esc(status.label)}</span></button><div class="card-body"><button class="person-name" data-details="${esc(person.id)}">${esc(person.name)}</button><p class="person-dates">${esc(dateLabel(person.birth))} – ${esc(deathDateLabel(person))}</p><p class="description">${esc(person.description || person.occupations.filter((label) => !/^Q\d+$/.test(label)).join(", ") || "Explore this life and its source records.")}</p>${wikipediaLink(person)}<div class="card-actions"><button class="pin-button" data-pin="${esc(person.id)}" aria-pressed="${isPinned}">${isPinned ? "Pinned ✓" : "+ Pin to timeline"}</button><button class="favorite-button" data-favorite="${esc(person.id)}" aria-pressed="${favorite}" aria-label="${favorite ? "Remove" : "Save"} ${esc(person.name)} ${favorite ? "from" : "to"} favorites">${favorite ? "★" : "☆"}</button></div></div></article>`;
       })
       .join("") ||
-    `<div class="empty-results"><h3>${favoritesOnly ? "Keep a few lives close." : "A little further into the unknown."}</h3>${favoritesOnly ? "Use the star on a person to save a favorite." : query ? "No matches. Try a name, occupation, or another spelling." : "This collection has no matches for that year. Try another year, include possible matches, or search for someone."}</div>`;
+    `<div class="empty-results"><h3>${favoritesOnly ? "Keep a few lives close." : "A little further into the unknown."}</h3>${favoritesOnly ? "Use the star on a person to save a favorite." : query ? "No matches. Try a name, occupation, or another spelling." : "This collection has no matches for that year. Try another year or search for someone."}</div>`;
   const more = $<HTMLButtonElement>("show-more");
   more.hidden = matches.length <= limit;
   more.textContent = `Show more (${Math.max(0, matches.length - limit).toLocaleString()} remaining)`;
@@ -405,10 +403,6 @@ $("search").addEventListener("input", () => {
   renderPeople();
 });
 $("sort").addEventListener("change", renderPeople);
-$("possible").addEventListener("change", () => {
-  limit = 48;
-  renderPeople();
-});
 $("show-more").addEventListener("click", () => {
   limit += 48;
   renderPeople();

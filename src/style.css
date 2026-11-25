@@ -484,16 +484,6 @@ main {
   background: none;
   font-size: 14px;
 }
-.possible-control {
-  font-size: 12px;
-  color: var(--muted);
-  display: flex;
-  align-items: center;
-  gap: 5px;
-}
-.possible-control input {
-  accent-color: var(--blue);
-}
 #sort {
   font-size: 12px;
 }
@@ -796,9 +786,6 @@ details pre {
   .portrait-placeholder {
     height: 190px;
   }
-  .possible-control {
-    max-width: 130px;
-  }
   .tagline {
     display: none;
   }
@@ -917,10 +904,6 @@ details pre {
   }
   .search-box {
     flex-basis: 100%;
-  }
-  .possible-control {
-    max-width: none;
-    flex: 1;
   }
   .people-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
