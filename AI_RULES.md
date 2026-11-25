@@ -20,3 +20,7 @@
 | Tests and tooling | `node:test` and `node:assert/strict` for tests, `tsx` for loading TypeScript tests, and Vite for bundling | Keep tooling in `devDependencies`. Build with the relative base (`./`) so assets work on repository subpaths. |
 
 Prefer existing project modules and standard platform APIs before proposing a dependency. Keep runtime exploration static: refresh historical records through the import workflow in [DATA.md](DATA.md), not through live queries from the browser.
+
+## Deployment
+
+After each completed change, push its commit to the GitHub repository's `main` branch to trigger the existing GitHub Pages workflow. If a push is unavailable, report that the change was not pushed; do not claim deployment without confirmation.
